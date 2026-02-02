@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Prompt Library - Quick Reference</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; max-width: 950px; margin: 0 auto; padding: 40px 20px; color: #333; background: #f9f9f9; }
+        h1 { color: #1a365d; border-bottom: 3px solid #2b6cb0; padding-bottom: 10px; }
+        h2 { color: #2c5282; margin-top: 30px; }
+        h3 { color: #2b6cb0; }
+        hr { border: none; border-top: 2px solid #e2e8f0; margin: 30px 0; }
+        .container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #e2e8f0; padding: 10px 12px; text-align: left; }
+        th { background: #2b6cb0; color: white; }
+        tr:nth-child(even) { background: #f7fafc; }
+        code { background: #edf2f7; padding: 2px 6px; border-radius: 4px; font-family: 'Monaco', 'Consolas', monospace; font-size: 0.9em; }
+        pre { background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; }
+        .tip-box { background: #ebf8ff; border-left: 4px solid #2b6cb0; padding: 15px 20px; margin: 20px 0; }
+        ol, ul { padding-left: 25px; }
+        li { margin: 6px 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Master Prompt Library - Quick Reference</h1>
+<p>This guide provides a quick reference to all prompts organized by use case.</p>
+
+<hr>
+
+<h2>How to Use These Prompts</h2>
+<ol>
+<li><strong>Find the prompt</strong> for your task in this reference</li>
+<li><strong>Copy the prompt</strong> from the appropriate file</li>
+<li><strong>Paste your data</strong> where indicated (e.g., [PASTE RFP HERE])</li>
+<li><strong>Run in any model</strong> - ChatGPT, Claude, Gemini, etc.</li>
+<li><strong>Iterate</strong> - If the output isn't right, adjust the prompt and try again</li>
+</ol>
+
+<hr>
+
+<h2>Prompt Files</h2>
+<table>
+<tr><th>File</th><th>Use Case</th><th># of Prompts</th></tr>
+<tr><td>01-rfp-analysis-prompts.md</td><td>Analyzing RFPs and building quotes</td><td>5</td></tr>
+<tr><td>02-rate-lookup-prompts.md</td><td>Responding to rate requests</td><td>8</td></tr>
+<tr><td>03-customer-communication-prompts.md</td><td>Writing customer emails</td><td>8</td></tr>
+<tr><td>04-process-mapping-prompts.md</td><td>Creating flowcharts and documentation</td><td>6</td></tr>
+<tr><td>05-customer-onboarding-prompts.md</td><td>New customer implementation</td><td>7</td></tr>
+<tr><td>06-financial-analysis-prompts.md</td><td>AR and revenue analysis</td><td>7</td></tr>
+</table>
+
+<hr>
+
+<h2>Quick Reference by Task</h2>
+
+<h3>"I need to analyze an RFP..."</h3>
+<table>
+<tr><th>Task</th><th>Prompt File</th><th>Prompt Name</th></tr>
+<tr><td>Extract key requirements</td><td>01</td><td>Basic RFP Extraction</td></tr>
+<tr><td>Assess if it's a good fit</td><td>01</td><td>RFP Fit Assessment</td></tr>
+<tr><td>Generate questions for discovery call</td><td>01</td><td>Generate Clarifying Questions</td></tr>
+<tr><td>Write the scope of work</td><td>01</td><td>Scope of Work Draft</td></tr>
+<tr><td>Position against competitors</td><td>01</td><td>Competitive Positioning</td></tr>
+</table>
+
+<h3>"I need to respond to a rate request..."</h3>
+<table>
+<tr><th>Task</th><th>Prompt File</th><th>Prompt Name</th></tr>
+<tr><td>Any rate request (master prompt)</td><td>02</td><td>Master Rate Lookup Prompt</td></tr>
+<tr><td>Simple LTL shipment</td><td>02</td><td>Rate Request #1</td></tr>
+<tr><td>Weekly/recurring FTL lane</td><td>02</td><td>Rate Request #2</td></tr>
+<tr><td>LTL with accessorials (liftgate, etc)</td><td>02</td><td>Rate Request #3</td></tr>
+<tr><td>Urgent/expedited shipment</td><td>02</td><td>Rate Request #4</td></tr>
+<tr><td>Multi-stop truckload</td><td>02</td><td>Rate Request #5</td></tr>
+<tr><td>Vague request (need more info)</td><td>02</td><td>Rate Request #6</td></tr>
+<tr><td>International/cross-border</td><td>02</td><td>Rate Request #7</td></tr>
+</table>
+
+<h3>"I need to write a customer email..."</h3>
+<table>
+<tr><th>Situation</th><th>Prompt File</th><th>Prompt Name</th></tr>
+<tr><td>Shipment is delayed</td><td>03</td><td>Scenario A: Delay Notification</td></tr>
+<tr><td>Following up on a quote</td><td>03</td><td>Scenario B: Quote Follow-Up</td></tr>
+<tr><td>Responding to damage claim</td><td>03</td><td>Scenario C: Damage Claim Response</td></tr>
+<tr><td>Apologizing for our mistake</td><td>03</td><td>Scenario D: Service Issue Apology</td></tr>
+<tr><td>Starting contract renewal conversation</td><td>03</td><td>Scenario E: Contract Renewal</td></tr>
+<tr><td>Notifying of price increase</td><td>03</td><td>Scenario F: Price Increase</td></tr>
+<tr><td>Trying to win back lost customer</td><td>03</td><td>Scenario G: Win-Back Attempt</td></tr>
+<tr><td>Thanking a customer</td><td>03</td><td>Scenario H: Thank You</td></tr>
+</table>
+
+<h3>"I need to create a process map..."</h3>
+<table>
+<tr><th>Task</th><th>Prompt File</th><th>Prompt Name</th></tr>
+<tr><td>Basic flowchart from description</td><td>04</td><td>Basic Process Flowchart</td></tr>
+<tr><td>Flowchart with pain points highlighted</td><td>04</td><td>Process Map with Pain Points</td></tr>
+<tr><td>Find where AI can help</td><td>04</td><td>Identify AI Integration Points</td></tr>
+<tr><td>Current state vs future state</td><td>04</td><td>Current State vs Future State</td></tr>
+<tr><td>Swimlane diagram (who does what)</td><td>04</td><td>Swimlane Diagram</td></tr>
+<tr><td>Full process documentation</td><td>04</td><td>Process Documentation Generator</td></tr>
+</table>
+
+<h3>"I need to onboard a new customer..."</h3>
+<table>
+<tr><th>Task</th><th>Prompt File</th><th>Prompt Name</th></tr>
+<tr><td>Generate task list</td><td>05</td><td>Onboarding Task Generator</td></tr>
+<tr><td>Create implementation timeline</td><td>05</td><td>Implementation Timeline</td></tr>
+<tr><td>Prepare kick-off meeting</td><td>05</td><td>Kick-Off Meeting Agenda</td></tr>
+<tr><td>Create welcome packet</td><td>05</td><td>Welcome Packet Content</td></tr>
+<tr><td>Assess implementation risks</td><td>05</td><td>Risk Assessment</td></tr>
+<tr><td>Write status update</td><td>05</td><td>Status Update Generator</td></tr>
+<tr><td>Create customer-specific SOP</td><td>05</td><td>SOP Generator</td></tr>
+</table>
+
+<h3>"I need to analyze financial data..."</h3>
+<table>
+<tr><th>Task</th><th>Prompt File</th><th>Prompt Name</th></tr>
+<tr><td>Summarize AR for collections meeting</td><td>06</td><td>AR Aging Summary</td></tr>
+<tr><td>Draft collection emails</td><td>06</td><td>Collection Email Drafts</td></tr>
+<tr><td>Project cash flow</td><td>06</td><td>Cash Flow Projection</td></tr>
+<tr><td>Analyze monthly revenue</td><td>06</td><td>Monthly Revenue Analysis</td></tr>
+<tr><td>Assess account health</td><td>06</td><td>Account Health Assessment</td></tr>
+<tr><td>CEO weekly summary</td><td>06</td><td>Financial Executive Summary</td></tr>
+<tr><td>Analyze customer profitability</td><td>06</td><td>Customer Profitability Analysis</td></tr>
+</table>
+
+<hr>
+
+<h2>The Four Building Blocks (Always Use This Structure)</h2>
+<p>Every prompt should include:</p>
+<pre>
+ROLE:
+[Who is the AI acting as?]
+
+CONTEXT:
+[What background information does it need?]
+
+TASK:
+[What specifically should it do?]
+
+OUTPUT FORMAT:
+[How should the output look?]
+</pre>
+
+<hr>
+
+<h2>Pro Tips</h2>
+
+<h3>Make Prompts Better</h3>
+<ol>
+<li><strong>Be specific</strong> - "Write a 150-word email" not "Write a short email"</li>
+<li><strong>Give examples</strong> - Show what good output looks like</li>
+<li><strong>State constraints</strong> - "Do not include..." or "Make sure to..."</li>
+<li><strong>Request structure</strong> - "Use bullet points" or "Create a table"</li>
+</ol>
+
+<h3>When Output Isn't Right</h3>
+<ol>
+<li><strong>Add more context</strong> - The model might be missing information</li>
+<li><strong>Be more specific about format</strong> - Show exactly what you want</li>
+<li><strong>Break into steps</strong> - "First... then... finally..."</li>
+<li><strong>Try a different model</strong> - Claude might handle it better than GPT (or vice versa)</li>
+</ol>
+
+<h3>For Business-Critical Output</h3>
+<ol>
+<li><strong>Always verify facts</strong> - Especially numbers, rates, dates</li>
+<li><strong>Check for hallucinations</strong> - Did it make something up?</li>
+<li><strong>Review tone</strong> - Is it appropriate for the recipient?</li>
+<li><strong>Add your judgment</strong> - AI is a first draft, not final copy</li>
+</ol>
+
+<hr>
+
+<h2>Sample Workflow: Using Multiple Prompts Together</h2>
+
+<div class="tip-box">
+<strong>Scenario: New RFP arrives, need to respond</strong>
+<ol>
+<li>Use <strong>RFP Fit Assessment</strong> - Decide if we should pursue</li>
+<li>Use <strong>Generate Clarifying Questions</strong> - Prepare for discovery call</li>
+<li>Use <strong>Scope of Work Draft</strong> - Create proposal content</li>
+<li>Use <strong>Competitive Positioning</strong> - Sharpen our message</li>
+<li>Use <strong>Quote Follow-Up</strong> - Send if no response</li>
+</ol>
+</div>
+
+<div class="tip-box">
+<strong>Scenario: New customer signs, need to onboard</strong>
+<ol>
+<li>Use <strong>Risk Assessment</strong> - Identify potential issues</li>
+<li>Use <strong>Onboarding Task Generator</strong> - Create task list</li>
+<li>Use <strong>Implementation Timeline</strong> - Build project plan</li>
+<li>Use <strong>Kick-Off Meeting Agenda</strong> - Prepare first meeting</li>
+<li>Use <strong>Welcome Packet Content</strong> - Send to customer</li>
+<li>Use <strong>SOP Generator</strong> - Document their requirements</li>
+<li>Use <strong>Status Update Generator</strong> - Keep stakeholders informed</li>
+</ol>
+</div>
+
+<hr>
+
+<h2>Customization</h2>
+<p>These prompts are templates. Always customize by:</p>
+<ul>
+<li>Adding Walker-specific details (locations, services, rates)</li>
+<li>Including relevant customer history</li>
+<li>Adjusting tone for the specific relationship</li>
+<li>Adding any constraints or requirements</li>
+</ul>
+<p><strong>The more context you provide, the better the output.</strong></p>
+
+</div>
+</body>
+</html>

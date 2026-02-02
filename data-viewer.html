@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Viewer - Walker SCM Workflows</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.5;
+            color: #333;
+            background: #f5f7fa;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 { margin-bottom: 10px; }
+        .header a { color: #90cdf4; }
+        .nav {
+            background: #2d3748;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .nav a {
+            color: #e2e8f0;
+            text-decoration: none;
+            margin-right: 20px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            display: inline-block;
+            font-size: 0.9em;
+            transition: background 0.2s;
+        }
+        .nav a:hover { background: #4a5568; }
+        .nav a.training { border-left: 3px solid #4299e1; }
+        .nav a.sample { border-left: 3px solid #48bb78; }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .section h2 {
+            color: #1a365d;
+            margin-bottom: 5px;
+            font-size: 1.4em;
+        }
+        .section .subtitle {
+            color: #718096;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85em;
+        }
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            white-space: nowrap;
+        }
+        th {
+            background: #2d3748;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover { background: #f7fafc; }
+        tr:nth-child(even) { background: #fafafa; }
+        tr:nth-child(even):hover { background: #f0f4f8; }
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+        .tag-blue { background: #bee3f8; color: #2b6cb0; }
+        .tag-green { background: #c6f6d5; color: #276749; }
+        .tag-orange { background: #feebc8; color: #c05621; }
+        .tag-red { background: #fed7d7; color: #c53030; }
+        .tag-purple { background: #e9d8fd; color: #553c9a; }
+        .summary-box {
+            background: #ebf8ff;
+            border: 1px solid #90cdf4;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .summary-box h3 {
+            color: #2b6cb0;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        .back-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2d3748;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9em;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .back-top:hover { background: #4a5568; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Data Viewer</h1>
+        <p>All CSV data as viewable tables | <a href="index.html">Back to Home</a></p>
+    </div>
+
+    <nav class="nav">
+        <a href="#rate-sheet" class="training">Rate Sheet</a>
+        <a href="#ar-aging" class="training">AR Aging</a>
+        <a href="#revenue" class="training">Revenue</a>
+        <a href="#customers" class="sample">Customers</a>
+        <a href="#carriers" class="sample">Carriers</a>
+        <a href="#lane-rates" class="sample">Lane Rates</a>
+        <a href="#inventory" class="sample">Inventory</a>
+        <a href="#shipments" class="sample">Shipments</a>
+        <a href="#dispatch" class="sample">Dispatch</a>
+        <a href="#rate-shopping" class="sample">Rate Shopping</a>
+        <a href="#cycle-counts" class="sample">Cycle Counts</a>
+    </nav>
+
+    <div class="container">
+
+        <!-- TRAINING DATA -->
+        <div class="section" id="rate-sheet">
+            <h2>Walker Rate Sheet</h2>
+            <p class="subtitle">Training Data &bull; Warehousing rates by location and service</p>
+
+            <div class="summary-box">
+                <h3>Storage Rates by Location</h3>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Location</th><th>Pallet Storage</th><th>Bulk Floor</th><th>Racked Selective</th><th>Climate Adder</th></tr>
+                    <tr><td>Atlanta, GA</td><td>$8.50/mo</td><td>$0.45/sq ft</td><td>$10.25/mo</td><td>+$2.00</td></tr>
+                    <tr><td>Chicago, IL</td><td>$9.75/mo</td><td>$0.52/sq ft</td><td>$11.50/mo</td><td>+$2.25</td></tr>
+                    <tr><td>Dallas, TX</td><td>$8.25/mo</td><td>$0.42/sq ft</td><td>$9.75/mo</td><td>+$1.75</td></tr>
+                    <tr><td>Los Angeles, CA</td><td>$11.50/mo</td><td>$0.65/sq ft</td><td>$13.25/mo</td><td>+$2.75</td></tr>
+                </table>
+            </div>
+
+            <div class="summary-box" style="margin-top: 25px;">
+                <h3>Handling Rates - Inbound</h3>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Service</th><th>Atlanta</th><th>Chicago</th><th>Dallas</th><th>Los Angeles</th></tr>
+                    <tr><td>Pallet Receiving</td><td>$4.25</td><td>$4.75</td><td>$4.00</td><td>$5.50</td></tr>
+                    <tr><td>Carton Receiving</td><td>$0.35</td><td>$0.40</td><td>$0.32</td><td>$0.48</td></tr>
+                    <tr><td>Unit Receiving</td><td>$0.08</td><td>$0.09</td><td>$0.07</td><td>$0.11</td></tr>
+                    <tr><td>Container Unload - Floor</td><td>$385</td><td>$425</td><td>$365</td><td>$485</td></tr>
+                    <tr><td>Container Unload - Palletized</td><td>$185</td><td>$210</td><td>$175</td><td>$245</td></tr>
+                </table>
+            </div>
+
+            <div class="summary-box" style="margin-top: 25px;">
+                <h3>Handling Rates - Outbound</h3>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Service</th><th>Atlanta</th><th>Chicago</th><th>Dallas</th><th>Los Angeles</th></tr>
+                    <tr><td>Pallet Pick</td><td>$4.50</td><td>$5.00</td><td>$4.25</td><td>$5.75</td></tr>
+                    <tr><td>Case Pick</td><td>$0.45</td><td>$0.50</td><td>$0.42</td><td>$0.58</td></tr>
+                    <tr><td>Each Pick</td><td>$0.12</td><td>$0.14</td><td>$0.11</td><td>$0.16</td></tr>
+                    <tr><td>Pallet Build/Wrap</td><td>$3.25</td><td>$3.50</td><td>$3.00</td><td>$4.00</td></tr>
+                    <tr><td>Loading</td><td>$2.75</td><td>$3.00</td><td>$2.50</td><td>$3.50</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" id="ar-aging">
+            <h2>AR Aging Report</h2>
+            <p class="subtitle">Training Data &bull; As of January 21, 2025</p>
+
+            <div class="summary-box">
+                <h3>Aging Summary: Total $472,790 | Current 74.2% | Past Due 25.8%</h3>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Customer</th><th>Invoice #</th><th>Invoice Date</th><th>Due Date</th><th>Amount</th><th>Status</th><th>Days Out</th><th>Bucket</th><th>Contact</th></tr>
+                    <tr><td>Acme Corporation</td><td>INV-4521</td><td>2024-12-15</td><td>2025-01-14</td><td>$12,450</td><td><span class="tag tag-orange">Overdue</span></td><td>7</td><td>1-30 Days</td><td>Robert Chang</td></tr>
+                    <tr><td>Acme Corporation</td><td>INV-4589</td><td>2024-12-28</td><td>2025-01-27</td><td>$8,920</td><td><span class="tag tag-green">Open</span></td><td>0</td><td>Current</td><td>Robert Chang</td></tr>
+                    <tr><td>Beta Manufacturing</td><td>INV-4522</td><td>2024-12-18</td><td>2025-01-17</td><td>$8,200</td><td><span class="tag tag-orange">Overdue</span></td><td>4</td><td>1-30 Days</td><td>Amanda Foster</td></tr>
+                    <tr><td>Sunrise Furniture</td><td>INV-4523</td><td>2024-12-20</td><td>2025-01-19</td><td>$15,780</td><td><span class="tag tag-orange">Overdue</span></td><td>2</td><td>1-30 Days</td><td>Mike Torres</td></tr>
+                    <tr><td>Delta Retail Systems</td><td>INV-4401</td><td>2024-11-15</td><td>2024-12-15</td><td>$6,450</td><td><span class="tag tag-red">Overdue</span></td><td>37</td><td>31-60 Days</td><td>Tom Bradley</td></tr>
+                    <tr><td>Delta Retail Systems</td><td>INV-4498</td><td>2024-12-05</td><td>2025-01-04</td><td>$9,870</td><td><span class="tag tag-orange">Overdue</span></td><td>17</td><td>1-30 Days</td><td>Tom Bradley</td></tr>
+                    <tr><td>Premier Retail Group</td><td>INV-4525</td><td>2024-12-22</td><td>2025-01-21</td><td>$42,500</td><td><span class="tag tag-blue">Due Today</span></td><td>0</td><td>Current</td><td>James Morrison</td></tr>
+                    <tr><td>Premier Retail Group</td><td>INV-4598</td><td>2025-01-02</td><td>2025-02-01</td><td>$38,750</td><td><span class="tag tag-green">Open</span></td><td>0</td><td>Current</td><td>James Morrison</td></tr>
+                    <tr><td>Henderson Furniture</td><td>INV-4530</td><td>2024-12-24</td><td>2025-01-23</td><td>$28,400</td><td><span class="tag tag-green">Open</span></td><td>0</td><td>Current</td><td>Chris Martinez</td></tr>
+                    <tr><td>Velocity Distribution</td><td>INV-4412</td><td>2024-11-20</td><td>2024-12-20</td><td>$18,500</td><td><span class="tag tag-red">Overdue</span></td><td>32</td><td>31-60 Days</td><td>Karen Liu</td></tr>
+                    <tr><td>Velocity Distribution</td><td>INV-4505</td><td>2024-12-10</td><td>2025-01-09</td><td>$22,300</td><td><span class="tag tag-orange">Overdue</span></td><td>12</td><td>1-30 Days</td><td>Karen Liu</td></tr>
+                    <tr><td>Global Parts Inc</td><td>INV-4320</td><td>2024-10-05</td><td>2024-11-04</td><td>$15,600</td><td><span class="tag tag-red">Overdue</span></td><td>78</td><td>61-90 Days</td><td>David Park</td></tr>
+                    <tr><td>Global Parts Inc</td><td>INV-4425</td><td>2024-11-25</td><td>2024-12-25</td><td>$14,200</td><td><span class="tag tag-orange">Overdue</span></td><td>27</td><td>1-30 Days</td><td>David Park</td></tr>
+                    <tr><td>Pacific Traders</td><td>INV-4298</td><td>2024-09-15</td><td>2024-10-15</td><td>$4,200</td><td><span class="tag tag-red">Overdue</span></td><td>98</td><td>90+ Days</td><td>Michelle Nakamura</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" id="revenue">
+            <h2>Monthly Revenue Summary</h2>
+            <p class="subtitle">Training Data &bull; January 2025 MTD (as of 1/21)</p>
+
+            <div class="summary-box">
+                <h3>Total Revenue: $632,200 | vs Budget: +2.1% | vs Prior Month: +3.8%</h3>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Customer</th><th>Storage</th><th>Handling</th><th>Transport</th><th>VAS</th><th>Total</th><th>vs Prior</th><th>vs Budget</th></tr>
+                    <tr><td>Premier Retail Group</td><td>$48,200</td><td>$52,300</td><td>$18,500</td><td>$6,200</td><td><strong>$125,200</strong></td><td>+8.2%</td><td>+5.1%</td></tr>
+                    <tr><td>Henderson Furniture</td><td>$32,100</td><td>$38,400</td><td>$12,200</td><td>$8,900</td><td><strong>$91,600</strong></td><td>+2.1%</td><td>+1.8%</td></tr>
+                    <tr><td>Velocity Distribution</td><td>$28,500</td><td>$31,200</td><td>$8,400</td><td>$2,100</td><td><strong>$70,200</strong></td><td><span class="tag tag-red">-3.4%</span></td><td>-2.1%</td></tr>
+                    <tr><td>Acme Corporation</td><td>$18,200</td><td>$22,100</td><td>$6,800</td><td>$1,200</td><td><strong>$48,300</strong></td><td>+1.5%</td><td>+0.8%</td></tr>
+                    <tr><td>Midwest Distributors</td><td>$15,400</td><td>$18,200</td><td>$4,500</td><td>$800</td><td><strong>$38,900</strong></td><td><span class="tag tag-green">+12.4%</span></td><td>+8.2%</td></tr>
+                    <tr><td>Standard Goods Co</td><td>$12,800</td><td>$14,500</td><td>$3,200</td><td>$600</td><td><strong>$31,100</strong></td><td>+0.2%</td><td>-1.2%</td></tr>
+                    <tr><td>Sunrise Furniture</td><td>$11,200</td><td>$13,800</td><td>$2,900</td><td>$2,400</td><td><strong>$30,300</strong></td><td><span class="tag tag-purple">NEW</span></td><td>NEW</td></tr>
+                    <tr><td>Beta Manufacturing</td><td>$10,500</td><td>$12,200</td><td>$2,100</td><td>$400</td><td><strong>$25,200</strong></td><td>+4.8%</td><td>+2.1%</td></tr>
+                    <tr><td>Global Parts Inc</td><td>$9,800</td><td>$11,400</td><td>$1,800</td><td>$200</td><td><strong>$23,200</strong></td><td><span class="tag tag-red">-8.2%</span></td><td>-12.4%</td></tr>
+                    <tr><td>Delta Retail Systems</td><td>$5,800</td><td>$6,400</td><td>$1,100</td><td>$200</td><td><strong>$13,500</strong></td><td><span class="tag tag-red">-15.2%</span></td><td>-18.4%</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- SAMPLE COMPANY DATA -->
+        <div class="section" id="customers">
+            <h2>Customers</h2>
+            <p class="subtitle">Sample Company &bull; Midwest Premier Logistics customer master</p>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>ID</th><th>Customer</th><th>Industry</th><th>City</th><th>Contact</th><th>Terms</th><th>Credit Limit</th><th>YTD Revenue</th><th>YTD Loads</th><th>On-Time Req</th><th>Status</th></tr>
+                    <tr><td>CUST-001</td><td>AutoParts National</td><td>Automotive</td><td>Columbus, OH</td><td>Robert Martinez</td><td>Net 30</td><td>$500K</td><td>$4.25M</td><td>1,842</td><td>95%</td><td><span class="tag tag-green">Active</span></td></tr>
+                    <tr><td>CUST-002</td><td>Heartland Foods</td><td>Food & Beverage</td><td>Columbus, OH</td><td>Michelle Thompson</td><td>Net 21</td><td>$350K</td><td>$2.89M</td><td>1,215</td><td>98%</td><td><span class="tag tag-green">Active</span></td></tr>
+                    <tr><td>CUST-003</td><td>BuildRight Supply</td><td>Construction</td><td>Indianapolis, IN</td><td>James Anderson</td><td>Net 30</td><td>$200K</td><td>$1.45M</td><td>892</td><td>90%</td><td><span class="tag tag-green">Active</span></td></tr>
+                    <tr><td>CUST-004</td><td>MedEquip Direct</td><td>Healthcare</td><td>Columbus, OH</td><td>Patricia Davis</td><td>Net 15</td><td>$250K</td><td>$1.68M</td><td>608</td><td>99%</td><td><span class="tag tag-green">Active</span></td></tr>
+                    <tr><td>CUST-005</td><td>TechFlow Distribution</td><td>Electronics</td><td>Chicago, IL</td><td>Steven Wilson</td><td>Net 30</td><td>$300K</td><td>$1.52M</td><td>534</td><td>96%</td><td><span class="tag tag-green">Active</span></td></tr>
+                    <tr><td>CUST-006</td><td>Midwest Manufacturing</td><td>Industrial</td><td>Detroit, MI</td><td>Karen Brown</td><td>Net 30</td><td>$150K</td><td>$680K</td><td>312</td><td>92%</td><td><span class="tag tag-green">Active</span></td></tr>
+                    <tr><td>CUST-007</td><td>Fresh Farms Produce</td><td>Agriculture</td><td>Memphis, TN</td><td>Daniel Garcia</td><td>Net 14</td><td>$175K</td><td>$420K</td><td>245</td><td>97%</td><td><span class="tag tag-green">Active</span></td></tr>
+                    <tr><td>CUST-008</td><td>National Retail Group</td><td>Retail</td><td>Louisville, KY</td><td>Amanda Lee</td><td>Net 30</td><td>$400K</td><td>$890K</td><td>402</td><td>94%</td><td><span class="tag tag-green">Active</span></td></tr>
+                    <tr><td>CUST-009</td><td>Precision Parts Co</td><td>Manufacturing</td><td>Cleveland, OH</td><td>Michael Chen</td><td>Net 30</td><td>$100K</td><td>$345K</td><td>186</td><td>91%</td><td><span class="tag tag-green">Active</span></td></tr>
+                    <tr><td>CUST-010</td><td>Southern Distributors</td><td>Wholesale</td><td>Atlanta, GA</td><td>Lisa Rodriguez</td><td>Net 30</td><td>$225K</td><td>$520K</td><td>278</td><td>93%</td><td><span class="tag tag-green">Active</span></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" id="carriers">
+            <h2>Carriers</h2>
+            <p class="subtitle">Sample Company &bull; Carrier master with performance metrics</p>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>ID</th><th>Carrier</th><th>MC#</th><th>Region</th><th>Equipment</th><th>YTD Loads</th><th>On-Time %</th><th>Accept %</th><th>Claims %</th><th>Safety</th><th>Status</th></tr>
+                    <tr><td>CAR-008</td><td>JB Hunt Transport</td><td>MC-123456</td><td>National</td><td>Dry Van, Reefer, Flatbed</td><td>842</td><td>94.2%</td><td>88.5%</td><td>0.12%</td><td>98</td><td><span class="tag tag-green">Gold</span></td></tr>
+                    <tr><td>CAR-012</td><td>Werner Enterprises</td><td>MC-234567</td><td>Midwest/South</td><td>Dry Van, Flatbed</td><td>724</td><td>92.8%</td><td>91.2%</td><td>0.08%</td><td>96</td><td><span class="tag tag-green">Gold</span></td></tr>
+                    <tr><td>CAR-018</td><td>XPO Logistics</td><td>MC-456789</td><td>National</td><td>Dry Van, Flatbed, Specialized</td><td>512</td><td>96.1%</td><td>82.8%</td><td>0.05%</td><td>99</td><td><span class="tag tag-green">Gold</span></td></tr>
+                    <tr><td>CAR-025</td><td>Schneider National</td><td>MC-678901</td><td>National</td><td>Dry Van, Reefer, Intermodal</td><td>678</td><td>91.8%</td><td>89.8%</td><td>0.10%</td><td>95</td><td><span class="tag tag-blue">Silver</span></td></tr>
+                    <tr><td>CAR-015</td><td>Estes Express</td><td>MC-345678</td><td>Regional</td><td>Dry Van, Flatbed, LTL</td><td>456</td><td>89.5%</td><td>85.4%</td><td>0.22%</td><td>94</td><td><span class="tag tag-blue">Silver</span></td></tr>
+                    <tr><td>CAR-022</td><td>Old Dominion Freight</td><td>MC-567890</td><td>East/Midwest</td><td>Dry Van, LTL</td><td>388</td><td>93.4%</td><td>86.2%</td><td>0.15%</td><td>97</td><td><span class="tag tag-blue">Silver</span></td></tr>
+                    <tr><td>CAR-031</td><td>Averitt Express</td><td>MC-789012</td><td>Southeast</td><td>Dry Van, Reefer, LTL</td><td>245</td><td>90.2%</td><td>87.5%</td><td>0.18%</td><td>93</td><td><span class="tag tag-orange">Standard</span></td></tr>
+                    <tr><td>CAR-035</td><td>Heartland Express</td><td>MC-890123</td><td>Midwest</td><td>Dry Van</td><td>312</td><td>88.4%</td><td>90.1%</td><td>0.25%</td><td>91</td><td><span class="tag tag-orange">Standard</span></td></tr>
+                    <tr><td>CAR-042</td><td>Ryder System</td><td>MC-012345</td><td>National</td><td>Dry Van, Reefer, Specialized</td><td>156</td><td>93.8%</td><td>78.5%</td><td>0.08%</td><td>97</td><td><span class="tag tag-blue">Silver</span></td></tr>
+                    <tr><td>CAR-045</td><td>Landstar System</td><td>MC-123457</td><td>National</td><td>Dry Van, Flatbed, Specialized</td><td>89</td><td>95.2%</td><td>72.4%</td><td>0.05%</td><td>98</td><td><span class="tag tag-orange">Standard</span></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" id="lane-rates">
+            <h2>Lane Rates</h2>
+            <p class="subtitle">Sample Company &bull; Contract and spot rates by lane</p>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Lane</th><th>Origin</th><th>Destination</th><th>Miles</th><th>Mode</th><th>Equipment</th><th>Contract $/mi</th><th>Spot $/mi</th><th>Transit</th><th>Carrier</th></tr>
+                    <tr><td>LN-MW-0101</td><td>Columbus, OH</td><td>Dallas, TX</td><td>928</td><td>FTL</td><td>Dry Van 53</td><td>$2.61</td><td>$2.95</td><td>2 days</td><td>Werner</td></tr>
+                    <tr><td>LN-MW-0102</td><td>Columbus, OH</td><td>Atlanta, GA</td><td>534</td><td>FTL</td><td>Dry Van 53</td><td>$2.78</td><td>$3.15</td><td>1 day</td><td>JB Hunt</td></tr>
+                    <tr><td>LN-MW-0103</td><td>Columbus, OH</td><td>Atlanta, GA</td><td>534</td><td>FTL</td><td>Reefer 53</td><td>$3.42</td><td>$3.85</td><td>1 day</td><td>JB Hunt</td></tr>
+                    <tr><td>LN-MW-0104</td><td>Columbus, OH</td><td>Chicago, IL</td><td>358</td><td>FTL</td><td>Dry Van 53</td><td>$2.45</td><td>$2.82</td><td>1 day</td><td>Old Dominion</td></tr>
+                    <tr><td>LN-MW-0106</td><td>Columbus, OH</td><td>St. Louis, MO</td><td>424</td><td>FTL</td><td>Dry Van 53</td><td>$2.52</td><td>$2.88</td><td>1 day</td><td>Schneider</td></tr>
+                    <tr><td>LN-MW-0111</td><td>Columbus, OH</td><td>Charlotte, NC</td><td>446</td><td>FTL</td><td>Dry Van 53</td><td>$2.68</td><td>$3.05</td><td>2 days</td><td>Schneider</td></tr>
+                    <tr><td>LN-MW-0112</td><td>Columbus, OH</td><td>Detroit, MI</td><td>204</td><td>FTL</td><td>Dry Van 53</td><td>$2.95</td><td>$3.40</td><td>1 day</td><td>XPO</td></tr>
+                    <tr><td>LN-MW-0115</td><td>Memphis, TN</td><td>Houston, TX</td><td>561</td><td>FTL</td><td>Dry Van 53</td><td>$2.42</td><td>$2.78</td><td>1 day</td><td>Werner</td></tr>
+                    <tr><td>LN-MW-0116</td><td>Memphis, TN</td><td>Nashville, TN</td><td>212</td><td>FTL</td><td>Reefer 48</td><td>$3.22</td><td>$3.65</td><td>1 day</td><td>JB Hunt</td></tr>
+                    <tr><td>LN-MW-0120</td><td>Joliet, IL</td><td>Detroit, MI</td><td>281</td><td>FTL</td><td>Dry Van 53</td><td>$2.72</td><td>$3.12</td><td>1 day</td><td>XPO</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" id="inventory">
+            <h2>WMS Inventory</h2>
+            <p class="subtitle">Sample Company &bull; Current inventory positions</p>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>SKU</th><th>Description</th><th>Customer</th><th>Facility</th><th>Location</th><th>Lot</th><th>On Hand</th><th>Allocated</th><th>Available</th><th>Unit Cost</th><th>ABC</th></tr>
+                    <tr><td>SKU-AP-10042</td><td>Brake Rotor Assembly Front</td><td>AutoParts National</td><td>CLB-01</td><td>A-12-04-03</td><td>LOT-2025-1842</td><td>2,450</td><td>180</td><td>2,270</td><td>$42.50</td><td><span class="tag tag-green">A</span></td></tr>
+                    <tr><td>SKU-AP-10044</td><td>Alternator 12V 150A</td><td>AutoParts National</td><td>CLB-01</td><td>A-14-02-01</td><td>LOT-2025-1901</td><td>680</td><td>42</td><td>638</td><td>$156.00</td><td><span class="tag tag-green">A</span></td></tr>
+                    <tr><td>SKU-HF-20105</td><td>Frozen Pizza 12pk Case</td><td>Heartland Foods</td><td>CLB-01</td><td>C-02-08-01</td><td>LOT-2026-0042</td><td>3,240</td><td>420</td><td>2,820</td><td>$18.50</td><td><span class="tag tag-green">A</span></td></tr>
+                    <tr><td>SKU-HF-20107</td><td>Ice Cream Vanilla 8pk</td><td>Heartland Foods</td><td>CLB-01</td><td>C-04-02-01</td><td>LOT-2026-0044</td><td>1,540</td><td>280</td><td>1,260</td><td>$34.50</td><td><span class="tag tag-green">A</span></td></tr>
+                    <tr><td>SKU-BR-30201</td><td>Lumber 2x4x8 Bundle 50pc</td><td>BuildRight Supply</td><td>CLB-01</td><td>D-01-01-FL</td><td>LOT-2025-8842</td><td>285</td><td>24</td><td>261</td><td>$425.00</td><td><span class="tag tag-green">A</span></td></tr>
+                    <tr><td>SKU-ME-40301</td><td>Hospital Bed Electric</td><td>MedEquip Direct</td><td>CLB-01</td><td>B-08-01-01</td><td>LOT-2025-6042</td><td>28</td><td>4</td><td>24</td><td>$2,450.00</td><td><span class="tag tag-blue">B</span></td></tr>
+                    <tr><td>SKU-ME-40302</td><td>Wheelchair Standard</td><td>MedEquip Direct</td><td>CLB-01</td><td>B-08-02-01</td><td>LOT-2025-6043</td><td>64</td><td>8</td><td>56</td><td>$385.00</td><td><span class="tag tag-green">A</span></td></tr>
+                    <tr><td>SKU-TF-50401</td><td>Laptop Computer 15in</td><td>TechFlow Distribution</td><td>CHI-04</td><td>E-02-04-02</td><td>LOT-2026-0112</td><td>425</td><td>42</td><td>383</td><td>$485.00</td><td><span class="tag tag-green">A</span></td></tr>
+                    <tr><td>SKU-TF-50402</td><td>Desktop Computer Tower</td><td>TechFlow Distribution</td><td>CHI-04</td><td>E-02-04-03</td><td>LOT-2026-0113</td><td>186</td><td>24</td><td>162</td><td>$625.00</td><td><span class="tag tag-green">A</span></td></tr>
+                    <tr><td>SKU-TF-50403</td><td>Monitor 27in 4K</td><td>TechFlow Distribution</td><td>CLB-01</td><td>E-04-02-01</td><td>LOT-2026-0114</td><td>342</td><td>18</td><td>324</td><td>$345.00</td><td><span class="tag tag-green">A</span></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" id="shipments">
+            <h2>TMS Shipments</h2>
+            <p class="subtitle">Sample Company &bull; Recent shipment activity</p>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Shipment ID</th><th>Customer</th><th>Origin</th><th>Destination</th><th>Pickup</th><th>Delivery</th><th>Carrier</th><th>Mode</th><th>Weight</th><th>Total Cost</th><th>Status</th></tr>
+                    <tr><td>SHP-2026-00142</td><td>AutoParts National</td><td>Columbus, OH</td><td>Dallas, TX</td><td>01/13</td><td>01/15</td><td>Werner</td><td>FTL</td><td>42,850 lbs</td><td>$2,847</td><td><span class="tag tag-green">Delivered</span></td></tr>
+                    <tr><td>SHP-2026-00143</td><td>Heartland Foods</td><td>Columbus, OH</td><td>Atlanta, GA</td><td>01/13</td><td>01/14</td><td>JB Hunt</td><td>FTL</td><td>38,200 lbs</td><td>$3,450</td><td><span class="tag tag-green">Delivered</span></td></tr>
+                    <tr><td>SHP-2026-00146</td><td>MedEquip Direct</td><td>Columbus, OH</td><td>Chicago, IL</td><td>01/15</td><td>01/15</td><td>Old Dominion</td><td>LTL</td><td>4,250 lbs</td><td>$1,157</td><td><span class="tag tag-green">Delivered</span></td></tr>
+                    <tr><td>SHP-2026-00148</td><td>Heartland Foods</td><td>Memphis, TN</td><td>Nashville, TN</td><td>01/16</td><td>01/16</td><td>JB Hunt</td><td>FTL</td><td>32,100 lbs</td><td>$898</td><td><span class="tag tag-blue">In Transit</span></td></tr>
+                    <tr><td>SHP-2026-00149</td><td>AutoParts National</td><td>Columbus, OH</td><td>St. Louis, MO</td><td>01/16</td><td>01/17</td><td>Schneider</td><td>FTL</td><td>41,800 lbs</td><td>$1,644</td><td><span class="tag tag-blue">In Transit</span></td></tr>
+                    <tr><td>SHP-2026-00151</td><td>MedEquip Direct</td><td>Indianapolis, IN</td><td>Cleveland, OH</td><td>01/17</td><td>01/17</td><td>Old Dominion</td><td>LTL</td><td>6,200 lbs</td><td>$1,004</td><td><span class="tag tag-purple">Picked Up</span></td></tr>
+                    <tr><td>SHP-2026-00153</td><td>Heartland Foods</td><td>Columbus, OH</td><td>Indianapolis, IN</td><td>01/17</td><td>01/18</td><td>JB Hunt</td><td>FTL</td><td>36,400 lbs</td><td>$1,179</td><td><span class="tag tag-orange">Confirmed</span></td></tr>
+                    <tr><td>SHP-2026-00156</td><td>MedEquip Direct</td><td>Columbus, OH</td><td>Lexington, KY</td><td>01/19</td><td>01/19</td><td>Old Dominion</td><td>LTL</td><td>2,840 lbs</td><td>$510</td><td><span class="tag tag-orange">Pending</span></td></tr>
+                    <tr><td>SHP-2026-00159</td><td>AutoParts National</td><td>Columbus, OH</td><td>Charlotte, NC</td><td>01/20</td><td>01/21</td><td>Schneider</td><td>FTL</td><td>40,500 lbs</td><td>$1,904</td><td><span class="tag tag-orange">Pending</span></td></tr>
+                    <tr><td>SHP-2026-00161</td><td>MedEquip Direct</td><td>Memphis, TN</td><td>Little Rock, AR</td><td>01/21</td><td>01/21</td><td>TBD</td><td>LTL</td><td>5,500 lbs</td><td>TBD</td><td><span class="tag tag-red">Open</span></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" id="dispatch">
+            <h2>Dispatch Queue</h2>
+            <p class="subtitle">Sample Company &bull; Active dispatch board</p>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Dispatch ID</th><th>Customer</th><th>Origin</th><th>Destination</th><th>Pickup</th><th>Delivery</th><th>Carrier</th><th>Driver</th><th>Equipment</th><th>Status</th><th>ETA</th></tr>
+                    <tr><td>DSP-4421</td><td>Heartland Foods</td><td>Memphis</td><td>Nashville</td><td>01/16 04:00</td><td>01/16 12:00</td><td>JB Hunt</td><td>Carlos Rodriguez</td><td>Reefer 48</td><td><span class="tag tag-blue">In Transit</span></td><td>11:15</td></tr>
+                    <tr><td>DSP-4422</td><td>AutoParts National</td><td>Columbus</td><td>St. Louis</td><td>01/16 08:00</td><td>01/17 14:00</td><td>Schneider</td><td>Jennifer Lee</td><td>Dry Van 53</td><td><span class="tag tag-blue">In Transit</span></td><td>08:30</td></tr>
+                    <tr><td>DSP-4423</td><td>BuildRight Supply</td><td>Columbus</td><td>Cincinnati</td><td>01/16 10:00</td><td>01/16 16:00</td><td>Estes</td><td>William Turner</td><td>Flatbed</td><td><span class="tag tag-blue">In Transit</span></td><td>14:45</td></tr>
+                    <tr><td>DSP-4424</td><td>MedEquip Direct</td><td>Indianapolis</td><td>Cleveland</td><td>01/17 06:00</td><td>01/17 18:00</td><td>Old Dominion</td><td>Amanda White</td><td>Dry Van</td><td><span class="tag tag-purple">Picked Up</span></td><td>15:30</td></tr>
+                    <tr><td>DSP-4425</td><td>TechFlow Distribution</td><td>Columbus</td><td>Pittsburgh</td><td>01/17 08:00</td><td>01/17 16:00</td><td>XPO</td><td>Steven Garcia</td><td>Dry Van</td><td><span class="tag tag-purple">Picked Up</span></td><td>14:00</td></tr>
+                    <tr><td>DSP-4426</td><td>Heartland Foods</td><td>Columbus</td><td>Indianapolis</td><td>01/17 10:00</td><td>01/18 06:00</td><td>JB Hunt</td><td>TBD</td><td>Reefer 53</td><td><span class="tag tag-orange">Confirmed</span></td><td>-</td></tr>
+                    <tr><td>DSP-4428</td><td>BuildRight Supply</td><td>Joliet</td><td>Milwaukee</td><td>01/18 12:00</td><td>01/18 20:00</td><td>Estes</td><td>TBD</td><td>Dry Van</td><td><span class="tag tag-orange">Tendered</span></td><td>-</td></tr>
+                    <tr><td>DSP-4433</td><td>BuildRight Supply</td><td>Columbus</td><td>Toledo</td><td>01/20 10:00</td><td>01/20 15:00</td><td>TBD</td><td>TBD</td><td>Flatbed</td><td><span class="tag tag-red">Open</span></td><td>16:00</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" id="rate-shopping">
+            <h2>Rate Shopping</h2>
+            <p class="subtitle">Sample Company &bull; Recent carrier quotes and selections</p>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Quote ID</th><th>Shipment</th><th>Origin</th><th>Destination</th><th>Carrier</th><th>Rate</th><th>Fuel</th><th>Access.</th><th>Total</th><th>Transit</th><th>On-Time</th><th>Selected</th></tr>
+                    <tr><td>QT-2026-00421</td><td>SHP-156</td><td>Columbus</td><td>Lexington</td><td>Old Dominion</td><td>$342</td><td>$44</td><td>$75</td><td>$461</td><td>1 day</td><td>93.4%</td><td><span class="tag tag-green">Yes</span></td></tr>
+                    <tr><td>QT-2026-00422</td><td>SHP-156</td><td>Columbus</td><td>Lexington</td><td>Estes</td><td>$325</td><td>$42</td><td>$85</td><td>$452</td><td>1 day</td><td>89.5%</td><td>No</td></tr>
+                    <tr><td>QT-2026-00423</td><td>SHP-156</td><td>Columbus</td><td>Lexington</td><td>XPO</td><td>$398</td><td>$51</td><td>$50</td><td>$499</td><td>1 day</td><td>96.1%</td><td>No</td></tr>
+                    <tr><td>QT-2026-00424</td><td>SHP-157</td><td>Indianapolis</td><td>Columbus</td><td>XPO</td><td>$265</td><td>$34</td><td>$50</td><td>$349</td><td>1 day</td><td>96.1%</td><td><span class="tag tag-green">Yes</span></td></tr>
+                    <tr><td>QT-2026-00427</td><td>SHP-158</td><td>Memphis</td><td>Birmingham</td><td>Averitt</td><td>$685</td><td>$88</td><td>$175</td><td>$948</td><td>1 day</td><td>90.2%</td><td><span class="tag tag-green">Yes</span></td></tr>
+                    <tr><td>QT-2026-00430</td><td>SHP-159</td><td>Columbus</td><td>Charlotte</td><td>Schneider</td><td>$1,520</td><td>$196</td><td>$0</td><td>$1,716</td><td>2 days</td><td>91.8%</td><td><span class="tag tag-green">Yes</span></td></tr>
+                    <tr><td>QT-2026-00433</td><td>SHP-160</td><td>Columbus</td><td>Toledo</td><td>Estes</td><td>$215</td><td>$28</td><td>$45</td><td>$288</td><td>1 day</td><td>89.5%</td><td><span class="tag tag-orange">Pending</span></td></tr>
+                    <tr><td>QT-2026-00436</td><td>SHP-161</td><td>Memphis</td><td>Little Rock</td><td>Averitt</td><td>$412</td><td>$53</td><td>$0</td><td>$465</td><td>1 day</td><td>90.2%</td><td><span class="tag tag-orange">Pending</span></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" id="cycle-counts">
+            <h2>Cycle Counts</h2>
+            <p class="subtitle">Sample Company &bull; Recent inventory count results</p>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Count ID</th><th>Date</th><th>Facility</th><th>SKU</th><th>Description</th><th>Customer</th><th>System</th><th>Actual</th><th>Variance</th><th>Value</th><th>Status</th><th>Root Cause</th></tr>
+                    <tr><td>CC-2026-0842</td><td>01/14</td><td>CLB-01</td><td>SKU-AP-10042</td><td>Brake Rotor Front</td><td>AutoParts</td><td>2,450</td><td>2,448</td><td>-2</td><td>-$85</td><td><span class="tag tag-green">Adjusted</span></td><td>Pick error</td></tr>
+                    <tr><td>CC-2026-0845</td><td>01/14</td><td>CLB-01</td><td>SKU-AP-10045</td><td>Starter Motor HD</td><td>AutoParts</td><td>445</td><td>442</td><td>-3</td><td>-$567</td><td><span class="tag tag-orange">Under Review</span></td><td>Unknown</td></tr>
+                    <tr><td>CC-2026-0847</td><td>01/15</td><td>CLB-01</td><td>SKU-HF-20106</td><td>Frozen Vegetables</td><td>Heartland</td><td>2,180</td><td>2,176</td><td>-4</td><td>-$88</td><td><span class="tag tag-green">Adjusted</span></td><td>Damage</td></tr>
+                    <tr><td>CC-2026-0850</td><td>01/16</td><td>CLB-01</td><td>SKU-BR-30202</td><td>Plywood 4x8</td><td>BuildRight</td><td>142</td><td>140</td><td>-2</td><td>-$1,360</td><td><span class="tag tag-orange">Under Review</span></td><td>Unknown</td></tr>
+                    <tr><td>CC-2026-0857</td><td>01/18</td><td>CLB-01</td><td>SKU-AP-10047</td><td>Oil Filter Standard</td><td>AutoParts</td><td>4,280</td><td>4,275</td><td>-5</td><td>-$21</td><td><span class="tag tag-green">Adjusted</span></td><td>Shrinkage</td></tr>
+                    <tr><td>CC-2026-0861</td><td>01/18</td><td>MEM-03</td><td>SKU-HF-20110</td><td>Frozen Burritos</td><td>Heartland</td><td>1,680</td><td>1,675</td><td>-5</td><td>-$75</td><td><span class="tag tag-green">Adjusted</span></td><td>Expiration</td></tr>
+                    <tr><td>CC-2026-0863</td><td>01/19</td><td>IND-02</td><td>SKU-BR-30205</td><td>Roofing Shingles</td><td>BuildRight</td><td>620</td><td>618</td><td>-2</td><td>-$90</td><td><span class="tag tag-green">Adjusted</span></td><td>Damage</td></tr>
+                    <tr><td>CC-2026-0865</td><td>01/20</td><td>CLB-01</td><td>SKU-TF-50403</td><td>Monitor 27in 4K</td><td>TechFlow</td><td>342</td><td>340</td><td>-2</td><td>-$690</td><td><span class="tag tag-orange">Under Review</span></td><td>Unknown</td></tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <a href="#" class="back-top">Back to Top</a>
+</body>
+</html>

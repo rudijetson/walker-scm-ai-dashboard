@@ -1,0 +1,26 @@
+count_id,count_date,count_time,facility,zone,sku,description,customer_name,system_qty,actual_qty,variance,variance_pct,unit_cost,variance_value,counted_by,verified_by,resolution_status,resolution_date,resolution_notes,root_cause
+CC-2026-0842,2026-01-14,08:15,CLB-01,A-12,SKU-AP-10042,Brake Rotor Assembly Front,AutoParts National,2450,2448,-2,-0.08%,42.50,-85.00,Mike Johnson,Sarah Chen,Adjusted,2026-01-14,System adjusted - minor pick variance,Pick error
+CC-2026-0843,2026-01-14,08:32,CLB-01,A-12,SKU-AP-10043,Brake Rotor Assembly Rear,AutoParts National,1820,1820,0,0.00%,38.75,0.00,Mike Johnson,,Verified,2026-01-14,,
+CC-2026-0844,2026-01-14,09:05,CLB-01,A-14,SKU-AP-10044,Alternator 12V 150A,AutoParts National,680,680,0,0.00%,156.00,0.00,Mike Johnson,,Verified,2026-01-14,,
+CC-2026-0845,2026-01-14,09:28,CLB-01,A-14,SKU-AP-10045,Starter Motor HD,AutoParts National,445,442,-3,-0.67%,189.00,-567.00,Mike Johnson,Sarah Chen,Under Review,,,Investigating - checking receiving records,Unknown
+CC-2026-0846,2026-01-15,07:45,CLB-01,C-02,SKU-HF-20105,Frozen Pizza 12pk Case,Heartland Foods,3240,3240,0,0.00%,18.50,0.00,Rosa Martinez,,Verified,2026-01-15,,
+CC-2026-0847,2026-01-15,08:12,CLB-01,C-02,SKU-HF-20106,Frozen Vegetables Mixed 24pk,Heartland Foods,2180,2176,-4,-0.18%,22.00,-88.00,Rosa Martinez,Tom Bradley,Adjusted,2026-01-15,Damaged cases removed from inventory,Damage
+CC-2026-0848,2026-01-15,08:45,CLB-01,C-04,SKU-HF-20107,Ice Cream Vanilla 8pk,Heartland Foods,1540,1540,0,0.00%,34.50,0.00,Rosa Martinez,,Verified,2026-01-15,,
+CC-2026-0849,2026-01-16,07:30,CLB-01,D-01,SKU-BR-30201,Lumber 2x4x8 Bundle 50pc,BuildRight Supply,285,285,0,0.00%,425.00,0.00,James Wilson,,Verified,2026-01-16,,
+CC-2026-0850,2026-01-16,08:15,CLB-01,D-01,SKU-BR-30202,Plywood 4x8 3/4in Pallet,BuildRight Supply,142,140,-2,-1.41%,680.00,-1360.00,James Wilson,Sarah Chen,Under Review,,,High value variance - audit in progress,Unknown
+CC-2026-0851,2026-01-16,09:00,CLB-01,B-08,SKU-ME-40301,Hospital Bed Electric,MedEquip Direct,28,28,0,0.00%,2450.00,0.00,James Wilson,,Verified,2026-01-16,,
+CC-2026-0852,2026-01-16,09:30,CLB-01,B-08,SKU-ME-40302,Wheelchair Standard,MedEquip Direct,64,64,0,0.00%,385.00,0.00,James Wilson,,Verified,2026-01-16,,
+CC-2026-0853,2026-01-16,10:00,CLB-01,B-08,SKU-ME-40303,IV Pole Mobile,MedEquip Direct,145,145,0,0.00%,125.00,0.00,James Wilson,,Verified,2026-01-16,,
+CC-2026-0854,2026-01-17,08:00,CHI-04,E-02,SKU-TF-50401,Laptop Computer 15in,TechFlow Distribution,425,425,0,0.00%,485.00,0.00,Kevin Park,,Verified,2026-01-17,,
+CC-2026-0855,2026-01-17,08:30,CHI-04,E-02,SKU-TF-50402,Desktop Computer Tower,TechFlow Distribution,186,186,0,0.00%,625.00,0.00,Kevin Park,,Verified,2026-01-17,,
+CC-2026-0856,2026-01-17,09:00,CHI-04,E-02,SKU-TF-50405,Network Switch 24-port,TechFlow Distribution,128,128,0,0.00%,425.00,0.00,Kevin Park,,Verified,2026-01-17,,
+CC-2026-0857,2026-01-18,07:30,CLB-01,A-18,SKU-AP-10047,Oil Filter Standard,AutoParts National,4280,4275,-5,-0.12%,4.25,-21.25,Mike Johnson,Tom Bradley,Adjusted,2026-01-18,Minor variance - normal shrink,Shrinkage
+CC-2026-0858,2026-01-18,08:00,CLB-01,A-18,SKU-AP-10048,Air Filter Panel,AutoParts National,3650,3650,0,0.00%,6.50,0.00,Mike Johnson,,Verified,2026-01-18,,
+CC-2026-0859,2026-01-18,08:30,MEM-03,A-06,SKU-AP-10049,Spark Plug Set 4pk,AutoParts National,2890,2890,0,0.00%,12.00,0.00,Linda Foster,,Verified,2026-01-18,,
+CC-2026-0860,2026-01-18,09:15,MEM-03,C-01,SKU-HF-20109,Fresh Orange Juice Gal 4pk,Heartland Foods,1890,1890,0,0.00%,16.80,0.00,Linda Foster,,Verified,2026-01-18,,
+CC-2026-0861,2026-01-18,09:45,MEM-03,C-01,SKU-HF-20110,Frozen Breakfast Burritos 24pk,Heartland Foods,1680,1675,-5,-0.30%,15.00,-75.00,Linda Foster,Tom Bradley,Adjusted,2026-01-18,Expired product pulled,Expiration
+CC-2026-0862,2026-01-19,07:30,IND-02,D-02,SKU-BR-30203,Concrete Mix 80lb Pallet,BuildRight Supply,86,86,0,0.00%,520.00,0.00,Derek White,,Verified,2026-01-19,,
+CC-2026-0863,2026-01-19,08:00,IND-02,D-03,SKU-BR-30205,Roofing Shingles Bundle,BuildRight Supply,620,618,-2,-0.32%,45.00,-90.00,Derek White,Tom Bradley,Adjusted,2026-01-19,Water damaged bundles removed,Damage
+CC-2026-0864,2026-01-19,08:30,IND-02,B-04,SKU-ME-40304,Patient Monitor Basic,MedEquip Direct,38,38,0,0.00%,1850.00,0.00,Derek White,,Verified,2026-01-19,,
+CC-2026-0865,2026-01-20,07:30,CLB-01,E-04,SKU-TF-50403,Monitor 27in 4K,TechFlow Distribution,342,340,-2,-0.58%,345.00,-690.00,Mike Johnson,Sarah Chen,Under Review,,,Checking returns processing,Unknown
+CC-2026-0866,2026-01-20,08:00,CLB-01,E-04,SKU-TF-50404,Keyboard Wireless,TechFlow Distribution,1840,1840,0,0.00%,28.00,0.00,Mike Johnson,,Verified,2026-01-20,,

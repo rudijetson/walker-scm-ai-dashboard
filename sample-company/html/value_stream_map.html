@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Value Stream Map: Order-to-Delivery Process</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; max-width: 1000px; margin: 0 auto; padding: 40px 20px; color: #333; background: #f9f9f9; }
+        h1 { color: #1a365d; border-bottom: 3px solid #2b6cb0; padding-bottom: 10px; }
+        h2 { color: #2c5282; margin-top: 30px; }
+        h3 { color: #2b6cb0; }
+        hr { border: none; border-top: 2px solid #e2e8f0; margin: 30px 0; }
+        .container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        table { border-collapse: collapse; width: 100%; margin: 15px 0; font-size: 0.9em; }
+        th, td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; }
+        th { background: #2b6cb0; color: white; }
+        tr:nth-child(even) { background: #f7fafc; }
+        .pain-point { background: #fed7e2; border-left: 4px solid #c53030; padding: 15px 20px; margin: 15px 0; border-radius: 0 8px 8px 0; }
+        .ai-opportunity { background: #c6f6d5; border-left: 4px solid #38a169; padding: 15px 20px; margin: 15px 0; border-radius: 0 8px 8px 0; }
+        .metrics-box { background: #ebf8ff; border: 1px solid #90cdf4; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .timeline-box { background: #faf5ff; border: 1px solid #d6bcfa; padding: 15px 20px; margin: 15px 0; border-radius: 8px; }
+        .process-flow { background: #f7fafc; padding: 25px; border-radius: 8px; border: 1px solid #e2e8f0; margin: 20px 0; }
+        .process-phase { display: inline-block; background: #2b6cb0; color: white; padding: 5px 15px; border-radius: 20px; margin: 5px; font-size: 0.85em; }
+        .process-step { display: inline-block; background: #edf2f7; padding: 8px 15px; border-radius: 6px; margin: 5px; font-size: 0.85em; }
+        .warning-icon { color: #c53030; }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Value Stream Map: Order-to-Delivery Process</h1>
+<p><strong>Midwest Premier Logistics</strong></p>
+
+<hr>
+
+<h2>Process Flow Overview</h2>
+
+<div class="process-flow">
+<p><span class="process-phase">CUSTOMER</span></p>
+<p><span class="process-step">Customer Order (EDI/Portal/Email)</span></p>
+
+<p><span class="process-phase">ORDER MANAGEMENT</span></p>
+<p>
+<span class="process-step">Order Receipt (5 min)</span> →
+<span class="process-step">Order Validation (15 min)</span> →
+<span class="process-step">Inventory Check (10 min)</span> →
+<span class="process-step">Order Confirmation (5 min)</span>
+</p>
+
+<p><span class="process-phase">TRANSPORTATION PLANNING</span></p>
+<p>
+<span class="process-step">Load Building (20 min)</span> →
+<span class="process-step" style="background:#fed7e2;">Rate Shopping (45 min) <span class="warning-icon">⚠</span></span> →
+<span class="process-step">Carrier Selection (15 min)</span> →
+<span class="process-step">Tender to Carrier (10 min)</span> →
+<span class="process-step" style="background:#fed7e2;">Carrier Acceptance (2-4 hrs) <span class="warning-icon">⚠</span></span>
+</p>
+
+<p><span class="process-phase">WAREHOUSE OPERATIONS</span></p>
+<p>
+<span class="process-step">Pick Wave Release (5 min)</span> →
+<span class="process-step">Order Picking (45 min)</span> →
+<span class="process-step">Packing/Staging (30 min)</span> →
+<span class="process-step">Load Trailer (45 min)</span> →
+<span class="process-step">BOL Generation (10 min)</span>
+</p>
+
+<p><span class="process-phase">TRANSPORTATION EXECUTION</span></p>
+<p>
+<span class="process-step">Driver Check-in (15 min)</span> →
+<span class="process-step">Trailer Inspection (10 min)</span> →
+<span class="process-step">Departure Scan (5 min)</span> →
+<span class="process-step">In-Transit Tracking</span> →
+<span class="process-step">Delivery Confirmation (15 min)</span>
+</p>
+</div>
+
+<hr>
+
+<h2>Process Metrics Summary</h2>
+
+<div class="metrics-box">
+<table>
+<tr><th>Phase</th><th>Steps</th><th>Total Time</th><th>Value-Add Time</th><th>Wait Time</th><th>Systems</th></tr>
+<tr><td>Order Management</td><td>4</td><td>35 min</td><td>30 min</td><td>5 min</td><td>SAP, WMS</td></tr>
+<tr><td>Transportation Planning</td><td>5</td><td>3-5 hrs</td><td>1.5 hrs</td><td>2-4 hrs</td><td>TMS, DB2</td></tr>
+<tr><td>Warehouse Operations</td><td>5</td><td>2.25 hrs</td><td>2 hrs</td><td>15 min</td><td>WMS</td></tr>
+<tr><td>Transportation Execution</td><td>5</td><td>Variable</td><td>45 min</td><td>N/A</td><td>TMS, FourKites</td></tr>
+</table>
+<p><strong>Total Lead Time:</strong> 6-8 hours (same-day) to 24+ hours (standard)</p>
+</div>
+
+<hr>
+
+<h2>Pain Points Identified <span class="warning-icon">⚠</span></h2>
+
+<div class="pain-point">
+<h3>1. Rate Shopping (45 min)</h3>
+<ul>
+<li><strong>Current State:</strong> Manual process across multiple carrier portals</li>
+<li><strong>Root Cause:</strong> No API integration, spreadsheet-based comparison</li>
+<li><strong>Impact:</strong> Delays load confirmation, reduces carrier options</li>
+<li><strong>AI Opportunity:</strong> Automated rate aggregation and recommendation</li>
+</ul>
+</div>
+
+<div class="pain-point">
+<h3>2. Carrier Acceptance (2-4 hrs)</h3>
+<ul>
+<li><strong>Current State:</strong> Email/phone back-and-forth</li>
+<li><strong>Root Cause:</strong> Carriers check capacity manually, no real-time visibility</li>
+<li><strong>Impact:</strong> Uncertainty in pickup scheduling, warehouse staging delays</li>
+<li><strong>AI Opportunity:</strong> Predictive acceptance scoring, auto-escalation</li>
+</ul>
+</div>
+
+<div class="pain-point">
+<h3>3. Data Silos</h3>
+<ul>
+<li><strong>Current State:</strong> 5 systems with limited integration</li>
+<li><strong>Root Cause:</strong> Legacy architecture, point-to-point interfaces</li>
+<li><strong>Impact:</strong> Manual data entry, reconciliation errors</li>
+<li><strong>AI Opportunity:</strong> Unified data layer, exception detection</li>
+</ul>
+</div>
+
+<hr>
+
+<h2>Handoff Points (Integration Gaps)</h2>
+
+<table>
+<tr><th>From</th><th>To</th><th>Integration Type</th><th>Frequency</th><th>Reliability</th></tr>
+<tr><td>SAP → TMS</td><td></td><td>Manual CSV</td><td>Daily</td><td>95%</td></tr>
+<tr><td>SAP → WMS</td><td></td><td>Batch API</td><td>Hourly</td><td>98%</td></tr>
+<tr><td>WMS → TMS</td><td></td><td>Real-time API</td><td>Event-driven</td><td>99%</td></tr>
+<tr><td>TMS → Carrier</td><td></td><td>EDI 204/990</td><td>Real-time</td><td>97%</td></tr>
+<tr><td>TMS → FourKites</td><td></td><td>API</td><td>Real-time</td><td>99%</td></tr>
+<tr><td>WMS → DB2</td><td></td><td>Query</td><td>On-demand</td><td>99%</td></tr>
+</table>
+
+<hr>
+
+<h2>AI Workflow Opportunities</h2>
+
+<div class="timeline-box">
+<h3>Quick Wins (0-3 months)</h3>
+<ol>
+<li><strong>Rate Shopping Automation</strong>
+<ul>
+<li>Input: Lane, weight, equipment, date</li>
+<li>Output: Ranked carrier options with confidence scores</li>
+<li>Savings: 30 min/load × 50 loads/day = 25 hrs/day</li>
+</ul>
+</li>
+<li><strong>Exception Alerting</strong>
+<ul>
+<li>Monitor: Delivery appointments, carrier acceptance, temp readings</li>
+<li>Alert: Proactive notification with recommended actions</li>
+<li>Impact: Reduce reactive fire-fighting by 40%</li>
+</ul>
+</li>
+</ol>
+</div>
+
+<div class="timeline-box">
+<h3>Medium-Term (3-6 months)</h3>
+<ol start="3">
+<li><strong>SOP Digitization</strong>
+<ul>
+<li>Convert 40+ SOPs to structured workflows</li>
+<li>Enable AI-assisted training and compliance checking</li>
+<li>Reduce onboarding time by 50%</li>
+</ul>
+</li>
+<li><strong>Demand Forecasting Integration</strong>
+<ul>
+<li>Combine historical data with customer forecasts</li>
+<li>Pre-position inventory, pre-book carrier capacity</li>
+<li>Improve on-time delivery by 3-5%</li>
+</ul>
+</li>
+</ol>
+</div>
+
+<div class="ai-opportunity">
+<h3>Long-Term (6-12 months)</h3>
+<ol start="5">
+<li><strong>Autonomous Planning</strong>
+<ul>
+<li>AI builds loads, selects carriers, tenders shipments</li>
+<li>Human approval for exceptions only</li>
+<li>Target: 80% touchless load execution</li>
+</ul>
+</li>
+</ol>
+</div>
+
+<hr>
+
+<p><em>Document Owner: Sarah Chen, VP Operations</em><br>
+<em>Last Updated: 2026-01-15</em><br>
+<em>Version: 1.2</em></p>
+
+</div>
+</body>
+</html>

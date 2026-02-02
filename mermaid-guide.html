@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walker SCM - Mermaid Diagram Guide</title>
+    <link rel="stylesheet" href="shared-nav.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .page-header { margin-bottom: 25px; }
+        .page-header h1 { color: #8B2332; font-size: 1.8em; margin-bottom: 8px; }
+        .page-header p { color: #666; }
+        .page-header .types-list { margin-top: 10px; font-size: 0.9em; color: #888; }
+
+        .section {
+            background: #ffffff;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .section h2 {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section h3 {
+            color: #333;
+            font-size: 1em;
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+
+        .example-card {
+            background: #fafafa;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .example-card h3 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 1em;
+        }
+
+        .code-box {
+            background: #f5f5f5;
+            color: #333;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            border: 1px solid #e0e0e0;
+        }
+
+        .diagram-box {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 15px;
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            text-align: center;
+        }
+
+        .tip-box {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .tip-box strong { color: #333; }
+
+        .prompt-box {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .prompt-box strong { color: #8B2332; }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .syntax-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .syntax-table th,
+        .syntax-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9em;
+        }
+
+        .syntax-table th {
+            background: #f8f9fa;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .syntax-table code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        @media (max-width: 768px) {
+            .section { padding: 20px 15px; }
+            .two-column { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header"><img src="assets/logo.png" alt="Walker SCM"></div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Dashboard</div>
+            <a href="index.html">Survey Results</a>
+            <a href="insights.html">Key Insights</a>
+            <a href="competency-matrix.html">Competency Matrix</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">FWI Strategy</div>
+            <a href="fwi-strategy.html">Strategy Overview</a>
+            <a href="slides.html">Presentation (52 slides)</a>
+            <a href="training-plan.html">Training Plan</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Training Resources</div>
+            <a href="prompt-library.html">Prompt Library</a>
+            <a href="tool-guides.html">AI Tool Guides</a>
+            <a href="mermaid-guide.html" class="active">Mermaid Diagrams</a>
+            <a href="quick-reference.html">Quick Reference</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Training Kit</div>
+            <a href="training-kit.html">Training Kit Home</a>
+            <a href="walker-prompts.html">Walker Prompts (41)</a>
+            <a href="glossary.html">Industry Glossary</a>
+            <a href="exercises.html">Hands-On Exercises</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Organization</div>
+            <a href="org-chart.html">Org Chart</a>
+            <a href="presentation-outline.html">Presentation Outline</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Data</div>
+            <a href="data/data.csv" download>Download CSV</a>
+            <a href="data/data.json" download>Download JSON</a>
+        </div>
+    </nav>
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Mermaid Diagram Guide</h1>
+                <p>Create professional diagrams with simple text</p>
+                <p class="types-list">Flowcharts | Process Maps | Org Charts | Timelines</p>
+            </div>
+
+            <!-- What is Mermaid -->
+            <div class="section">
+                <h2>What is Mermaid?</h2>
+                <p>Mermaid is a way to create diagrams using simple text. Instead of dragging boxes around in PowerPoint or Visio, you describe the diagram and it renders automatically.</p>
+
+                <div class="tip-box">
+                    <strong>Why use it?</strong> You can ask ChatGPT to create Mermaid diagrams for you. Just describe what you want, and it will generate the code. Copy the code into a Mermaid viewer and you have a professional diagram.
+                </div>
+
+                <h3>Where to Use Mermaid</h3>
+                <ul>
+                    <li><strong>ChatGPT:</strong> Ask it to create a Mermaid diagram, then copy to a viewer</li>
+                    <li><strong>Mermaid Live Editor:</strong> <a href="https://mermaid.live" target="_blank">mermaid.live</a> - paste code, see diagram, export as PNG</li>
+                    <li><strong>Notion:</strong> Use code block with "mermaid" language</li>
+                    <li><strong>GitHub/GitLab:</strong> Renders in markdown files</li>
+                    <li><strong>VS Code:</strong> With Mermaid extension</li>
+                </ul>
+            </div>
+
+            <!-- Quick Start with AI -->
+            <div class="section">
+                <h2>Quick Start: Let AI Create Diagrams for You</h2>
+
+                <div class="prompt-box">
+                    <strong>The Easy Way:</strong> Just ask ChatGPT to create the diagram for you. You don't need to learn the syntax.
+                </div>
+
+                <div class="example-card">
+                    <h3>Example Prompt for ChatGPT</h3>
+                    <div class="code-box">Create a Mermaid flowchart showing our customer onboarding process:
+1. Customer signs contract
+2. Account manager creates customer in system
+3. IT sets up access credentials
+4. Warehouse receives notification
+5. Customer training scheduled
+6. Go live</div>
+
+                    <p style="margin-top: 15px;"><strong>ChatGPT will generate something like:</strong></p>
+
+                    <div class="code-box">flowchart TD
+    A[Customer Signs Contract] --> B[AM Creates Customer in System]
+    B --> C[IT Sets Up Credentials]
+    C --> D[Warehouse Notified]
+    D --> E[Training Scheduled]
+    E --> F[Go Live]</div>
+
+                    <p style="margin-top: 15px;"><strong>Which renders as:</strong></p>
+                    <div class="diagram-box">
+                        <div class="mermaid">
+flowchart TD
+    A[Customer Signs Contract] --> B[AM Creates Customer in System]
+    B --> C[IT Sets Up Credentials]
+    C --> D[Warehouse Notified]
+    D --> E[Training Scheduled]
+    E --> F[Go Live]
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <strong>Pro Tip:</strong> Copy the Mermaid code from ChatGPT, paste it into <a href="https://mermaid.live" target="_blank">mermaid.live</a>, then click "Actions" → "Export PNG" to save the image for your presentation.
+                </div>
+            </div>
+
+            <!-- Flowcharts -->
+            <div class="section">
+                <h2>Flowcharts (Most Common)</h2>
+
+                <div class="example-card">
+                    <h3>Basic Flowchart</h3>
+                    <div class="two-column">
+                        <div>
+                            <p><strong>Code:</strong></p>
+                            <div class="code-box">flowchart TD
+    A[Start] --> B{Decision?}
+    B -->|Yes| C[Do This]
+    B -->|No| D[Do That]
+    C --> E[End]
+    D --> E</div>
+                        </div>
+                        <div>
+                            <p><strong>Result:</strong></p>
+                            <div class="diagram-box">
+                                <div class="mermaid">
+flowchart TD
+    A[Start] --> B{Decision?}
+    B -->|Yes| C[Do This]
+    B -->|No| D[Do That]
+    C --> E[End]
+    D --> E
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Shape Reference</h3>
+                <table class="syntax-table">
+                    <tr>
+                        <th>Shape</th>
+                        <th>Code</th>
+                        <th>Use For</th>
+                    </tr>
+                    <tr>
+                        <td>Rectangle</td>
+                        <td><code>[Text]</code></td>
+                        <td>Process steps, actions</td>
+                    </tr>
+                    <tr>
+                        <td>Diamond</td>
+                        <td><code>{Text}</code></td>
+                        <td>Decisions, yes/no questions</td>
+                    </tr>
+                    <tr>
+                        <td>Rounded</td>
+                        <td><code>(Text)</code></td>
+                        <td>Start/end points</td>
+                    </tr>
+                    <tr>
+                        <td>Circle</td>
+                        <td><code>((Text))</code></td>
+                        <td>Connectors</td>
+                    </tr>
+                    <tr>
+                        <td>Database</td>
+                        <td><code>[(Text)]</code></td>
+                        <td>Data stores, systems</td>
+                    </tr>
+                </table>
+
+                <h3>Direction Options</h3>
+                <table class="syntax-table">
+                    <tr>
+                        <th>Code</th>
+                        <th>Direction</th>
+                    </tr>
+                    <tr>
+                        <td><code>flowchart TD</code></td>
+                        <td>Top to Down (vertical)</td>
+                    </tr>
+                    <tr>
+                        <td><code>flowchart LR</code></td>
+                        <td>Left to Right (horizontal)</td>
+                    </tr>
+                    <tr>
+                        <td><code>flowchart BT</code></td>
+                        <td>Bottom to Top</td>
+                    </tr>
+                    <tr>
+                        <td><code>flowchart RL</code></td>
+                        <td>Right to Left</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Walker SCM Examples -->
+            <div class="section">
+                <h2>Walker SCM Examples</h2>
+
+                <div class="example-card">
+                    <h3>FWI Request Process</h3>
+                    <div class="code-box">flowchart LR
+    A[Staff Identifies<br>Friction Point] --> B[Submit via<br>Intake Portal]
+    B --> C{Dept Head<br>Approves?}
+    C -->|Yes| D[IT Reviews<br>Feasibility]
+    C -->|No| E[Feedback<br>to Staff]
+    D --> F{1-3 Day<br>Build?}
+    F -->|Yes| G[Build Agent]
+    F -->|No| H[Regular IT<br>Queue]
+    G --> I[Deploy &<br>Train]
+    I --> J[Measure<br>Results]</div>
+                    <div class="diagram-box">
+                        <div class="mermaid">
+flowchart LR
+    A[Staff Identifies<br>Friction Point] --> B[Submit via<br>Intake Portal]
+    B --> C{Dept Head<br>Approves?}
+    C -->|Yes| D[IT Reviews<br>Feasibility]
+    C -->|No| E[Feedback<br>to Staff]
+    D --> F{1-3 Day<br>Build?}
+    F -->|Yes| G[Build Agent]
+    F -->|No| H[Regular IT<br>Queue]
+    G --> I[Deploy &<br>Train]
+    I --> J[Measure<br>Results]
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h3>Training Cohort Flow</h3>
+                    <div class="code-box">flowchart TD
+    subgraph Cohort1[Cohort 1: Cabinet]
+        A[C-Suite + VPs<br>~12 people]
+    end
+    subgraph Cohort2[Cohort 2: Management]
+        B[Directors + Managers<br>~25-35 people]
+    end
+    subgraph Cohort3[Cohort 3: ICs]
+        C[Individual Contributors<br>~860 people]
+    end
+
+    External[External Trainer<br>RUDI AI] --> A
+    External --> B
+    B --> C
+    A -.->|Sponsor & Fund| B</div>
+                    <div class="diagram-box">
+                        <div class="mermaid">
+flowchart TD
+    subgraph Cohort1[Cohort 1: Cabinet]
+        A[C-Suite + VPs<br>~12 people]
+    end
+    subgraph Cohort2[Cohort 2: Management]
+        B[Directors + Managers<br>~25-35 people]
+    end
+    subgraph Cohort3[Cohort 3: ICs]
+        C[Individual Contributors<br>~860 people]
+    end
+
+    External[External Trainer<br>RUDI AI] --> A
+    External --> B
+    B --> C
+    A -.->|Sponsor & Fund| B
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h3>Three Pillars of FWI</h3>
+                    <div class="code-box">flowchart LR
+    subgraph P1[Pillar 1]
+        A[Training &<br>AI Literacy]
+    end
+    subgraph P2[Pillar 2]
+        B[Custom Agentic<br>Solutions]
+    end
+    subgraph P3[Pillar 3]
+        C[Vendor AI<br>Integration]
+    end
+
+    P1 --> P2
+    P2 --> P3
+
+    style P1 fill:#8B2332,color:#fff
+    style P2 fill:#8B2332,color:#fff
+    style P3 fill:#6B7280,color:#fff</div>
+                    <div class="diagram-box">
+                        <div class="mermaid">
+flowchart LR
+    subgraph P1[Pillar 1]
+        A[Training &<br>AI Literacy]
+    end
+    subgraph P2[Pillar 2]
+        B[Custom Agentic<br>Solutions]
+    end
+    subgraph P3[Pillar 3]
+        C[Vendor AI<br>Integration]
+    end
+
+    P1 --> P2
+    P2 --> P3
+
+    style P1 fill:#8B2332,color:#fff
+    style P2 fill:#8B2332,color:#fff
+    style P3 fill:#6B7280,color:#fff
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="section">
+                <h2>Timeline Diagrams</h2>
+
+                <div class="example-card">
+                    <h3>Project Timeline</h3>
+                    <div class="code-box">timeline
+    title FWI 2026 Roadmap
+    section Q1
+        Cabinet Training : Jan
+        Management Training : Feb-Mar
+        Intake Portal Launch : Mar
+    section Q2
+        First Agents Deployed : Apr
+        Productivity Tracking : May
+        AI Champions Identified : Jun
+    section Q3-Q4
+        Vendor AI Evaluation : Q3
+        Scale & Iterate : Q3-Q4
+        Year-End Assessment : Dec</div>
+                    <div class="diagram-box">
+                        <div class="mermaid">
+timeline
+    title FWI 2026 Roadmap
+    section Q1
+        Cabinet Training : Jan
+        Management Training : Feb-Mar
+        Intake Portal Launch : Mar
+    section Q2
+        First Agents Deployed : Apr
+        Productivity Tracking : May
+        AI Champions Identified : Jun
+    section Q3-Q4
+        Vendor AI Evaluation : Q3
+        Scale & Iterate : Q3-Q4
+        Year-End Assessment : Dec
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="section">
+                <h2>Tips & Tricks</h2>
+
+                <div class="tip-box">
+                    <strong>Line breaks in text:</strong> Use <code>&lt;br&gt;</code> for line breaks inside boxes. Example: <code>[First Line&lt;br&gt;Second Line]</code>
+                </div>
+
+                <div class="tip-box">
+                    <strong>Labeled arrows:</strong> Use <code>-->|Label|</code> to add text on arrows. Example: <code>A -->|Yes| B</code>
+                </div>
+
+                <div class="tip-box">
+                    <strong>Dotted lines:</strong> Use <code>-.-></code> for dotted arrows, good for optional or indirect relationships.
+                </div>
+
+                <div class="tip-box">
+                    <strong>Subgraphs:</strong> Group related items with <code>subgraph Name ... end</code>
+                </div>
+
+                <div class="prompt-box">
+                    <strong>Just Ask AI:</strong> The easiest approach is to describe what you want to ChatGPT:
+                    <br><br>
+                    "Create a Mermaid flowchart showing [your process]. Include decision points for [X] and [Y]. Use subgraphs to group [these items]."
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="text-align: center; margin: 40px 0; padding: 30px; background: #f8f9fa; border-radius: 8px;">
+                <p style="font-size: 1.1em; color: #666;">
+                    Walker SCM | Mermaid Diagram Guide<br>
+                    <strong style="color: #8B2332;">Create diagrams with simple text</strong>
+                </p>
+                <p style="margin-top: 15px;">
+                    <a href="https://mermaid.live" target="_blank" style="color: #8B2332; font-weight: 500;">Open Mermaid Live Editor →</a>
+                </p>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #999;">
+                    Last updated: January 2026
+                </p>
+            </div>
+        </div>
+    </main>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>

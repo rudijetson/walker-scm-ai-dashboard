@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midwest Premier Logistics - Sample Data Package</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; max-width: 950px; margin: 0 auto; padding: 40px 20px; color: #333; background: #f9f9f9; }
+        h1 { color: #1a365d; border-bottom: 3px solid #2b6cb0; padding-bottom: 10px; }
+        h2 { color: #2c5282; margin-top: 30px; }
+        h3 { color: #2b6cb0; }
+        hr { border: none; border-top: 2px solid #e2e8f0; margin: 30px 0; }
+        .container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #e2e8f0; padding: 10px 12px; text-align: left; }
+        th { background: #2b6cb0; color: white; }
+        tr:nth-child(even) { background: #f7fafc; }
+        code { background: #edf2f7; padding: 2px 6px; border-radius: 4px; font-family: 'Monaco', 'Consolas', monospace; }
+        pre { background: #2d3748; color: #e2e8f0; padding: 20px; border-radius: 8px; overflow-x: auto; font-size: 0.85em; }
+        .info-box { background: #ebf8ff; border: 1px solid #90cdf4; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .diagram { background: #f7fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; font-family: monospace; white-space: pre; margin: 20px 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Midwest Premier Logistics - Sample Data Package</h1>
+
+<h2>Overview</h2>
+<p>This package contains realistic sample data representing a mid-sized 3PL (third-party logistics) company operating in the Midwest United States. The data is designed for:</p>
+<ul>
+<li>AI/ML training and demonstration</li>
+<li>Process mapping and workflow design</li>
+<li>Systems integration planning</li>
+<li>Logistics education and training</li>
+</ul>
+
+<hr>
+
+<h2>Company Profile</h2>
+<div class="info-box">
+<p><strong>Midwest Premier Logistics, LLC</strong></p>
+<ul>
+<li>Founded: 1987</li>
+<li>HQ: Columbus, OH</li>
+<li>Revenue: $89M annually</li>
+<li>Employees: 342</li>
+<li>Fleet: 124 tractors, 310 trailers</li>
+<li>Facilities: 4 (Columbus, Indianapolis, Memphis, Joliet)</li>
+</ul>
+</div>
+
+<hr>
+
+<h2>Data Files</h2>
+
+<h3>Core Operational Data (<code>/data/</code>)</h3>
+<table>
+<tr><th>File</th><th>Records</th><th>Description</th></tr>
+<tr><td>tms_shipments.csv</td><td>20</td><td>Transportation Management System shipment records</td></tr>
+<tr><td>wms_inventory.csv</td><td>30</td><td>Warehouse Management System inventory positions</td></tr>
+<tr><td>lane_rates.csv</td><td>25</td><td>Contract and spot rates by lane</td></tr>
+<tr><td>cycle_counts.csv</td><td>25</td><td>Inventory audit/cycle count records</td></tr>
+<tr><td>carriers.csv</td><td>12</td><td>Carrier master data with performance metrics</td></tr>
+<tr><td>dispatch_queue.csv</td><td>14</td><td>Active dispatch/load board</td></tr>
+<tr><td>customers.csv</td><td>10</td><td>Customer master data</td></tr>
+<tr><td>rate_shopping.csv</td><td>18</td><td>Rate comparison/shopping records</td></tr>
+</table>
+
+<h3>Documentation (<code>/docs/</code>)</h3>
+<table>
+<tr><th>File</th><th>Description</th></tr>
+<tr><td>rfp_tracker.md</td><td>Active and closed RFP tracking</td></tr>
+<tr><td>SOP-WH-003_Inbound_Receiving.md</td><td>Standard Operating Procedure example</td></tr>
+<tr><td>value_stream_map.md</td><td>Order-to-delivery process map with Mermaid diagrams</td></tr>
+</table>
+
+<hr>
+
+<h2>Data Relationships</h2>
+<div class="diagram">
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│  Customers  │────▶│  Shipments  │────▶│  Dispatch   │
+└─────────────┘     └─────────────┘     └─────────────┘
+                           │                   │
+                           ▼                   ▼
+                    ┌─────────────┐     ┌─────────────┐
+                    │ Lane Rates  │     │  Carriers   │
+                    └─────────────┘     └─────────────┘
+                           │
+                           ▼
+                    ┌─────────────┐
+                    │Rate Shopping│
+                    └─────────────┘
+
+┌─────────────┐     ┌─────────────┐
+│  Inventory  │────▶│Cycle Counts │
+└─────────────┘     └─────────────┘</div>
+
+<hr>
+
+<h2>Key Fields Reference</h2>
+
+<h3>Shipment Statuses</h3>
+<table>
+<tr><th>Status</th><th>Description</th></tr>
+<tr><td>Pending</td><td>Order received, not yet planned</td></tr>
+<tr><td>Open</td><td>Ready for carrier assignment</td></tr>
+<tr><td>Tendered</td><td>Sent to carrier, awaiting acceptance</td></tr>
+<tr><td>Confirmed</td><td>Carrier accepted</td></tr>
+<tr><td>Picked Up</td><td>Freight collected from origin</td></tr>
+<tr><td>In Transit</td><td>En route to destination</td></tr>
+<tr><td>Delivered</td><td>Completed</td></tr>
+</table>
+
+<h3>Carrier Preferred Status</h3>
+<table>
+<tr><th>Status</th><th>Description</th></tr>
+<tr><td>Gold</td><td>Strategic partner, prioritize</td></tr>
+<tr><td>Silver</td><td>Preferred, standard rates</td></tr>
+<tr><td>Standard</td><td>Approved, backup capacity</td></tr>
+</table>
+
+<h3>Inventory ABC Classification</h3>
+<table>
+<tr><th>Class</th><th>Velocity</th><th>Typical Location</th></tr>
+<tr><td>A</td><td>High (top 20%)</td><td>Prime pick locations</td></tr>
+<tr><td>B</td><td>Medium (next 30%)</td><td>Secondary locations</td></tr>
+<tr><td>C</td><td>Low (bottom 50%)</td><td>Bulk/overflow storage</td></tr>
+</table>
+
+<hr>
+
+<h2>System Mapping</h2>
+<table>
+<tr><th>Data File</th><th>Source System</th><th>Integration</th></tr>
+<tr><td>tms_shipments.csv</td><td>Oracle OTM</td><td>EDI 204/214</td></tr>
+<tr><td>wms_inventory.csv</td><td>Manhattan SCALE</td><td>Real-time API</td></tr>
+<tr><td>lane_rates.csv</td><td>Oracle OTM + DB2</td><td>Manual + Query</td></tr>
+<tr><td>cycle_counts.csv</td><td>Manhattan SCALE</td><td>Batch export</td></tr>
+<tr><td>carriers.csv</td><td>Oracle OTM</td><td>Master data sync</td></tr>
+<tr><td>dispatch_queue.csv</td><td>Oracle OTM</td><td>Real-time</td></tr>
+<tr><td>customers.csv</td><td>SAP S/4HANA</td><td>Daily sync</td></tr>
+<tr><td>rate_shopping.csv</td><td>Oracle OTM</td><td>Transaction log</td></tr>
+</table>
+
+<hr>
+
+<h2>AI/ML Use Cases</h2>
+
+<h3>Demonstrated in This Data</h3>
+<ol>
+<li><strong>Rate Prediction</strong>
+<ul><li>Input: lane_rates.csv, rate_shopping.csv</li><li>Goal: Predict optimal carrier/rate for new shipments</li></ul></li>
+<li><strong>Inventory Accuracy</strong>
+<ul><li>Input: wms_inventory.csv, cycle_counts.csv</li><li>Goal: Predict variance, prioritize counts</li></ul></li>
+<li><strong>Carrier Performance</strong>
+<ul><li>Input: carriers.csv, tms_shipments.csv</li><li>Goal: Score/rank carriers, predict acceptance</li></ul></li>
+<li><strong>Exception Detection</strong>
+<ul><li>Input: dispatch_queue.csv, tms_shipments.csv</li><li>Goal: Flag at-risk shipments before delay</li></ul></li>
+<li><strong>Process Optimization</strong>
+<ul><li>Input: value_stream_map.md, SOPs</li><li>Goal: Identify bottlenecks, suggest improvements</li></ul></li>
+</ol>
+
+<hr>
+
+<h2>Sample Queries</h2>
+
+<h3>Find shipments at risk of delay</h3>
+<pre>SELECT shipment_id, customer_name, dest_city, delivery_date, status
+FROM tms_shipments
+WHERE status IN ('Tendered', 'Pending')
+  AND pickup_date <= CURRENT_DATE;</pre>
+
+<h3>Carrier performance ranking</h3>
+<pre>SELECT carrier_name, on_time_delivery_pct, tender_acceptance_pct,
+       claims_rate_pct, preferred_status
+FROM carriers
+ORDER BY on_time_delivery_pct DESC;</pre>
+
+<h3>Inventory with high variance</h3>
+<pre>SELECT sku, description, system_qty, actual_qty, variance_pct, variance_value
+FROM cycle_counts
+WHERE ABS(variance_pct) > 0.5
+ORDER BY ABS(variance_value) DESC;</pre>
+
+<hr>
+
+<h2>Glossary</h2>
+<table>
+<tr><th>Term</th><th>Definition</th></tr>
+<tr><td><strong>ASN</strong></td><td>Advanced Ship Notice - electronic notification of incoming shipment</td></tr>
+<tr><td><strong>BOL</strong></td><td>Bill of Lading - shipping document/contract</td></tr>
+<tr><td><strong>Cross-dock</strong></td><td>Facility where freight is transferred between trucks without storage</td></tr>
+<tr><td><strong>EDI</strong></td><td>Electronic Data Interchange - standard B2B messaging</td></tr>
+<tr><td><strong>FTL</strong></td><td>Full Truckload - shipment using entire trailer</td></tr>
+<tr><td><strong>Lane</strong></td><td>Defined freight route (origin - destination)</td></tr>
+<tr><td><strong>LTL</strong></td><td>Less Than Truckload - consolidated shipments</td></tr>
+<tr><td><strong>PRO</strong></td><td>Progressive/Tracking number assigned by carrier</td></tr>
+<tr><td><strong>Reefer</strong></td><td>Refrigerated trailer</td></tr>
+<tr><td><strong>TMS</strong></td><td>Transportation Management System</td></tr>
+<tr><td><strong>WMS</strong></td><td>Warehouse Management System</td></tr>
+</table>
+
+<hr>
+
+<h2>Notes</h2>
+<ul>
+<li>All data is fictional and for demonstration purposes only</li>
+<li>Company names, addresses, and contact information are fabricated</li>
+<li>Financial figures are representative of industry norms</li>
+<li>Dates are set around January 2026 for consistency</li>
+</ul>
+
+<p><em>Created: January 2026 | Version: 1.0</em></p>
+
+</div>
+</body>
+</html>

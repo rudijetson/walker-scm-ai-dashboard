@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walker SCM - AI Tool Guides</title>
+    <link rel="stylesheet" href="shared-nav.css">
+    <style>
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .page-header { margin-bottom: 25px; }
+        .page-header h1 { color: #8B2332; font-size: 1.8em; margin-bottom: 8px; }
+        .page-header p { color: #666; }
+        .page-header .tools-list { margin-top: 10px; font-size: 0.9em; color: #888; }
+
+        .section {
+            background: #ffffff;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .section h2 {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tool-card {
+            background: #fafafa;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tool-header h3 {
+            color: #333;
+            font-size: 1.1em;
+            margin: 0;
+        }
+
+        .tool-badge {
+            background: #666;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.75em;
+        }
+
+        .tool-badge.free { background: #555; }
+        .tool-badge.paid { background: #777; }
+        .tool-badge.enterprise { background: #888; }
+
+        .tool-url {
+            color: #8B2332;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .tool-url:hover { text-decoration: underline; }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .pros, .cons {
+            padding: 15px;
+            border-radius: 6px;
+            background: #f8f9fa;
+        }
+
+        .pros h4, .cons h4 {
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .pros ul, .cons ul {
+            margin-left: 15px;
+            font-size: 0.85em;
+            color: #555;
+        }
+
+        .pros li, .cons li { margin-bottom: 5px; }
+
+        .best-for {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        .best-for strong { color: #8B2332; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9em;
+        }
+
+        .comparison-table th {
+            background: #f8f9fa;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover { background: #fafafa; }
+
+        .check { color: #333; font-weight: bold; }
+        .x { color: #999; }
+
+        .quick-start {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .quick-start h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .quick-start ol {
+            margin-left: 18px;
+            font-size: 0.85em;
+            color: #555;
+        }
+
+        .quick-start li { margin-bottom: 6px; }
+
+        @media (max-width: 768px) {
+            .section { padding: 20px 15px; }
+            .pros-cons { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header"><img src="assets/logo.png" alt="Walker SCM"></div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Dashboard</div>
+            <a href="index.html">Survey Results</a>
+            <a href="insights.html">Key Insights</a>
+            <a href="competency-matrix.html">Competency Matrix</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">FWI Strategy</div>
+            <a href="fwi-strategy.html">Strategy Overview</a>
+            <a href="slides.html">Presentation (52 slides)</a>
+            <a href="training-plan.html">Training Plan</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Training Resources</div>
+            <a href="prompt-library.html">Prompt Library</a>
+            <a href="tool-guides.html" class="active">AI Tool Guides</a>
+            <a href="mermaid-guide.html">Mermaid Diagrams</a>
+            <a href="quick-reference.html">Quick Reference</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Training Kit</div>
+            <a href="training-kit.html">Training Kit Home</a>
+            <a href="walker-prompts.html">Walker Prompts (41)</a>
+            <a href="glossary.html">Industry Glossary</a>
+            <a href="exercises.html">Hands-On Exercises</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Organization</div>
+            <a href="org-chart.html">Org Chart</a>
+            <a href="presentation-outline.html">Presentation Outline</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Data</div>
+            <a href="data/data.csv" download>Download CSV</a>
+            <a href="data/data.json" download>Download JSON</a>
+        </div>
+    </nav>
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>AI Tool Guides</h1>
+                <p>Comparison and quick-start guides for AI platforms</p>
+                <p class="tools-list">ChatGPT | Microsoft Copilot | Google Gemini | NotebookLM | Perplexity | Claude</p>
+            </div>
+
+            <!-- Pro Tip -->
+            <div class="section">
+                <h2>Pro Tip: Use Voice Input</h2>
+                <p style="font-size: 0.95em; color: #555;">You can speak faster than you type. All major AI tools support voice input — use the microphone icon or your device's dictation feature. This is especially helpful for longer prompts and brainstorming sessions.</p>
+            </div>
+
+            <!-- Quick Comparison -->
+            <div class="section">
+                <h2>Quick Comparison</h2>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Tool</th>
+                        <th>Best For</th>
+                        <th>Free Tier</th>
+                        <th>File Upload</th>
+                        <th>Images</th>
+                        <th>Web Search</th>
+                    </tr>
+                    <tr>
+                        <td><strong>ChatGPT</strong></td>
+                        <td>General purpose, coding, writing, editing</td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="check">Yes</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Microsoft Copilot</strong></td>
+                        <td>Office integration, enterprise</td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="check">Yes</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Google Gemini</strong></td>
+                        <td>Google Workspace, research</td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="check">Yes</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>NotebookLM</strong></td>
+                        <td>Document analysis, research</td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="check">Yes (core)</span></td>
+                        <td><span class="x">No</span></td>
+                        <td><span class="x">No</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Perplexity</strong></td>
+                        <td>Research, citations, fact-finding</td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="x">No</span></td>
+                        <td><span class="check">Yes (core)</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Claude</strong></td>
+                        <td>Analysis, writing, coding</td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="check">Yes</span></td>
+                        <td><span class="x">No</span></td>
+                        <td><span class="check">Yes</span></td>
+                    </tr>
+                </table>
+                <p style="margin-top: 12px; font-size: 0.85em; color: #888;"><strong>Note:</strong> All AI models can hallucinate (make up facts). Always verify important information.</p>
+            </div>
+
+            <!-- ChatGPT -->
+            <div class="section">
+                <h2>ChatGPT (OpenAI)</h2>
+
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <h3>ChatGPT</h3>
+                        <div>
+                            <span class="tool-badge free">Free tier</span>
+                            <span class="tool-badge paid">Plus: $20/mo</span>
+                        </div>
+                    </div>
+                    <p><a href="https://chat.openai.com" class="tool-url" target="_blank">chat.openai.com</a></p>
+                    <p style="margin-top: 10px;">The most widely-used AI assistant. Excellent for general tasks, writing, coding, and analysis. GPT-4 (Plus) is significantly more capable than the free GPT-3.5.</p>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>Strengths</h4>
+                            <ul>
+                                <li>Most widely used AI assistant</li>
+                                <li>Projects feature for organizing work</li>
+                                <li>Custom GPTs for specific use cases</li>
+                                <li>Image generation built-in</li>
+                                <li>Mobile app with voice input</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>Limitations</h4>
+                            <ul>
+                                <li>Free tier is limited</li>
+                                <li>Knowledge cutoff (not always current)</li>
+                                <li>Rate limits on free tier</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="best-for">
+                        <strong>Best for Walker SCM:</strong> Day-to-day writing tasks, email drafting, document creation, brainstorming, explaining complex topics, Excel formulas.
+                    </div>
+
+                    <div class="quick-start">
+                        <h4>Quick Start</h4>
+                        <ol>
+                            <li>Go to <a href="https://chat.openai.com" target="_blank">chat.openai.com</a></li>
+                            <li>Sign up with email or Google account</li>
+                            <li>Start with: "Help me write a professional email about [topic]"</li>
+                            <li>Use the paperclip icon to upload files for analysis</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Microsoft Copilot -->
+            <div class="section">
+                <h2>Microsoft Copilot</h2>
+
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <h3>Microsoft Copilot</h3>
+                        <div>
+                            <span class="tool-badge free">Free tier</span>
+                            <span class="tool-badge enterprise">M365 Copilot: Enterprise</span>
+                        </div>
+                    </div>
+                    <p><a href="https://copilot.microsoft.com" class="tool-url" target="_blank">copilot.microsoft.com</a></p>
+                    <p style="margin-top: 10px;">Microsoft's AI assistant, integrated with Bing search and Office 365. The free version is solid; the enterprise version integrates directly into Word, Excel, Outlook, and Teams.</p>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>Strengths</h4>
+                            <ul>
+                                <li>Built-in web search with citations</li>
+                                <li>Enterprise version in Office apps</li>
+                                <li>Image generation included</li>
+                                <li>Good for Microsoft ecosystem users</li>
+                                <li>Enterprise data protection</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>Limitations</h4>
+                            <ul>
+                                <li>Free version less capable than ChatGPT Plus</li>
+                                <li>Enterprise version requires M365 license</li>
+                                <li>Can be slower than competitors</li>
+                                <li>Interface less intuitive</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="best-for">
+                        <strong>Best for Walker SCM:</strong> Already in our ecosystem. Good for quick web searches with sources, and if we deploy M365 Copilot, it will work directly in Outlook, Word, Excel, and Teams.
+                    </div>
+
+                    <div class="quick-start">
+                        <h4>Quick Start</h4>
+                        <ol>
+                            <li>Go to <a href="https://copilot.microsoft.com" target="_blank">copilot.microsoft.com</a></li>
+                            <li>Sign in with your Microsoft account</li>
+                            <li>Try: "Search for recent trends in warehouse automation"</li>
+                            <li>Note the citations - you can verify sources</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Google Gemini -->
+            <div class="section">
+                <h2>Google Gemini</h2>
+
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <h3>Google Gemini</h3>
+                        <div>
+                            <span class="tool-badge free">Free tier</span>
+                            <span class="tool-badge paid">Advanced: $20/mo</span>
+                        </div>
+                    </div>
+                    <p><a href="https://gemini.google.com" class="tool-url" target="_blank">gemini.google.com</a></p>
+                    <p style="margin-top: 10px;">Google's AI assistant. Full suite integration with Google Workspace — Docs, Sheets, Gmail, and video. Strong image capabilities and real-time information access.</p>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>Strengths</h4>
+                            <ul>
+                                <li>Full Google Workspace suite (Docs, Gmail, Sheets)</li>
+                                <li>Strong at research tasks</li>
+                                <li>Video and image capabilities</li>
+                                <li>Real-time information access</li>
+                                <li>Image generation built-in</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>Limitations</h4>
+                            <ul>
+                                <li>Less mature than ChatGPT</li>
+                                <li>Sometimes less nuanced responses</li>
+                                <li>Google account required</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="best-for">
+                        <strong>Best for Walker SCM:</strong> Research tasks, Google Workspace users, tasks requiring up-to-date web information, image analysis.
+                    </div>
+
+                    <div class="quick-start">
+                        <h4>Quick Start</h4>
+                        <ol>
+                            <li>Go to <a href="https://gemini.google.com" target="_blank">gemini.google.com</a></li>
+                            <li>Sign in with Google account</li>
+                            <li>Try: "Analyze this image" and upload a photo</li>
+                            <li>Or: "Help me research [logistics topic]"</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NotebookLM -->
+            <div class="section">
+                <h2>NotebookLM (Google)</h2>
+
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <h3>NotebookLM</h3>
+                        <div>
+                            <span class="tool-badge free">Free</span>
+                        </div>
+                    </div>
+                    <p><a href="https://notebooklm.google.com" class="tool-url" target="_blank">notebooklm.google.com</a></p>
+                    <p style="margin-top: 10px;">Google's document analysis tool. Upload PDFs, docs, or websites and ask questions about them. It ONLY answers from your uploaded sources - no hallucinations from external knowledge.</p>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>Strengths</h4>
+                            <ul>
+                                <li>Grounded in YOUR documents only</li>
+                                <li>Cites exact sources from uploads</li>
+                                <li>Great for policy/contract analysis</li>
+                                <li>Can generate Audio Overviews, notes, PowerPoints</li>
+                                <li>Completely free</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>Limitations</h4>
+                            <ul>
+                                <li>Only knows what you upload</li>
+                                <li>No web search</li>
+                                <li>Limited to ~50 sources per notebook</li>
+                                <li>Requires Google account</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="best-for">
+                        <strong>Best for Walker SCM:</strong> Analyzing contracts, policies, RFPs, training materials, or any situation where you need answers grounded in specific documents without risk of hallucination.
+                    </div>
+
+                    <div class="quick-start">
+                        <h4>Quick Start</h4>
+                        <ol>
+                            <li>Go to <a href="https://notebooklm.google.com" target="_blank">notebooklm.google.com</a></li>
+                            <li>Create a new notebook</li>
+                            <li>Upload PDFs, docs, or paste website URLs</li>
+                            <li>Ask: "Summarize the key points" or "What does this say about [topic]?"</li>
+                            <li>Click "Audio Overview" to generate a podcast-style summary</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Perplexity -->
+            <div class="section">
+                <h2>Perplexity AI</h2>
+
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <h3>Perplexity</h3>
+                        <div>
+                            <span class="tool-badge free">Free tier</span>
+                            <span class="tool-badge paid">Pro: $20/mo</span>
+                        </div>
+                    </div>
+                    <p><a href="https://perplexity.ai" class="tool-url" target="_blank">perplexity.ai</a></p>
+                    <p style="margin-top: 10px;">AI-powered search engine that provides answers with citations. Think of it as "Google that gives you the answer instead of links." Every response includes numbered sources you can verify.</p>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>Strengths</h4>
+                            <ul>
+                                <li>Always cites sources</li>
+                                <li>Real-time web search</li>
+                                <li>Great for research and fact-finding</li>
+                                <li>"Focus" modes for specific searches</li>
+                                <li>Clean, simple interface</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>Limitations</h4>
+                            <ul>
+                                <li>Less capable for creative tasks</li>
+                                <li>Not ideal for long-form writing</li>
+                                <li>Free tier has usage limits</li>
+                                <li>Less customizable than ChatGPT</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="best-for">
+                        <strong>Best for Walker SCM:</strong> Research with verifiable sources, competitor analysis, industry trends, any time you need to cite where information came from.
+                    </div>
+
+                    <div class="quick-start">
+                        <h4>Quick Start</h4>
+                        <ol>
+                            <li>Go to <a href="https://perplexity.ai" target="_blank">perplexity.ai</a></li>
+                            <li>No account needed for basic use</li>
+                            <li>Try: "What are the top trends in 3PL logistics for 2026?"</li>
+                            <li>Note the numbered citations - click to verify</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Claude -->
+            <div class="section">
+                <h2>Claude (Anthropic)</h2>
+
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <h3>Claude</h3>
+                        <div>
+                            <span class="tool-badge free">Free tier</span>
+                            <span class="tool-badge paid">Pro: $20/mo</span>
+                        </div>
+                    </div>
+                    <p><a href="https://claude.ai" class="tool-url" target="_blank">claude.ai</a></p>
+                    <p style="margin-top: 10px;">Anthropic's AI assistant. Known for strong reasoning, long document handling, and nuanced writing. Claude can process very long documents (up to 200k tokens - roughly a 500-page book). Claude Code is considered one of the best coding tools available.</p>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>Strengths</h4>
+                            <ul>
+                                <li>Excellent at long documents (500+ pages)</li>
+                                <li>Strong analytical reasoning</li>
+                                <li>Best-in-class coding with Claude Code</li>
+                                <li>MCP ecosystem for integrations</li>
+                                <li>Nuanced, thoughtful responses</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>Limitations</h4>
+                            <ul>
+                                <li>Free tier has message limits</li>
+                                <li>Sometimes overly cautious</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="best-for">
+                        <strong>Best for Walker SCM:</strong> Analyzing long contracts or documents, coding tasks, nuanced writing, complex analysis that requires careful reasoning.
+                    </div>
+
+                    <div class="quick-start">
+                        <h4>Quick Start</h4>
+                        <ol>
+                            <li>Go to <a href="https://claude.ai" target="_blank">claude.ai</a></li>
+                            <li>Sign up with email</li>
+                            <li>Upload a long document and ask questions about it</li>
+                            <li>Try: "Analyze this contract and identify potential risks"</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decision Guide -->
+            <div class="section">
+                <h2>Which Tool Should I Use?</h2>
+
+                <table class="comparison-table">
+                    <tr>
+                        <th>If you need to...</th>
+                        <th>Use this</th>
+                    </tr>
+                    <tr>
+                        <td>Write an email or document</td>
+                        <td><strong>ChatGPT</strong>, <strong>Claude</strong>, or <strong>Gemini</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Research with citations</td>
+                        <td><strong>Perplexity</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Analyze a specific document</td>
+                        <td><strong>NotebookLM</strong> (won't hallucinate)</td>
+                    </tr>
+                    <tr>
+                        <td>Get help in Office apps</td>
+                        <td><strong>Microsoft Copilot</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Analyze a very long document</td>
+                        <td><strong>Claude</strong>, <strong>Gemini</strong>, or <strong>ChatGPT</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Create or understand code/formulas</td>
+                        <td><strong>Claude</strong> or <strong>ChatGPT</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Get current information</td>
+                        <td><strong>Perplexity</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Work with images</td>
+                        <td><strong>Gemini</strong> or <strong>ChatGPT</strong></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Footer -->
+            <div style="text-align: center; margin: 40px 0; padding: 30px; background: #f8f9fa; border-radius: 8px;">
+                <p style="font-size: 1.1em; color: #666;">
+                    Walker SCM | AI Tool Guides<br>
+                    <strong style="color: #8B2332;">Pick the right tool for the job</strong>
+                </p>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #999;">
+                    Last updated: January 2026
+                </p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

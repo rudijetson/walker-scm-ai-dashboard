@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walker SCM - AI Training Kit</title>
+    <link rel="stylesheet" href="shared-nav.css">
+    <style>
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            color: #8B2332;
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #666;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 600;
+            color: #8B2332;
+        }
+
+        .stat-label {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .quick-start {
+            background: #f8f9fa;
+            padding: 20px 25px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .quick-start h2 {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 12px;
+        }
+
+        .quick-start ol {
+            margin: 0 0 0 20px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .quick-start a {
+            color: #8B2332;
+            text-decoration: none;
+        }
+
+        .quick-start a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            background: #ffffff;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .section h2 {
+            color: #333;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .kit-card {
+            background: #fafafa;
+            border-radius: 6px;
+            padding: 20px;
+        }
+
+        .kit-card h3 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .kit-card p {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .kit-card ul {
+            margin: 0 0 12px 18px;
+            font-size: 0.85em;
+            color: #555;
+        }
+
+        .kit-card li { margin-bottom: 3px; }
+
+        .kit-card a.btn {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #8B2332;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .kit-card a.btn:hover { background: #6B1A26; }
+
+        .prompt-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .prompt-table th,
+        .prompt-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9em;
+        }
+
+        .prompt-table th {
+            background: #f8f9fa;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .prompt-table tr:hover { background: #fafafa; }
+
+        .prompt-table a {
+            color: #8B2332;
+            text-decoration: none;
+        }
+
+        .prompt-table a:hover { text-decoration: underline; }
+
+        .workflow-card {
+            background: #fafafa;
+            border-radius: 6px;
+            padding: 20px;
+        }
+
+        .workflow-card h3 {
+            color: #333;
+            font-size: 1em;
+            margin-bottom: 12px;
+        }
+
+        .workflow-card ol {
+            margin: 0 0 0 18px;
+            font-size: 0.85em;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .building-blocks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .block {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .block h4 {
+            color: #8B2332;
+            font-size: 0.9em;
+            margin-bottom: 6px;
+        }
+
+        .block p {
+            color: #555;
+            font-size: 0.85em;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .block .example {
+            color: #888;
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header"><img src="assets/logo.png" alt="Walker SCM"></div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Dashboard</div>
+            <a href="index.html">Survey Results</a>
+            <a href="insights.html">Key Insights</a>
+            <a href="competency-matrix.html">Competency Matrix</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">FWI Strategy</div>
+            <a href="fwi-strategy.html">Strategy Overview</a>
+            <a href="slides.html">Presentation (52 slides)</a>
+            <a href="training-plan.html">Training Plan</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Training Resources</div>
+            <a href="prompt-library.html">Prompt Library</a>
+            <a href="tool-guides.html">AI Tool Guides</a>
+            <a href="mermaid-guide.html">Mermaid Diagrams</a>
+            <a href="quick-reference.html">Quick Reference</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Training Kit</div>
+            <a href="training-kit.html" class="active">Training Kit Home</a>
+            <a href="walker-prompts.html">Walker Prompts (41)</a>
+            <a href="glossary.html">Industry Glossary</a>
+            <a href="exercises.html">Hands-On Exercises</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Organization</div>
+            <a href="org-chart.html">Org Chart</a>
+            <a href="presentation-outline.html">Presentation Outline</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Data</div>
+            <a href="data/data.csv" download>Download CSV</a>
+            <a href="data/data.json" download>Download JSON</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>AI Training Kit</h1>
+                <p>Walker SCM-specific prompts, exercises, and reference materials</p>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">41</div>
+                    <div class="stat-label">Prompts</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">60+</div>
+                    <div class="stat-label">Glossary Terms</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Exercises</div>
+                </div>
+            </div>
+
+            <div class="quick-start">
+                <h2>Quick Start</h2>
+                <ol>
+                    <li>Find the prompt for your task in the <a href="walker-prompts.html">Walker Prompts</a> library</li>
+                    <li>Copy the prompt and paste your data where indicated</li>
+                    <li>Run in any AI — ChatGPT, Claude, Gemini, Copilot</li>
+                    <li>Iterate — if the output isn't right, adjust and try again</li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>What's Included</h2>
+                <div class="card-grid">
+                    <div class="kit-card">
+                        <h3>Walker-Specific Prompts</h3>
+                        <p>41 prompts tailored for Walker SCM workflows.</p>
+                        <ul>
+                            <li>RFP Analysis (5)</li>
+                            <li>Rate Requests (8)</li>
+                            <li>Customer Communication (8)</li>
+                            <li>Process Mapping (6)</li>
+                            <li>Customer Onboarding (7)</li>
+                            <li>Financial Analysis (7)</li>
+                        </ul>
+                        <a href="walker-prompts.html" class="btn">Browse Prompts</a>
+                    </div>
+
+                    <div class="kit-card">
+                        <h3>Training Materials</h3>
+                        <p>Real-world documents for hands-on practice.</p>
+                        <ul>
+                            <li>Sample RFP</li>
+                            <li>Quote Template</li>
+                            <li>Rate Request Examples</li>
+                            <li>Customer Info Sheet</li>
+                            <li>Scenario Cards</li>
+                        </ul>
+                        <a href="training-materials/html/00-README.html" class="btn">View Materials</a>
+                    </div>
+
+                    <div class="kit-card">
+                        <h3>Sample Company Data</h3>
+                        <p>Practice with realistic data from "Acme Distribution."</p>
+                        <ul>
+                            <li>Customer profile</li>
+                            <li>AR aging report</li>
+                            <li>Shipment history</li>
+                            <li>Rate card</li>
+                        </ul>
+                        <a href="sample-company/html/00_COMPANY_PROFILE.html" class="btn">Explore Data</a>
+                    </div>
+
+                    <div class="kit-card">
+                        <h3>Industry Glossary</h3>
+                        <p>60+ logistics and supply chain terms.</p>
+                        <ul>
+                            <li>Transportation</li>
+                            <li>Warehousing</li>
+                            <li>Technology</li>
+                            <li>Finance</li>
+                        </ul>
+                        <a href="glossary.html" class="btn">View Glossary</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Prompt Quick Reference</h2>
+                <table class="prompt-table">
+                    <tr>
+                        <th>I need to...</th>
+                        <th>Category</th>
+                        <th>Count</th>
+                    </tr>
+                    <tr>
+                        <td>Analyze an RFP and build a quote</td>
+                        <td><a href="prompts/html/01-rfp-analysis-prompts.html">RFP Analysis</a></td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Respond to a rate request</td>
+                        <td><a href="prompts/html/02-rate-lookup-prompts.html">Rate Lookup</a></td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>Write a customer email</td>
+                        <td><a href="prompts/html/03-customer-communication-prompts.html">Customer Communication</a></td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>Create a process map</td>
+                        <td><a href="prompts/html/04-process-mapping-prompts.html">Process Mapping</a></td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>Onboard a new customer</td>
+                        <td><a href="prompts/html/05-customer-onboarding-prompts.html">Customer Onboarding</a></td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>Analyze financial data</td>
+                        <td><a href="prompts/html/06-financial-analysis-prompts.html">Financial Analysis</a></td>
+                        <td>7</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Sample Workflows</h2>
+                <div class="card-grid">
+                    <div class="workflow-card">
+                        <h3>New RFP Arrives</h3>
+                        <ol>
+                            <li>RFP Fit Assessment</li>
+                            <li>Generate Clarifying Questions</li>
+                            <li>Scope of Work Draft</li>
+                            <li>Competitive Positioning</li>
+                            <li>Quote Follow-Up</li>
+                        </ol>
+                    </div>
+                    <div class="workflow-card">
+                        <h3>New Customer Signs</h3>
+                        <ol>
+                            <li>Risk Assessment</li>
+                            <li>Onboarding Task Generator</li>
+                            <li>Implementation Timeline</li>
+                            <li>Kick-Off Meeting Agenda</li>
+                            <li>Welcome Packet Content</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Prompt Structure (Four Building Blocks)</h2>
+                <div class="building-blocks">
+                    <div class="block">
+                        <h4>ROLE</h4>
+                        <p>Who is the AI acting as?</p>
+                        <p class="example">"You are a senior logistics account manager..."</p>
+                    </div>
+                    <div class="block">
+                        <h4>CONTEXT</h4>
+                        <p>What background does it need?</p>
+                        <p class="example">"This customer has been with us for 3 years..."</p>
+                    </div>
+                    <div class="block">
+                        <h4>TASK</h4>
+                        <p>What should it do?</p>
+                        <p class="example">"Write a professional email explaining the delay..."</p>
+                    </div>
+                    <div class="block">
+                        <h4>FORMAT</h4>
+                        <p>How should output look?</p>
+                        <p class="example">"Use bullet points. Keep under 200 words."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                Walker SCM AI Training Kit | January 2026
+            </div>
+        </div>
+    </main>
+</body>
+</html>

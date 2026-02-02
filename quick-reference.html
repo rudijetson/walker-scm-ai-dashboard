@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walker SCM - AI Quick Reference</title>
+    <link rel="stylesheet" href="shared-nav.css">
+    <style>
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .page-header { margin-bottom: 25px; }
+        .page-header h1 { color: #8B2332; font-size: 1.8em; margin-bottom: 8px; }
+        .page-header p { color: #666; }
+
+        .section {
+            background: #ffffff;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .section h2 {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .ref-card {
+            background: #fafafa;
+            border-radius: 6px;
+            padding: 15px;
+        }
+
+        .ref-card h3 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .ref-card p {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .ref-card ul {
+            margin-left: 15px;
+            font-size: 0.85em;
+            color: #555;
+        }
+
+        .ref-card li { margin-bottom: 4px; }
+
+        .do-dont {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .do-box, .dont-box {
+            padding: 20px;
+            border-radius: 6px;
+            background: #fafafa;
+        }
+
+        .do-box h4, .dont-box h4 {
+            margin-bottom: 12px;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .do-box ul, .dont-box ul {
+            margin-left: 15px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .do-box li, .dont-box li { margin-bottom: 6px; }
+
+        .vocab-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .vocab-table th,
+        .vocab-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9em;
+        }
+
+        .vocab-table th {
+            background: #f8f9fa;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .vocab-table tr:hover { background: #fafafa; }
+
+        .vocab-table td:first-child {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .quick-tip {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .quick-tip strong { color: #8B2332; }
+
+        .shortcut-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .shortcut-card {
+            background: #fafafa;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .shortcut-card .keys {
+            background: #f5f5f5;
+            color: #333;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-bottom: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .shortcut-card p {
+            font-size: 0.8em;
+            color: #666;
+            margin: 0;
+        }
+
+        .checklist {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9em;
+        }
+
+        .checklist li:last-child { border-bottom: none; }
+
+        .checklist .check {
+            color: #666;
+            font-size: 1em;
+        }
+
+        @media (max-width: 768px) {
+            .section { padding: 20px 15px; }
+            .do-dont { grid-template-columns: 1fr; }
+        }
+
+        @media print {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; }
+            .section { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header"><img src="assets/logo.png" alt="Walker SCM"></div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Dashboard</div>
+            <a href="index.html">Survey Results</a>
+            <a href="insights.html">Key Insights</a>
+            <a href="competency-matrix.html">Competency Matrix</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">FWI Strategy</div>
+            <a href="fwi-strategy.html">Strategy Overview</a>
+            <a href="slides.html">Presentation (52 slides)</a>
+            <a href="training-plan.html">Training Plan</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Training Resources</div>
+            <a href="prompt-library.html">Prompt Library</a>
+            <a href="tool-guides.html">AI Tool Guides</a>
+            <a href="mermaid-guide.html">Mermaid Diagrams</a>
+            <a href="quick-reference.html" class="active">Quick Reference</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Training Kit</div>
+            <a href="training-kit.html">Training Kit Home</a>
+            <a href="walker-prompts.html">Walker Prompts (41)</a>
+            <a href="glossary.html">Industry Glossary</a>
+            <a href="exercises.html">Hands-On Exercises</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Organization</div>
+            <a href="org-chart.html">Org Chart</a>
+            <a href="presentation-outline.html">Presentation Outline</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Data</div>
+            <a href="data/data.csv" download>Download CSV</a>
+            <a href="data/data.json" download>Download JSON</a>
+        </div>
+    </nav>
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>AI Quick Reference</h1>
+                <p>Key concepts and guidelines at a glance — print or bookmark for easy access</p>
+            </div>
+
+            <!-- Key Vocabulary -->
+            <div class="section">
+                <h2>Key Vocabulary</h2>
+                <table class="vocab-table">
+                    <tr>
+                        <th style="width: 25%;">Term</th>
+                        <th>What It Means (Plain English)</th>
+                    </tr>
+                    <tr>
+                        <td>AI (Artificial Intelligence)</td>
+                        <td>Computer systems that can do tasks that normally require human intelligence - like understanding language, recognizing patterns, or making decisions.</td>
+                    </tr>
+                    <tr>
+                        <td>Generative AI</td>
+                        <td>AI that creates new content (text, images, code) rather than just analyzing existing data. ChatGPT is generative AI.</td>
+                    </tr>
+                    <tr>
+                        <td>LLM (Large Language Model)</td>
+                        <td>The technology behind ChatGPT and similar tools. It's trained on massive amounts of text and learns to predict/generate human-like responses.</td>
+                    </tr>
+                    <tr>
+                        <td>Prompt</td>
+                        <td>The instruction or question you give to an AI. Better prompts = better results.</td>
+                    </tr>
+                    <tr>
+                        <td>Prompt Engineering</td>
+                        <td>The skill of writing effective prompts to get the results you want from AI.</td>
+                    </tr>
+                    <tr>
+                        <td>Hallucination</td>
+                        <td>When AI confidently makes up information that isn't true. Always verify important facts.</td>
+                    </tr>
+                    <tr>
+                        <td>Context Window</td>
+                        <td>How much text the AI can "remember" in a conversation. Longer context = can handle bigger documents.</td>
+                    </tr>
+                    <tr>
+                        <td>Agent / Agentic AI</td>
+                        <td>AI that can take actions and complete multi-step tasks, not just answer questions. The FWI "agents" are small automated helpers.</td>
+                    </tr>
+                    <tr>
+                        <td>Token</td>
+                        <td>How AI measures text length. Roughly 1 token = 4 characters or 0.75 words. Most tools have token limits.</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- The CRAFT Framework -->
+            <div class="section">
+                <h2>The CRAFT Framework for Prompts</h2>
+                <p>A simple structure for writing effective prompts:</p>
+
+                <div class="card-grid" style="margin-top: 20px;">
+                    <div class="ref-card">
+                        <h3>C - Context</h3>
+                        <p>What's the situation?</p>
+                        <ul>
+                            <li>Who's the audience?</li>
+                            <li>What's the background?</li>
+                            <li>Any constraints?</li>
+                        </ul>
+                    </div>
+                    <div class="ref-card">
+                        <h3>R - Role</h3>
+                        <p>What role should AI play?</p>
+                        <ul>
+                            <li>Expert analyst</li>
+                            <li>Technical writer</li>
+                            <li>Business advisor</li>
+                        </ul>
+                    </div>
+                    <div class="ref-card">
+                        <h3>A - Action</h3>
+                        <p>What do you need done?</p>
+                        <ul>
+                            <li>Be specific</li>
+                            <li>One task at a time</li>
+                            <li>Clear deliverable</li>
+                        </ul>
+                    </div>
+                    <div class="ref-card">
+                        <h3>F - Format</h3>
+                        <p>How should output look?</p>
+                        <ul>
+                            <li>Bullet points vs prose</li>
+                            <li>Length (short/detailed)</li>
+                            <li>Structure (headers, tables)</li>
+                        </ul>
+                    </div>
+                    <div class="ref-card">
+                        <h3>T - Tone</h3>
+                        <p>What voice/style?</p>
+                        <ul>
+                            <li>Formal vs casual</li>
+                            <li>Technical vs simple</li>
+                            <li>Confident vs tentative</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Do's and Don'ts -->
+            <div class="section">
+                <h2>AI Do's and Don'ts</h2>
+
+                <div class="do-dont">
+                    <div class="do-box">
+                        <h4>DO</h4>
+                        <ul>
+                            <li><strong>Verify important facts</strong> - AI can be wrong</li>
+                            <li><strong>Iterate</strong> - Refine prompts if first result isn't right</li>
+                            <li><strong>Be specific</strong> - Vague prompts = vague results</li>
+                            <li><strong>Give examples</strong> - Show what you want</li>
+                            <li><strong>Review before sending</strong> - Always read AI-generated content</li>
+                            <li><strong>Use for first drafts</strong> - Then edit to your voice</li>
+                            <li><strong>Experiment</strong> - Try different tools for different tasks</li>
+                            <li><strong>Ask follow-up questions</strong> - Dig deeper</li>
+                        </ul>
+                    </div>
+                    <div class="dont-box">
+                        <h4>DON'T</h4>
+                        <ul>
+                            <li><strong>Put in sensitive data</strong> - No SSNs, passwords, client data</li>
+                            <li><strong>Trust blindly</strong> - AI can hallucinate facts</li>
+                            <li><strong>Use for final version</strong> - Always review and edit</li>
+                            <li><strong>Copy-paste without reading</strong> - You're responsible for the output</li>
+                            <li><strong>Share confidential info</strong> - Treat AI like a public conversation</li>
+                            <li><strong>Expect perfection</strong> - AI is a tool, not a replacement</li>
+                            <li><strong>Give up after one try</strong> - Refine your prompt</li>
+                            <li><strong>Use for legal/medical advice</strong> - Get professional help</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Tool Guide -->
+            <div class="section">
+                <h2>Quick Tool Selection</h2>
+
+                <table class="vocab-table">
+                    <tr>
+                        <th>I need to...</th>
+                        <th>Use this tool</th>
+                    </tr>
+                    <tr>
+                        <td>Write or edit text</td>
+                        <td><strong>ChatGPT</strong> or <strong>Claude</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Research with sources</td>
+                        <td><strong>Perplexity</strong> (always cites sources)</td>
+                    </tr>
+                    <tr>
+                        <td>Analyze a document without hallucination</td>
+                        <td><strong>NotebookLM</strong> (only answers from your docs)</td>
+                    </tr>
+                    <tr>
+                        <td>Create Excel formulas</td>
+                        <td><strong>ChatGPT</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Get help in Office apps</td>
+                        <td><strong>Microsoft Copilot</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Analyze a very long document</td>
+                        <td><strong>Claude</strong> (handles 500+ pages)</td>
+                    </tr>
+                    <tr>
+                        <td>Get current/recent information</td>
+                        <td><strong>Perplexity</strong> or <strong>Copilot</strong></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Common Prompt Starters -->
+            <div class="section">
+                <h2>Common Prompt Starters</h2>
+                <p>Copy and customize these:</p>
+
+                <div class="card-grid" style="margin-top: 20px;">
+                    <div class="ref-card">
+                        <h3>Rewrite/Edit</h3>
+                        <p>"Rewrite this to be more [concise/formal/clear]..."</p>
+                    </div>
+                    <div class="ref-card">
+                        <h3>Explain</h3>
+                        <p>"Explain [topic] as if I'm [new to this/an expert/a customer]..."</p>
+                    </div>
+                    <div class="ref-card">
+                        <h3>Summarize</h3>
+                        <p>"Summarize this in [3 bullet points/one paragraph/plain English]..."</p>
+                    </div>
+                    <div class="ref-card">
+                        <h3>Draft</h3>
+                        <p>"Draft a [email/memo/response] about [topic] for [audience]..."</p>
+                    </div>
+                    <div class="ref-card">
+                        <h3>Compare</h3>
+                        <p>"Compare [option A] and [option B] for [use case]. Show pros and cons..."</p>
+                    </div>
+                    <div class="ref-card">
+                        <h3>Improve</h3>
+                        <p>"What's wrong with this [email/process/approach]? How would you improve it?"</p>
+                    </div>
+                    <div class="ref-card">
+                        <h3>Create</h3>
+                        <p>"Create a [checklist/template/outline] for [task]..."</p>
+                    </div>
+                    <div class="ref-card">
+                        <h3>Analyze</h3>
+                        <p>"Analyze this [data/feedback/situation]. What are the key insights?"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Iterative Prompting -->
+            <div class="section">
+                <h2>Iterative Prompting</h2>
+                <p>Don't expect perfection on the first try. Use follow-ups:</p>
+
+                <div class="shortcut-grid" style="margin-top: 20px;">
+                    <div class="shortcut-card">
+                        <div class="keys">"Make it shorter"</div>
+                        <p>Reduce length</p>
+                    </div>
+                    <div class="shortcut-card">
+                        <div class="keys">"Make it more formal"</div>
+                        <p>Adjust tone</p>
+                    </div>
+                    <div class="shortcut-card">
+                        <div class="keys">"Add more detail to X"</div>
+                        <p>Expand sections</p>
+                    </div>
+                    <div class="shortcut-card">
+                        <div class="keys">"Give me 3 alternatives"</div>
+                        <p>Get options</p>
+                    </div>
+                    <div class="shortcut-card">
+                        <div class="keys">"Use bullet points"</div>
+                        <p>Change format</p>
+                    </div>
+                    <div class="shortcut-card">
+                        <div class="keys">"What am I missing?"</div>
+                        <p>Get perspective</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Before You Send Checklist -->
+            <div class="section">
+                <h2>Before You Send (Checklist)</h2>
+                <p>Always review AI-generated content before using it:</p>
+
+                <ul class="checklist">
+                    <li><span class="check">☐</span> <strong>Read it completely</strong> - Don't skim AI output</li>
+                    <li><span class="check">☐</span> <strong>Verify facts and numbers</strong> - AI can hallucinate</li>
+                    <li><span class="check">☐</span> <strong>Check for your voice</strong> - Does it sound like you?</li>
+                    <li><span class="check">☐</span> <strong>Remove AI artifacts</strong> - Look for generic phrases</li>
+                    <li><span class="check">☐</span> <strong>Confirm accuracy</strong> - Names, dates, specifics</li>
+                    <li><span class="check">☐</span> <strong>Consider the audience</strong> - Is the tone right?</li>
+                    <li><span class="check">☐</span> <strong>No sensitive data</strong> - Nothing confidential included</li>
+                </ul>
+            </div>
+
+            <!-- FWI Quick Reference -->
+            <div class="section">
+                <h2>FWI Quick Reference</h2>
+
+                <div class="quick-tip">
+                    <strong>What is FWI?</strong> The Frictionless Workforce Initiative - using AI to remove friction from work. Small, quickly deployed AI tools that make work easier.
+                </div>
+
+                <h3 style="color: #8B2332; margin-top: 20px;">The Three Pillars</h3>
+                <div class="card-grid">
+                    <div class="ref-card">
+                        <h3>1. Training & AI Literacy</h3>
+                        <p>Getting everyone comfortable using AI tools in their daily work.</p>
+                    </div>
+                    <div class="ref-card">
+                        <h3>2. Custom Agentic Solutions</h3>
+                        <p>Building small AI tools (1-3 day builds) to solve specific friction points.</p>
+                    </div>
+                    <div class="ref-card">
+                        <h3>3. Vendor AI Integration</h3>
+                        <p>Leveraging AI features in tools we already pay for (Copilot, etc.).</p>
+                    </div>
+                </div>
+
+                <h3 style="color: #8B2332; margin-top: 25px;">How to Submit a Friction Point</h3>
+                <ol style="margin-left: 20px;">
+                    <li>Identify something that causes friction in your work</li>
+                    <li>Document: What it is, how often, how long it takes</li>
+                    <li>Submit through the intake portal (coming soon)</li>
+                    <li>Your department head reviews</li>
+                    <li>IT evaluates feasibility</li>
+                    <li>If it's a 1-3 day build, it goes into the FWI queue</li>
+                </ol>
+            </div>
+
+            <!-- Footer -->
+            <div style="text-align: center; margin: 40px 0; padding: 30px; background: #f8f9fa; border-radius: 8px;">
+                <p style="font-size: 1.1em; color: #666;">
+                    Walker SCM | AI Quick Reference<br>
+                    <strong style="color: #8B2332;">Print or bookmark this page for easy access</strong>
+                </p>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #999;">
+                    Last updated: January 2026
+                </p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

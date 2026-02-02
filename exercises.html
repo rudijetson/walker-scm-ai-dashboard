@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hands-On Exercises - Walker SCM Training Kit</title>
+    <link rel="stylesheet" href="shared-nav.css">
+    <style>
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            color: #8B2332;
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #666;
+        }
+
+        .intro {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            font-size: 0.95em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .exercise {
+            background: white;
+            border-radius: 6px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .exercise-number {
+            background: #8B2332;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .exercise-title {
+            flex: 1;
+        }
+
+        .exercise-title h2 {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 4px;
+        }
+
+        .exercise-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .difficulty {
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+        }
+
+        .diff-beginner { background: #e8f5e9; color: #2e7d32; }
+        .diff-intermediate { background: #fff8e1; color: #f57f17; }
+        .diff-advanced { background: #fce4ec; color: #c62828; }
+
+        .scenario {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .scenario strong {
+            color: #333;
+        }
+
+        .steps {
+            margin-bottom: 20px;
+        }
+
+        .step {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .step:last-child {
+            border-bottom: none;
+        }
+
+        .step-num {
+            color: #8B2332;
+            font-weight: 600;
+            font-size: 0.9em;
+            min-width: 20px;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content strong {
+            color: #333;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            color: #666;
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+        .step-content a {
+            color: #8B2332;
+            text-decoration: none;
+            font-size: 0.85em;
+        }
+
+        .step-content a:hover {
+            text-decoration: underline;
+        }
+
+        .success-criteria {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+
+        .success-criteria h4 {
+            color: #333;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .success-criteria ul {
+            margin: 0 0 0 18px;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        .success-criteria li {
+            margin-bottom: 4px;
+        }
+
+        .tip {
+            background: #fff8e1;
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-size: 0.85em;
+            color: #5d4037;
+        }
+
+        .tip strong {
+            color: #4e342e;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .back-link a {
+            color: #8B2332;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header"><img src="assets/logo.png" alt="Walker SCM"></div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Dashboard</div>
+            <a href="index.html">Survey Results</a>
+            <a href="insights.html">Key Insights</a>
+            <a href="competency-matrix.html">Competency Matrix</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">FWI Strategy</div>
+            <a href="fwi-strategy.html">Strategy Overview</a>
+            <a href="slides.html">Presentation (52 slides)</a>
+            <a href="training-plan.html">Training Plan</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Training Resources</div>
+            <a href="prompt-library.html">Prompt Library</a>
+            <a href="tool-guides.html">AI Tool Guides</a>
+            <a href="mermaid-guide.html">Mermaid Diagrams</a>
+            <a href="quick-reference.html">Quick Reference</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Training Kit</div>
+            <a href="training-kit.html">Training Kit Home</a>
+            <a href="walker-prompts.html">Walker Prompts (41)</a>
+            <a href="glossary.html">Industry Glossary</a>
+            <a href="exercises.html" class="active">Hands-On Exercises</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Organization</div>
+            <a href="org-chart.html">Org Chart</a>
+            <a href="presentation-outline.html">Presentation Outline</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Data</div>
+            <a href="data/data.csv" download>Download CSV</a>
+            <a href="data/data.json" download>Download JSON</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Hands-On Exercises</h1>
+                <p>Practice using AI with real Walker SCM scenarios</p>
+            </div>
+
+            <div class="intro">
+                Each exercise walks you through a real-world scenario using prompts and sample data from the Training Kit.
+                <strong>Beginner</strong> exercises use a single prompt. <strong>Intermediate</strong> may require iteration.
+                <strong>Advanced</strong> exercises combine multiple prompts into a complete workflow.
+            </div>
+
+            <!-- Exercise 1 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-number">1</div>
+                    <div class="exercise-title">
+                        <h2>Analyze an RFP</h2>
+                        <div class="exercise-meta">
+                            <span class="difficulty diff-beginner">Beginner</span>
+                            <span>15-20 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <strong>Scenario:</strong> You've received an RFP from Sunrise Furniture Co. looking for a 3PL partner. Your sales manager wants a quick summary of what they're asking for and whether we should pursue it.
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-num">1.</div>
+                        <div class="step-content">
+                            <strong>Open RFP Analysis Prompts</strong>
+                            <p>Find "Prompt 1: Basic RFP Extraction"</p>
+                            <a href="prompts/html/01-rfp-analysis-prompts.html">Open RFP Analysis Prompts →</a>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2.</div>
+                        <div class="step-content">
+                            <strong>Get the Sample RFP</strong>
+                            <p>Copy the sample RFP content</p>
+                            <a href="training-materials/html/01-sample-rfp.html">Open Sample RFP →</a>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3.</div>
+                        <div class="step-content">
+                            <strong>Run in ChatGPT or Claude</strong>
+                            <p>Paste the prompt, then paste the RFP where indicated</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">4.</div>
+                        <div class="step-content">
+                            <strong>Review Output</strong>
+                            <p>Check for customer info, services, volumes, timeline, and follow-up questions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-criteria">
+                    <h4>Success Criteria</h4>
+                    <ul>
+                        <li>Customer name and contact identified</li>
+                        <li>Services requested clearly listed</li>
+                        <li>Volume estimates extracted</li>
+                        <li>Key dates noted</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Exercise 2 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-number">2</div>
+                    <div class="exercise-title">
+                        <h2>Quote a Rate Request</h2>
+                        <div class="exercise-meta">
+                            <span class="difficulty diff-beginner">Beginner</span>
+                            <span>10-15 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <strong>Scenario:</strong> A customer emailed asking for a rate on 2 pallets from Atlanta to Nashville, needed by Friday. You need to respond quickly with a quote.
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-num">1.</div>
+                        <div class="step-content">
+                            <strong>Open Rate Lookup Prompts</strong>
+                            <p>Find "Rate Request #1: Simple LTL"</p>
+                            <a href="prompts/html/02-rate-lookup-prompts.html">Open Rate Lookup Prompts →</a>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2.</div>
+                        <div class="step-content">
+                            <strong>Run the prompt</strong>
+                            <p>The prompt includes sample carrier rates and customer email</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3.</div>
+                        <div class="step-content">
+                            <strong>Review the quote</strong>
+                            <p>Check that rates include fuel surcharge and transit meets deadline</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-criteria">
+                    <h4>Success Criteria</h4>
+                    <ul>
+                        <li>Rate includes 28% fuel surcharge</li>
+                        <li>Transit time meets Friday deadline</li>
+                        <li>Response email is professional</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Exercise 3 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-number">3</div>
+                    <div class="exercise-title">
+                        <h2>Write a Delay Notification</h2>
+                        <div class="exercise-meta">
+                            <span class="difficulty diff-intermediate">Intermediate</span>
+                            <span>15 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <strong>Scenario:</strong> A shipment is delayed due to carrier breakdown. The customer (3-year account, $45K/month) previously complained about not being notified promptly. Write a professional email that's empathetic but not excessive.
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-num">1.</div>
+                        <div class="step-content">
+                            <strong>Open Customer Communication Prompts</strong>
+                            <p>Find "Scenario A: Shipment Delay Notification"</p>
+                            <a href="prompts/html/03-customer-communication-prompts.html">Open Customer Communication Prompts →</a>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2.</div>
+                        <div class="step-content">
+                            <strong>Run and evaluate</strong>
+                            <p>Does it acknowledge their previous feedback? Is the tone right?</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3.</div>
+                        <div class="step-content">
+                            <strong>Iterate</strong>
+                            <p>Ask the AI to make it shorter, more apologetic, or add a discount offer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-criteria">
+                    <h4>Success Criteria</h4>
+                    <ul>
+                        <li>Email under 200 words</li>
+                        <li>Acknowledges previous feedback</li>
+                        <li>Provides clear ETA</li>
+                        <li>Professional tone</li>
+                    </ul>
+                </div>
+
+                <div class="tip">
+                    <strong>Tip:</strong> Try the same prompt in both ChatGPT and Claude to compare outputs.
+                </div>
+            </div>
+
+            <!-- Exercise 4 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-number">4</div>
+                    <div class="exercise-title">
+                        <h2>Analyze AR Aging Data</h2>
+                        <div class="exercise-meta">
+                            <span class="difficulty diff-intermediate">Intermediate</span>
+                            <span>20 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <strong>Scenario:</strong> It's Monday morning. Prepare for the weekly collections meeting with a summary of overdue accounts and recommended priorities.
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-num">1.</div>
+                        <div class="step-content">
+                            <strong>Open Financial Analysis Prompts</strong>
+                            <p>Find "Prompt 1: AR Aging Summary"</p>
+                            <a href="prompts/html/06-financial-analysis-prompts.html">Open Financial Analysis Prompts →</a>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2.</div>
+                        <div class="step-content">
+                            <strong>Get AR data from Data Viewer</strong>
+                            <p>Copy the AR Aging Report table</p>
+                            <a href="data-viewer.html#ar-aging">View AR Aging Data →</a>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3.</div>
+                        <div class="step-content">
+                            <strong>Run and review</strong>
+                            <p>Check that priorities and recommendations make sense</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-criteria">
+                    <h4>Success Criteria</h4>
+                    <ul>
+                        <li>Correct total AR calculation</li>
+                        <li>Priorities ranked appropriately</li>
+                        <li>Specific action recommendations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Exercise 5 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-number">5</div>
+                    <div class="exercise-title">
+                        <h2>Create a Process Flowchart</h2>
+                        <div class="exercise-meta">
+                            <span class="difficulty diff-advanced">Advanced</span>
+                            <span>25-30 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <strong>Scenario:</strong> Your team describes the quote process differently. Document it as a flowchart for training and improvement.
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-num">1.</div>
+                        <div class="step-content">
+                            <strong>Open Process Mapping Prompts</strong>
+                            <p>Find "Prompt 2: Process Map with Pain Points"</p>
+                            <a href="prompts/html/04-process-mapping-prompts.html">Open Process Mapping Prompts →</a>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2.</div>
+                        <div class="step-content">
+                            <strong>Get the messy process description</strong>
+                            <a href="training-materials/html/08-messy-process-description.html">Open Messy Process Description →</a>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3.</div>
+                        <div class="step-content">
+                            <strong>Run and get Mermaid code</strong>
+                            <p>The AI will output diagram code</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">4.</div>
+                        <div class="step-content">
+                            <strong>Visualize</strong>
+                            <p>Paste code into mermaid.live or use our Mermaid Guide</p>
+                            <a href="mermaid-guide.html">Mermaid Guide →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-criteria">
+                    <h4>Success Criteria</h4>
+                    <ul>
+                        <li>Mermaid code renders without errors</li>
+                        <li>Logical process flow</li>
+                        <li>Pain points highlighted</li>
+                    </ul>
+                </div>
+
+                <div class="tip">
+                    <strong>Tip:</strong> If Mermaid has errors, paste the error back to the AI—it usually fixes it.
+                </div>
+            </div>
+
+            <!-- Exercise 6 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-number">6</div>
+                    <div class="exercise-title">
+                        <h2>Full Workflow: Customer Onboarding</h2>
+                        <div class="exercise-meta">
+                            <span class="difficulty diff-advanced">Advanced</span>
+                            <span>45-60 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <strong>Scenario:</strong> Sunrise Furniture signed! Plan their implementation using multiple prompts to create a complete onboarding package.
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-num">1.</div>
+                        <div class="step-content">
+                            <strong>Review customer info</strong>
+                            <a href="training-materials/html/05-new-customer-info-sheet.html">Open Customer Info Sheet →</a>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2.</div>
+                        <div class="step-content">
+                            <strong>Create task list</strong>
+                            <p>Use "Onboarding Task Generator" prompt</p>
+                            <a href="prompts/html/05-customer-onboarding-prompts.html">Open Customer Onboarding Prompts →</a>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3.</div>
+                        <div class="step-content">
+                            <strong>Assess risks</strong>
+                            <p>Use "Risk Assessment" prompt</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">4.</div>
+                        <div class="step-content">
+                            <strong>Create kick-off agenda</strong>
+                            <p>Use "Kick-Off Meeting Agenda" prompt</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">5.</div>
+                        <div class="step-content">
+                            <strong>Draft welcome packet</strong>
+                            <p>Use "Welcome Packet Content" prompt</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-criteria">
+                    <h4>Success Criteria</h4>
+                    <ul>
+                        <li>Task list has owners and dates</li>
+                        <li>Risks are realistic</li>
+                        <li>Agenda fits 60 minutes</li>
+                        <li>Documents are consistent</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="back-link">
+                <a href="training-kit.html">← Back to Training Kit</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Communication Scenario Cards</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 40px 20px; color: #333; background: #f9f9f9; }
+        h1 { color: #1a365d; border-bottom: 3px solid #2b6cb0; padding-bottom: 10px; }
+        h2 { color: #2c5282; margin-top: 30px; }
+        h3 { color: #2b6cb0; }
+        hr { border: none; border-top: 2px solid #e2e8f0; margin: 30px 0; }
+        .container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .scenario-card { background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 25px; margin: 25px 0; }
+        .scenario-header { background: #2b6cb0; color: white; padding: 10px 20px; margin: -25px -25px 20px -25px; border-radius: 12px 12px 0 0; }
+        .scenario-header h2 { color: white; margin: 0; border: none; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
+        .info-item { background: white; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0; }
+        .info-item strong { color: #2b6cb0; display: block; font-size: 0.85em; margin-bottom: 4px; }
+        .detail-box { background: white; padding: 15px; border-radius: 6px; margin: 15px 0; border: 1px solid #e2e8f0; }
+        .task-box { background: #ebf8ff; border-left: 4px solid #2b6cb0; padding: 15px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+        .task-box strong { color: #1a365d; }
+        .notes-section { background: #fffbeb; border: 1px solid #f6e05e; border-radius: 8px; padding: 20px; margin-top: 30px; }
+        ul, ol { padding-left: 25px; }
+        li { margin: 6px 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Customer Communication Scenario Cards</h1>
+<p>Use these scenarios to practice drafting emails with AI assistance.</p>
+
+<hr>
+
+<div class="scenario-card">
+<div class="scenario-header">
+<h2>SCENARIO A: Shipment Delay Notification</h2>
+</div>
+
+<h3>Situation</h3>
+<div class="info-grid">
+<div class="info-item"><strong>Customer</strong>Acme Corporation</div>
+<div class="info-item"><strong>Contact</strong>Robert Chang, Supply Chain Manager</div>
+<div class="info-item"><strong>Email</strong>rchang@acmecorp.com</div>
+<div class="info-item"><strong>Relationship</strong>3-year customer, $45K/month in business</div>
+</div>
+
+<div class="detail-box">
+<strong>What happened:</strong><br>
+Shipment #WL-45892 was scheduled to arrive Tuesday, January 21st. Due to a carrier mechanical breakdown in transit, the shipment is now delayed. New estimated arrival is Thursday, January 23rd.
+</div>
+
+<p><strong>Shipment details:</strong></p>
+<ul>
+<li>8 pallets of manufacturing components</li>
+<li>Value: $32,000</li>
+<li>Origin: Walker Chicago DC</li>
+<li>Destination: Acme Detroit plant</li>
+<li>Original carrier: XPO Freight</li>
+</ul>
+
+<p><strong>Customer context:</strong></p>
+<ul>
+<li>These components feed their production line</li>
+<li>Robert complained about communication last quarter (said he found out about a delay from his plant manager, not from us)</li>
+<li>He specifically asked to be notified immediately of any issues</li>
+</ul>
+
+<div class="task-box">
+<strong>Your task:</strong><br>
+Draft an email notifying Robert of the delay, apologizing for the inconvenience, and explaining what we're doing to resolve it.
+</div>
+</div>
+
+<div class="scenario-card">
+<div class="scenario-header">
+<h2>SCENARIO B: Quote Follow-Up (No Response)</h2>
+</div>
+
+<h3>Situation</h3>
+<div class="info-grid">
+<div class="info-item"><strong>Prospect</strong>Midwest Home Goods, Inc.</div>
+<div class="info-item"><strong>Contact</strong>Sarah Chen, Director of Supply Chain</div>
+<div class="info-item"><strong>Email</strong>schen@midwesthomegoods.com</div>
+<div class="info-item"><strong>Relationship</strong>New prospect (no current business)</div>
+</div>
+
+<div class="detail-box">
+<strong>Timeline:</strong><br>
+<ul style="margin: 10px 0;">
+<li>January 5: Received their RFP</li>
+<li>January 12: Sent our proposal (Proposal #WL-2025-0147)</li>
+<li>January 15: They confirmed receipt, said they'd review</li>
+<li>January 21 (today): No response in 6 days</li>
+</ul>
+</div>
+
+<p><strong>Proposal details:</strong></p>
+<ul>
+<li>Warehousing + distribution services</li>
+<li>Estimated monthly value: $18,000</li>
+<li>Our facility: Chicago</li>
+<li>Their timeline: Need to decide by mid-February for June go-live</li>
+</ul>
+
+<p><strong>Competitive context:</strong></p>
+<ul>
+<li>They mentioned also talking to XPO and Kenco</li>
+<li>Our pricing was competitive</li>
+<li>They seemed very interested during the facility tour</li>
+</ul>
+
+<div class="task-box">
+<strong>Your task:</strong><br>
+Draft a follow-up email that checks in without being pushy. You want to keep the conversation moving and see if they have questions.
+</div>
+</div>
+
+<div class="scenario-card">
+<div class="scenario-header">
+<h2>SCENARIO C: Damage Claim Response</h2>
+</div>
+
+<h3>Situation</h3>
+<div class="info-grid">
+<div class="info-item"><strong>Customer</strong>Beta Manufacturing, LLC</div>
+<div class="info-item"><strong>Contact</strong>Amanda Foster, Logistics Coordinator</div>
+<div class="info-item"><strong>Email</strong>afoster@betamfg.com</div>
+<div class="info-item"><strong>Relationship</strong>New customer, only 2 months in</div>
+</div>
+
+<div class="detail-box">
+<strong>What happened:</strong><br>
+Beta received a shipment yesterday. They're reporting 3 pallets arrived with visible damage (crushed corners, torn shrink wrap, product exposed). They sent photos showing the damage.
+</div>
+
+<p><strong>Damage details:</strong></p>
+<ul>
+<li>Shipment #WL-52341</li>
+<li>3 of 12 pallets damaged</li>
+<li>Product: Electronic components</li>
+<li>Customer's claimed value: $2,400</li>
+<li>Carrier: Estes Express</li>
+<li>Photos show damage consistent with forklift impact</li>
+</ul>
+
+<p><strong>POD status:</strong> Driver obtained signature, but notation on POD says "received subject to inspection" and "possible damage noted"</p>
+
+<p><strong>What we know:</strong></p>
+<ul>
+<li>Product left our dock in good condition (we have photos)</li>
+<li>This appears to be carrier damage in transit</li>
+<li>Estes has been notified, claim process started</li>
+</ul>
+
+<div class="task-box">
+<strong>Your task:</strong><br>
+Draft a response to Amanda acknowledging the issue, explaining the claim process, and setting expectations for resolution timeline. This is a new customer - we need to handle this well.
+</div>
+</div>
+
+<div class="scenario-card">
+<div class="scenario-header">
+<h2>SCENARIO D: Service Issue Apology (Our Fault)</h2>
+</div>
+
+<h3>Situation</h3>
+<div class="info-grid">
+<div class="info-item"><strong>Customer</strong>Premier Retail Group</div>
+<div class="info-item"><strong>Contact</strong>James Morrison, VP of Logistics</div>
+<div class="info-item"><strong>Email</strong>jmorrison@premierretail.com</div>
+<div class="info-item"><strong>Relationship</strong>5-year customer, $120K/month, strategic account</div>
+</div>
+
+<div class="detail-box">
+<strong>What happened:</strong><br>
+We shipped the wrong product to 4 of their retail stores last week. Instead of spring seasonal merchandise, we sent clearance items that were supposed to go to their outlet stores.
+</div>
+
+<p><strong>Impact:</strong></p>
+<ul>
+<li>4 stores received wrong product (about 200 units each)</li>
+<li>Stores had to refuse delivery and call customer service</li>
+<li>Premier had to expedite correct shipments at their cost ($1,800)</li>
+<li>Their stores missed a promotional window</li>
+</ul>
+
+<p><strong>Root cause:</strong> Our warehouse team mislabeled pallets during a high-volume day. This was our error.</p>
+
+<p><strong>What we've done:</strong></p>
+<ul>
+<li>Shipped correct product via expedited freight (at our cost)</li>
+<li>Retrieved incorrect product from stores</li>
+<li>Implemented additional QC check for this customer</li>
+</ul>
+
+<div class="task-box">
+<strong>Your task:</strong><br>
+Draft an apology email to James. This is a major account and a significant error. We need to own it, explain what happened, and describe what we're doing to prevent recurrence. Consider whether we should offer a credit.
+</div>
+</div>
+
+<div class="scenario-card">
+<div class="scenario-header">
+<h2>SCENARIO E: Contract Renewal Outreach</h2>
+</div>
+
+<h3>Situation</h3>
+<div class="info-grid">
+<div class="info-item"><strong>Customer</strong>Velocity Distribution, Inc.</div>
+<div class="info-item"><strong>Contact</strong>Karen Liu, COO</div>
+<div class="info-item"><strong>Email</strong>kliu@velocitydist.com</div>
+<div class="info-item"><strong>Relationship</strong>4-year customer, $65K/month</div>
+</div>
+
+<div class="detail-box">
+<strong>Contract status:</strong><br>
+<ul style="margin: 10px 0;">
+<li>Current contract expires: March 31, 2025</li>
+<li>We need 60-day notice to renew or terminate (deadline: January 31)</li>
+<li>They haven't reached out about renewal</li>
+</ul>
+</div>
+
+<p><strong>Account health:</strong></p>
+<ul>
+<li>Generally satisfied (8/10 on last survey)</li>
+<li>No major issues in past year</li>
+<li>They did mention last QBR that they were "evaluating options"</li>
+<li>Volume has been flat (no growth)</li>
+</ul>
+
+<p><strong>What we want:</strong></p>
+<ul>
+<li>Renew for another 2 years</li>
+<li>Ideally, grow the business (they have West Coast volume going elsewhere)</li>
+</ul>
+
+<p><strong>Competitive concern:</strong></p>
+<ul>
+<li>We heard through industry contacts they took meetings with DHL Supply Chain</li>
+<li>Their West Coast business might be up for bid</li>
+</ul>
+
+<div class="task-box">
+<strong>Your task:</strong><br>
+Draft an email to Karen to start the renewal conversation. You want to gauge their satisfaction, understand their plans, and ideally schedule a meeting to discuss renewal and growth opportunities.
+</div>
+</div>
+
+<div class="scenario-card">
+<div class="scenario-header">
+<h2>SCENARIO F: Price Increase Notification</h2>
+</div>
+
+<h3>Situation</h3>
+<div class="info-grid">
+<div class="info-item"><strong>Customer</strong>Standard Goods Company</div>
+<div class="info-item"><strong>Contact</strong>Bill Thompson, Purchasing Manager</div>
+<div class="info-item"><strong>Email</strong>bthompson@standardgoods.com</div>
+<div class="info-item"><strong>Relationship</strong>2-year customer, $28K/month</div>
+</div>
+
+<div class="detail-box">
+<strong>Context:</strong><br>
+<ul style="margin: 10px 0;">
+<li>Contract allows annual rate adjustment tied to CPI</li>
+<li>CPI increase this year: 3.2%</li>
+<li>Our actual cost increases (labor, utilities): 4.5%</li>
+<li>We're implementing a 3.2% increase (per contract)</li>
+</ul>
+</div>
+
+<p><strong>Rate changes (effective March 1):</strong></p>
+<ul>
+<li>Storage: $8.50 → $8.77 per pallet</li>
+<li>Handling in: $4.25 → $4.39 per pallet</li>
+<li>Handling out: $4.50 → $4.64 per pallet</li>
+<li>Estimated monthly impact: +$896</li>
+</ul>
+
+<p><strong>Customer context:</strong></p>
+<ul>
+<li>Bill is very cost-conscious</li>
+<li>He pushed back hard on pricing during initial negotiation</li>
+<li>Account is profitable but not highly profitable</li>
+<li>They've been a good customer with steady volume</li>
+</ul>
+
+<div class="task-box">
+<strong>Your task:</strong><br>
+Draft a professional notification of the rate increase. Reference the contract terms, be clear about the new rates and timing, and maintain a positive relationship tone.
+</div>
+</div>
+
+<div class="scenario-card">
+<div class="scenario-header">
+<h2>SCENARIO G: Win-Back Attempt (Lost Customer)</h2>
+</div>
+
+<h3>Situation</h3>
+<div class="info-grid">
+<div class="info-item"><strong>Former Customer</strong>Pacific Traders, Inc.</div>
+<div class="info-item"><strong>Contact</strong>Michelle Nakamura, Director of Operations</div>
+<div class="info-item"><strong>Email</strong>mnakamura@pacifictraders.com</div>
+<div class="info-item"><strong>Relationship</strong>Left us 8 months ago</div>
+</div>
+
+<div class="detail-box">
+<strong>History:</strong><br>
+<ul style="margin: 10px 0;">
+<li>Was a customer for 3 years ($35K/month)</li>
+<li>Left due to service issues during peak season 2023</li>
+<li>Specifically: we missed delivery windows, causing chargebacks with their retail customers</li>
+<li>Michelle was very frustrated when she terminated</li>
+</ul>
+</div>
+
+<p><strong>What's changed:</strong></p>
+<ul>
+<li>We've invested in new WMS</li>
+<li>Added capacity at our LA facility (their market)</li>
+<li>Hired new operations manager (strong retail experience)</li>
+<li>Improved our on-time delivery from 94% to 99.2%</li>
+</ul>
+
+<p><strong>Why reach out now:</strong></p>
+<ul>
+<li>Industry contact mentioned Pacific is unhappy with their current provider</li>
+<li>Their current provider reportedly having capacity issues</li>
+<li>This might be an opportunity to re-engage</li>
+</ul>
+
+<div class="task-box">
+<strong>Your task:</strong><br>
+Draft a win-back email to Michelle. Acknowledge the past issues without being defensive, highlight what's changed, and try to get a conversation started. Be humble but confident.
+</div>
+</div>
+
+<div class="scenario-card">
+<div class="scenario-header">
+<h2>SCENARIO H: Thank You / Relationship Building</h2>
+</div>
+
+<h3>Situation</h3>
+<div class="info-grid">
+<div class="info-item"><strong>Customer</strong>Henderson Furniture</div>
+<div class="info-item"><strong>Contact</strong>Chris Martinez, Logistics Director</div>
+<div class="info-item"><strong>Email</strong>cmartinez@hendersonfurniture.com</div>
+<div class="info-item"><strong>Relationship</strong>6-year customer, $85K/month, reference account</div>
+</div>
+
+<div class="detail-box">
+<strong>Recent event:</strong><br>
+Chris agreed to be a reference for a prospect (Sunrise Furniture). He took a 30-minute call with their VP of Operations and gave us a glowing recommendation. The prospect is close to signing.
+</div>
+
+<p><strong>Chris's value:</strong></p>
+<ul>
+<li>One of our longest customers</li>
+<li>Always willing to provide references</li>
+<li>Speaks at our customer advisory board</li>
+<li>Genuine advocate for Walker</li>
+</ul>
+
+<div class="task-box">
+<strong>Your task:</strong><br>
+Draft a thank you email to Chris. Make it personal, not generic. Consider whether to mention any token of appreciation.
+</div>
+</div>
+
+<hr>
+
+<div class="notes-section">
+<h2>Notes for Training</h2>
+<p>These scenarios cover common communication types:</p>
+<ol>
+<li><strong>Bad news delivery</strong> (Scenarios A, C, D, F) - How to communicate problems professionally</li>
+<li><strong>Sales/prospecting</strong> (Scenarios B, E, G) - Moving opportunities forward</li>
+<li><strong>Relationship building</strong> (Scenario H) - Maintaining strong partnerships</li>
+</ol>
+
+<p><strong>When practicing with AI:</strong></p>
+<ul>
+<li>Provide the full context</li>
+<li>Specify the tone you want</li>
+<li>Ask for multiple versions if needed</li>
+<li>Always review and personalize before sending</li>
+</ul>
+</div>
+
+</div>
+</body>
+</html>

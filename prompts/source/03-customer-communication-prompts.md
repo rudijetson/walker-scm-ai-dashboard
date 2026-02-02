@@ -1,0 +1,347 @@
+# Customer Communication Prompts
+
+Use these prompts with the scenario cards (07-scenario-cards.md)
+
+---
+
+## Scenario A: Shipment Delay Notification
+
+```
+ROLE:
+You are a customer service representative at Walker Logistics writing to a valued customer about a shipment delay.
+
+CONTEXT:
+Customer: Acme Corporation
+Contact: Robert Chang, Supply Chain Manager (rchang@acmecorp.com)
+Relationship: 3-year customer, $45K/month in business
+History: Robert complained last quarter about finding out about delays from his plant manager instead of from us. He specifically asked to be notified immediately of any issues.
+
+What happened:
+- Shipment #WL-45892 was scheduled to arrive Tuesday, January 21st
+- Carrier (XPO Freight) had a mechanical breakdown in transit
+- New estimated arrival: Thursday, January 23rd
+- Shipment: 8 pallets of manufacturing components, value $32,000
+- Route: Walker Chicago DC to Acme Detroit plant
+
+What we're doing:
+- Monitoring shipment closely with carrier
+- Will provide tracking updates every 12 hours until delivery
+- Escalated with XPO management
+
+TASK:
+Write an email to Robert that:
+1. Notifies him of the delay immediately and clearly
+2. Apologizes sincerely without being excessive
+3. Explains what happened (brief, factual)
+4. Provides the new ETA
+5. Describes what we're doing about it
+6. Offers a way to reach us directly with questions
+7. Acknowledges his previous feedback about communication
+
+OUTPUT FORMAT:
+Professional email, empathetic but not groveling. Under 200 words. Subject line included.
+```
+
+---
+
+## Scenario B: Quote Follow-Up (No Response)
+
+```
+ROLE:
+You are a sales representative at Walker Logistics following up on a proposal that hasn't received a response.
+
+CONTEXT:
+Prospect: Midwest Home Goods, Inc.
+Contact: Sarah Chen, Director of Supply Chain (schen@midwesthomegoods.com)
+Relationship: New prospect, no current business
+
+Timeline:
+- January 5: Received their RFP
+- January 12: Sent our proposal (Proposal #WL-2025-0147)
+- January 15: They confirmed receipt, said they'd review
+- January 21 (today): No response in 6 days
+
+Proposal details:
+- Warehousing + distribution services
+- Estimated monthly value: $18,000
+- Our facility: Chicago
+- Their timeline: Need to decide by mid-February for June go-live
+
+Competitive context:
+- They mentioned talking to XPO and Kenco
+- Our pricing was competitive
+- They seemed very interested during the facility tour
+
+TASK:
+Write a follow-up email that:
+1. Checks in without being pushy or desperate
+2. Adds value (doesn't just ask "did you get my email?")
+3. Offers to answer questions or provide additional information
+4. Gently creates some urgency without pressure
+5. Makes it easy for them to respond
+6. Keeps the door open regardless of their decision
+
+OUTPUT FORMAT:
+Friendly, professional email. Confident but not aggressive. Under 150 words. Subject line included.
+```
+
+---
+
+## Scenario C: Damage Claim Response
+
+```
+ROLE:
+You are a customer service manager at Walker Logistics responding to a damage claim from a new customer.
+
+CONTEXT:
+Customer: Beta Manufacturing, LLC
+Contact: Amanda Foster, Logistics Coordinator (afoster@betamfg.com)
+Relationship: New customer, only 2 months in
+
+What happened:
+- Shipment #WL-52341 delivered yesterday
+- Customer reports 3 of 12 pallets arrived damaged (crushed corners, torn shrink wrap, product exposed)
+- Photos show damage consistent with forklift impact
+- Product: Electronic components
+- Customer's claimed value: $2,400
+- Carrier: Estes Express
+
+Documentation:
+- Product left our dock in good condition (we have photos)
+- POD was signed with notation: "received subject to inspection" and "possible damage noted"
+- This appears to be carrier damage in transit
+
+What we've done:
+- Notified Estes Express
+- Claim process initiated
+- Waiting for carrier investigation
+
+TASK:
+Write a response to Amanda that:
+1. Acknowledges the issue with empathy
+2. Thanks her for the photos and documentation
+3. Explains what we've determined (carrier damage, not warehouse)
+4. Describes the claim process and timeline
+5. Sets realistic expectations (carrier claims take 2-4 weeks)
+6. Assures her we're advocating on her behalf
+7. Maintains the relationship (new customer - this is critical)
+
+OUTPUT FORMAT:
+Professional, empathetic email. Balance being helpful with being accurate about process. Under 250 words. Subject line included.
+```
+
+---
+
+## Scenario D: Service Issue Apology (Our Fault)
+
+```
+ROLE:
+You are a senior customer service manager at Walker Logistics writing to a strategic account about a significant error we made.
+
+CONTEXT:
+Customer: Premier Retail Group
+Contact: James Morrison, VP of Logistics (jmorrison@premierretail.com)
+Relationship: 5-year customer, $120K/month, strategic account
+
+What happened:
+- We shipped the wrong product to 4 of their retail stores last week
+- Instead of spring seasonal merchandise, we sent clearance items meant for outlet stores
+- Root cause: Our warehouse team mislabeled pallets during a high-volume day
+- This was 100% our error
+
+Impact:
+- 4 stores received wrong product (~200 units each)
+- Stores had to refuse delivery and call customer service
+- Premier had to expedite correct shipments at their cost ($1,800)
+- Their stores missed a promotional window
+- Customer is frustrated
+
+What we've done:
+- Shipped correct product via expedited freight at our cost
+- Retrieved incorrect product from stores
+- Implemented additional QC check for this customer going forward
+
+TASK:
+Write an apology email to James that:
+1. Owns the mistake completely - no excuses or deflection
+2. Apologizes sincerely at the executive level
+3. Explains what happened (without making excuses)
+4. Details what we've done to fix it immediately
+5. Describes what we're doing to prevent recurrence
+6. Offers to credit them for their $1,800 expedite cost
+7. Offers to discuss further by phone
+8. Reinforces our commitment to the partnership
+
+OUTPUT FORMAT:
+Executive-level communication. Sincere and direct. Takes full responsibility. Under 300 words. Subject line included.
+```
+
+---
+
+## Scenario E: Contract Renewal Outreach
+
+```
+ROLE:
+You are a sales director at Walker Logistics reaching out to start a contract renewal conversation.
+
+CONTEXT:
+Customer: Velocity Distribution, Inc.
+Contact: Karen Liu, COO (kliu@velocitydist.com)
+Relationship: 4-year customer, $65K/month
+
+Contract status:
+- Current contract expires: March 31, 2025
+- 60-day notice required (deadline: January 31)
+- They haven't reached out about renewal
+
+Account health:
+- Generally satisfied (8/10 on last survey)
+- No major issues in past year
+- Volume has been flat (no growth)
+- At last QBR, they mentioned "evaluating options"
+
+What we want:
+- Renew for another 2 years
+- Grow the business (they have West Coast volume going elsewhere)
+
+Competitive concern:
+- Heard through industry contacts they took meetings with DHL Supply Chain
+- Their West Coast business might be up for bid
+
+TASK:
+Write an email to Karen that:
+1. Reaches out proactively about the renewal
+2. Acknowledges the upcoming contract expiration
+3. Expresses appreciation for the partnership
+4. Opens the door to discuss their needs and any concerns
+5. Hints at growth opportunities without being pushy
+6. Requests a meeting to discuss renewal and future plans
+7. Doesn't reveal that we know about DHL meetings
+
+OUTPUT FORMAT:
+Executive-level, relationship-focused email. Confident but not presumptuous. Under 200 words. Subject line included.
+```
+
+---
+
+## Scenario F: Price Increase Notification
+
+```
+ROLE:
+You are an account manager at Walker Logistics notifying a customer of a contractual rate adjustment.
+
+CONTEXT:
+Customer: Standard Goods Company
+Contact: Bill Thompson, Purchasing Manager (bthompson@standardgoods.com)
+Relationship: 2-year customer, $28K/month
+Customer personality: Bill is very cost-conscious, pushed back hard during initial negotiation
+
+Contract terms:
+- Contract allows annual rate adjustment tied to CPI
+- CPI increase this year: 3.2%
+- Our actual cost increases (labor, utilities): 4.5%
+- We're implementing only the 3.2% increase (per contract)
+
+Rate changes effective March 1:
+- Storage: $8.50 → $8.77 per pallet
+- Handling in: $4.25 → $4.39 per pallet
+- Handling out: $4.50 → $4.64 per pallet
+- Estimated monthly impact: +$896 (~3.2%)
+
+TASK:
+Write a notification email to Bill that:
+1. Clearly communicates the rate increase
+2. References the contract terms that allow this adjustment
+3. Provides the specific new rates and effective date
+4. Explains the basis (CPI) and that we're at the minimum allowed
+5. Shows the estimated monthly impact
+6. Maintains a positive, partnership tone
+7. Offers to discuss if he has questions
+8. Doesn't apologize excessively - this is contractual
+
+OUTPUT FORMAT:
+Professional, matter-of-fact but friendly. Clear and transparent. Under 200 words. Subject line included.
+```
+
+---
+
+## Scenario G: Win-Back Attempt (Lost Customer)
+
+```
+ROLE:
+You are a sales director at Walker Logistics attempting to re-engage a former customer.
+
+CONTEXT:
+Former customer: Pacific Traders, Inc.
+Contact: Michelle Nakamura, Director of Operations (mnakamura@pacifictraders.com)
+Relationship: Left us 8 months ago after 3 years ($35K/month)
+
+Why they left:
+- Service issues during peak season 2023
+- We missed delivery windows, causing chargebacks with their retail customers
+- Michelle was very frustrated when she terminated
+
+What's changed at Walker since then:
+- Invested in new WMS with better inventory accuracy
+- Added 40K sq ft capacity at our LA facility (their market)
+- Hired new operations manager with strong retail experience
+- Improved on-time delivery from 94% to 99.2%
+
+Why reach out now:
+- Industry contact mentioned Pacific is unhappy with their current provider
+- Their current 3PL is reportedly having capacity issues
+- This might be an opportunity to re-engage
+
+TASK:
+Write a win-back email to Michelle that:
+1. Acknowledges the past honestly (without being defensive)
+2. Doesn't over-apologize or grovel
+3. Explains what has changed since they left
+4. Provides specific proof points (not just claims)
+5. Expresses interest in reconnecting if timing is right
+6. Makes it easy for her to respond (low pressure)
+7. Maintains dignity and professionalism
+
+OUTPUT FORMAT:
+Humble but confident. Honest about the past, optimistic about the future. Under 250 words. Subject line included.
+```
+
+---
+
+## Scenario H: Thank You / Relationship Building
+
+```
+ROLE:
+You are a customer success manager at Walker Logistics thanking a loyal customer for going above and beyond.
+
+CONTEXT:
+Customer: Henderson Furniture
+Contact: Chris Martinez, Logistics Director (cmartinez@hendersonfurniture.com)
+Relationship: 6-year customer, $85K/month, reference account
+
+What Chris did:
+- Agreed to be a reference for our prospect (Sunrise Furniture)
+- Took a 30-minute call with their VP of Operations
+- Gave us a glowing recommendation
+- The prospect is now close to signing (potential $30K/month)
+
+Chris's overall value to us:
+- One of our longest customers
+- Always willing to provide references
+- Speaks at our customer advisory board
+- Genuine advocate for Walker
+- Never complains, always professional
+
+TASK:
+Write a thank you email to Chris that:
+1. Expresses genuine gratitude (not form-letter generic)
+2. Specifically mentions what he did and the impact
+3. Acknowledges his ongoing support over the years
+4. Feels personal and warm
+5. Considers mentioning a small token of appreciation (gift card, lunch, etc.)
+6. Reinforces the mutual value of the partnership
+7. Doesn't ask for anything else
+
+OUTPUT FORMAT:
+Warm, personal, genuine. Not corporate-speak. Under 150 words. Subject line included.
+```

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walker SCM - Industry Glossary</title>
+    <link rel="stylesheet" href="shared-nav.css">
+    <style>
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            color: #8B2332;
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #666;
+        }
+
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .category-nav a {
+            padding: 6px 14px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #555;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+
+        .category-nav a:hover {
+            background: #8B2332;
+            color: white;
+        }
+
+        .section {
+            background: #ffffff;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .section h2 {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .term {
+            margin-bottom: 18px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .term:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .term-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 1em;
+        }
+
+        .term-abbrev {
+            background: #f8f9fa;
+            color: #8B2332;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-left: 6px;
+        }
+
+        .term-def {
+            margin-top: 5px;
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .term-example {
+            margin-top: 8px;
+            font-size: 0.85em;
+            color: #666;
+            font-style: italic;
+            background: #fafafa;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        .back-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #8B2332;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85em;
+            z-index: 100;
+        }
+
+        .back-top:hover { background: #6B1A26; }
+
+        .back-link {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .back-link a {
+            color: #8B2332;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .back-link a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header"><img src="assets/logo.png" alt="Walker SCM"></div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Dashboard</div>
+            <a href="index.html">Survey Results</a>
+            <a href="insights.html">Key Insights</a>
+            <a href="competency-matrix.html">Competency Matrix</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">FWI Strategy</div>
+            <a href="fwi-strategy.html">Strategy Overview</a>
+            <a href="slides.html">Presentation (52 slides)</a>
+            <a href="training-plan.html">Training Plan</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Training Resources</div>
+            <a href="prompt-library.html">Prompt Library</a>
+            <a href="tool-guides.html">AI Tool Guides</a>
+            <a href="mermaid-guide.html">Mermaid Diagrams</a>
+            <a href="quick-reference.html">Quick Reference</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Training Kit</div>
+            <a href="training-kit.html">Training Kit Home</a>
+            <a href="walker-prompts.html">Walker Prompts (41)</a>
+            <a href="glossary.html" class="active">Industry Glossary</a>
+            <a href="exercises.html">Hands-On Exercises</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Organization</div>
+            <a href="org-chart.html">Org Chart</a>
+            <a href="presentation-outline.html">Presentation Outline</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Data</div>
+            <a href="data/data.csv" download>Download CSV</a>
+            <a href="data/data.json" download>Download JSON</a>
+        </div>
+    </nav>
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Industry Glossary</h1>
+                <p>60+ logistics and supply chain terms with definitions</p>
+            </div>
+
+            <div class="category-nav">
+                <a href="#transportation">Transportation</a>
+                <a href="#warehousing">Warehousing</a>
+                <a href="#technology">Technology</a>
+                <a href="#finance">Finance</a>
+                <a href="#general">General</a>
+            </div>
+
+            <!-- Transportation -->
+            <div class="section" id="transportation">
+                <h2>Transportation Terms</h2>
+                <span class="category-tag cat-transport">Transportation</span>
+
+                <div class="term">
+                    <span class="term-name">FTL</span><span class="term-abbrev">Full Truckload</span>
+                    <p class="term-def">A shipment that fills an entire truck trailer (typically 48-53 feet). The shipper pays for the whole trailer regardless of whether it's completely full.</p>
+                    <p class="term-example">Example: "We need an FTL from Dallas to Chicago - 42,000 lbs of auto parts."</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">LTL</span><span class="term-abbrev">Less Than Truckload</span>
+                    <p class="term-def">A shipment that doesn't fill a full truck. Multiple shippers share trailer space, and pricing is based on weight, dimensions, and freight class.</p>
+                    <p class="term-example">Example: "This is only 4 pallets, so we'll ship it LTL to save money."</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Freight Class</span>
+                    <p class="term-def">A standardized classification (50-500) used to categorize LTL shipments based on density, handling, stowability, and liability. Lower class = lower rate.</p>
+                    <p class="term-example">Example: "Class 85 freight is denser than Class 150, so it costs less per pound to ship."</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Dry Van</span>
+                    <p class="term-def">An enclosed trailer used for shipping non-perishable goods. The most common type of trailer, typically 53 feet long.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Reefer</span><span class="term-abbrev">Refrigerated Trailer</span>
+                    <p class="term-def">A temperature-controlled trailer used for shipping perishable goods like food, pharmaceuticals, and flowers.</p>
+                    <p class="term-example">Example: "Frozen foods require a reefer set to -10°F with team drivers."</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Flatbed</span>
+                    <p class="term-def">An open trailer with no sides or roof, used for oversized cargo, construction materials, and machinery that can't fit in an enclosed trailer.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Intermodal</span>
+                    <p class="term-def">Shipping that uses multiple transportation modes (typically truck + rail) using standardized containers that transfer between modes.</p>
+                    <p class="term-example">Example: "For coast-to-coast, intermodal is 30% cheaper than FTL if you have 5+ days."</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Drayage</span>
+                    <p class="term-def">Short-distance trucking, typically moving containers from ports or rail yards to nearby warehouses or distribution centers.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Deadhead</span>
+                    <p class="term-def">When a truck drives empty (no freight). Carriers try to minimize deadhead miles because they don't generate revenue.</p>
+                    <p class="term-example">Example: "The backhaul rate is low because the carrier needs to deadhead back anyway."</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Linehaul</span>
+                    <p class="term-def">The main transportation charge for moving freight from origin to destination, excluding accessorial charges.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Accessorial</span>
+                    <p class="term-def">Additional charges beyond basic linehaul, such as liftgate service, inside delivery, detention, or appointment scheduling.</p>
+                    <p class="term-example">Example: "Add $85 for liftgate delivery since they don't have a loading dock."</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Detention</span>
+                    <p class="term-def">A charge applied when a driver is kept waiting beyond the allotted free time (usually 2 hours) for loading or unloading.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">BOL</span><span class="term-abbrev">Bill of Lading</span>
+                    <p class="term-def">The legal document between shipper and carrier that details the shipment contents, origin, destination, and terms. Serves as a receipt and contract.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">POD</span><span class="term-abbrev">Proof of Delivery</span>
+                    <p class="term-def">Documentation (usually signed) confirming that a shipment was delivered to the consignee. Required for billing and claims.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">PRO Number</span>
+                    <p class="term-def">Progressive or tracking number assigned by the carrier to identify and track a shipment.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Fuel Surcharge</span>
+                    <p class="term-def">A variable charge added to freight rates to account for fluctuating fuel costs. Typically expressed as a percentage of linehaul.</p>
+                    <p class="term-example">Example: "Current fuel surcharge is 28% on top of the base rate."</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Spot Rate</span>
+                    <p class="term-def">A one-time rate negotiated for a specific shipment, as opposed to contracted rates. Usually higher than contract rates.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Contract Rate</span>
+                    <p class="term-def">A pre-negotiated rate agreed upon for a specified period, typically in exchange for committed volume. Lower than spot rates.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Lane</span>
+                    <p class="term-def">A specific origin-destination pair for freight movement. Rates are often quoted and managed by lane.</p>
+                    <p class="term-example">Example: "The Dallas-to-Phoenix lane runs $1,800 for FTL."</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">MABD</span><span class="term-abbrev">Must Arrive By Date</span>
+                    <p class="term-def">The deadline by which a shipment must be delivered, often with penalties (chargebacks) for late delivery.</p>
+                </div>
+            </div>
+
+            <!-- Warehousing -->
+            <div class="section" id="warehousing">
+                <h2>Warehousing Terms</h2>
+                <span class="category-tag cat-warehouse">Warehousing</span>
+
+                <div class="term">
+                    <span class="term-name">3PL</span><span class="term-abbrev">Third-Party Logistics</span>
+                    <p class="term-def">A company that provides outsourced logistics services including warehousing, fulfillment, and transportation management.</p>
+                    <p class="term-example">Example: "Walker Logistics is our 3PL - they handle all our storage and shipping."</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">DC</span><span class="term-abbrev">Distribution Center</span>
+                    <p class="term-def">A warehouse focused on receiving, storing, and shipping products to customers or retail locations. Emphasizes throughput over long-term storage.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Cross-Dock</span>
+                    <p class="term-def">A logistics practice where incoming shipments are unloaded and directly loaded onto outbound trucks with minimal storage time.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Pick & Pack</span>
+                    <p class="term-def">The warehouse process of selecting items from inventory (picking) and packaging them for shipment (packing).</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Each Pick</span>
+                    <p class="term-def">Picking individual units rather than full cases or pallets. More labor-intensive and typically costs more per unit.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Case Pick</span>
+                    <p class="term-def">Picking full cases/cartons from inventory rather than individual units or full pallets.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Pallet Position</span>
+                    <p class="term-def">A storage space for one standard pallet (typically 48" x 40"). Storage fees are often charged per pallet position per month.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">SKU</span><span class="term-abbrev">Stock Keeping Unit</span>
+                    <p class="term-def">A unique identifier for each distinct product in inventory. Used to track inventory levels and movements.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">FIFO</span><span class="term-abbrev">First In, First Out</span>
+                    <p class="term-def">An inventory management method where the oldest stock is shipped first. Critical for perishable goods.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">FEFO</span><span class="term-abbrev">First Expired, First Out</span>
+                    <p class="term-def">An inventory method where items closest to expiration are shipped first, regardless of when they were received.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Lot Tracking</span>
+                    <p class="term-def">Tracking inventory by production lot or batch number for traceability, quality control, and recall management.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Cycle Count</span>
+                    <p class="term-def">A partial inventory count done on a regular schedule, rather than counting all inventory at once (physical inventory).</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Shrinkage</span>
+                    <p class="term-def">Loss of inventory due to theft, damage, administrative errors, or other causes. Measured as a percentage of total inventory value.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Put-Away</span>
+                    <p class="term-def">The process of moving received goods from the dock to their assigned storage location in the warehouse.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Slotting</span>
+                    <p class="term-def">Organizing warehouse storage locations to optimize picking efficiency - placing fast-moving items in easily accessible locations.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">VAS</span><span class="term-abbrev">Value-Added Services</span>
+                    <p class="term-def">Additional services beyond basic storage and shipping, such as kitting, labeling, assembly, or returns processing.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Kitting</span>
+                    <p class="term-def">Combining multiple SKUs into a single sellable unit or package. Common for promotional bundles or product sets.</p>
+                </div>
+            </div>
+
+            <!-- Technology -->
+            <div class="section" id="technology">
+                <h2>Technology Terms</h2>
+                <span class="category-tag cat-tech">Technology</span>
+
+                <div class="term">
+                    <span class="term-name">WMS</span><span class="term-abbrev">Warehouse Management System</span>
+                    <p class="term-def">Software that manages warehouse operations including inventory tracking, picking, receiving, and shipping.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">TMS</span><span class="term-abbrev">Transportation Management System</span>
+                    <p class="term-def">Software that manages transportation operations including carrier selection, rate shopping, shipment tracking, and freight audit.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">OMS</span><span class="term-abbrev">Order Management System</span>
+                    <p class="term-def">Software that tracks orders from placement through fulfillment, managing inventory allocation and order status.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">EDI</span><span class="term-abbrev">Electronic Data Interchange</span>
+                    <p class="term-def">A standardized format for exchanging business documents electronically between trading partners (orders, invoices, ASNs).</p>
+                    <p class="term-example">Example: "We receive orders via EDI 940 and send ship confirmations via EDI 945."</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">EDI 940</span>
+                    <p class="term-def">Warehouse Shipping Order - instructs a 3PL to ship inventory to a customer.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">EDI 945</span>
+                    <p class="term-def">Warehouse Shipping Advice - confirms that a shipment has been sent from the warehouse.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">EDI 856</span><span class="term-abbrev">ASN - Advance Ship Notice</span>
+                    <p class="term-def">Electronic notification sent before a shipment arrives, detailing contents, carrier, and expected arrival.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">EDI 810</span>
+                    <p class="term-def">Invoice - electronic billing document sent from seller to buyer.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">API</span><span class="term-abbrev">Application Programming Interface</span>
+                    <p class="term-def">A modern method for systems to communicate and share data in real-time, often replacing or supplementing EDI.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">RF Scanner</span><span class="term-abbrev">Radio Frequency</span>
+                    <p class="term-def">Handheld devices used in warehouses to scan barcodes and communicate with the WMS in real-time.</p>
+                </div>
+            </div>
+
+            <!-- Finance -->
+            <div class="section" id="finance">
+                <h2>Finance & Billing Terms</h2>
+                <span class="category-tag cat-finance">Finance</span>
+
+                <div class="term">
+                    <span class="term-name">AR</span><span class="term-abbrev">Accounts Receivable</span>
+                    <p class="term-def">Money owed to a company by its customers for goods or services delivered but not yet paid for.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">AP</span><span class="term-abbrev">Accounts Payable</span>
+                    <p class="term-def">Money a company owes to its vendors or suppliers for goods or services received but not yet paid for.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Net 30</span>
+                    <p class="term-def">Payment terms requiring full payment within 30 days of the invoice date. Common terms include Net 15, Net 30, Net 45.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Aging Report</span>
+                    <p class="term-def">A report showing outstanding invoices categorized by how long they've been unpaid (current, 1-30 days, 31-60 days, etc.).</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Chargeback</span>
+                    <p class="term-def">A deduction taken by a retailer from a vendor's payment for non-compliance (late delivery, labeling errors, etc.).</p>
+                    <p class="term-example">Example: "Walmart hit us with a $500 chargeback for missing the MABD."</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Freight Audit</span>
+                    <p class="term-def">The process of reviewing carrier invoices to verify charges are accurate and match contracted rates.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">CPI</span><span class="term-abbrev">Consumer Price Index</span>
+                    <p class="term-def">A measure of inflation often used as a basis for annual rate adjustments in logistics contracts.</p>
+                </div>
+            </div>
+
+            <!-- General -->
+            <div class="section" id="general">
+                <h2>General Terms</h2>
+                <span class="category-tag cat-general">General</span>
+
+                <div class="term">
+                    <span class="term-name">RFP</span><span class="term-abbrev">Request for Proposal</span>
+                    <p class="term-def">A document sent to potential vendors inviting them to submit a proposal for services. Used to compare and select providers.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">RFQ</span><span class="term-abbrev">Request for Quote</span>
+                    <p class="term-def">A request for pricing on specific services or shipments, typically less formal than an RFP.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">SOP</span><span class="term-abbrev">Standard Operating Procedure</span>
+                    <p class="term-def">Documented step-by-step instructions for completing routine operations consistently.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">KPI</span><span class="term-abbrev">Key Performance Indicator</span>
+                    <p class="term-def">Metrics used to measure performance, such as on-time delivery rate, order accuracy, or inventory turns.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">QBR</span><span class="term-abbrev">Quarterly Business Review</span>
+                    <p class="term-def">A regular meeting between a company and its customers or vendors to review performance, discuss issues, and plan ahead.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">SLA</span><span class="term-abbrev">Service Level Agreement</span>
+                    <p class="term-def">A contract defining the expected level of service, including metrics and penalties for non-compliance.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Consignee</span>
+                    <p class="term-def">The person or company receiving a shipment (the "ship to" party).</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Shipper</span>
+                    <p class="term-def">The person or company sending a shipment (the "ship from" party). Also called consignor.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Carrier</span>
+                    <p class="term-def">A company that transports freight, such as a trucking company, railroad, or airline.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Broker</span>
+                    <p class="term-def">An intermediary that arranges transportation by connecting shippers with carriers, without owning trucks.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Building File</span>
+                    <p class="term-def">The process of setting up a new customer in a 3PL's systems, including configuration, testing, and documentation.</p>
+                </div>
+
+                <div class="term">
+                    <span class="term-name">Go-Live</span>
+                    <p class="term-def">The date when a new customer or system becomes operational and starts processing real transactions.</p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="text-align: center; margin: 40px 0; padding: 30px; background: #f8f9fa; border-radius: 8px;">
+                <p style="font-size: 1.1em; color: #666;">
+                    Walker SCM | Industry Glossary<br>
+                    <strong style="color: #8B2332;">60+ Terms Across 5 Categories</strong>
+                </p>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #999;">
+                    Last updated: January 2026
+                </p>
+            </div>
+        </div>
+    </main>
+    <a href="#" class="back-top">Back to Top</a>
+</body>
+</html>

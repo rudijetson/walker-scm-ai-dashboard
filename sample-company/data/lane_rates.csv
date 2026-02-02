@@ -1,0 +1,26 @@
+lane_id,origin_city,origin_state,origin_zip,dest_city,dest_state,dest_zip,miles,mode,equipment_type,contract_rate_per_mile,spot_rate_per_mile,avg_fuel_surcharge_pct,avg_transit_days,volume_tier,min_weight,effective_date,expiration_date,carrier_id,carrier_name,notes
+LN-MW-0101,Columbus,OH,43215,Dallas,TX,75201,928,FTL,Dry Van 53,2.61,2.95,12.9,2,Standard,38000,2025-10-01,2026-09-30,CAR-012,Werner Enterprises,High volume lane - weekly capacity
+LN-MW-0102,Columbus,OH,43215,Atlanta,GA,30301,534,FTL,Dry Van 53,2.78,3.15,12.9,1,Standard,38000,2025-10-01,2026-09-30,CAR-008,JB Hunt,
+LN-MW-0103,Columbus,OH,43215,Atlanta,GA,30301,534,FTL,Reefer 53,3.42,3.85,12.9,1,Standard,36000,2025-10-01,2026-09-30,CAR-008,JB Hunt,Temperature controlled
+LN-MW-0104,Columbus,OH,43215,Chicago,IL,60601,358,FTL,Dry Van 53,2.45,2.82,12.9,1,Standard,38000,2025-10-01,2026-09-30,CAR-022,Old Dominion,
+LN-MW-0105,Columbus,OH,43215,Chicago,IL,60601,358,LTL,Dry Van,4.25,4.90,12.9,1,Per CWT,100,2025-10-01,2026-09-30,CAR-022,Old Dominion,LTL rates per CWT
+LN-MW-0106,Columbus,OH,43215,St. Louis,MO,63101,424,FTL,Dry Van 53,2.52,2.88,12.9,1,Standard,38000,2025-10-01,2026-09-30,CAR-025,Schneider National,
+LN-MW-0107,Columbus,OH,43215,Indianapolis,IN,46201,175,FTL,Dry Van 53,3.12,3.55,12.9,1,Standard,38000,2025-10-01,2026-09-30,CAR-015,Estes Express,Short haul premium
+LN-MW-0108,Columbus,OH,43215,Indianapolis,IN,46201,175,FTL,Reefer 53,3.85,4.35,12.9,1,Standard,36000,2025-10-01,2026-09-30,CAR-008,JB Hunt,
+LN-MW-0109,Columbus,OH,43215,Cincinnati,OH,45202,107,LTL,Dry Van,4.85,5.50,12.9,1,Per CWT,100,2025-10-01,2026-09-30,CAR-015,Estes Express,Local LTL
+LN-MW-0110,Columbus,OH,43215,Pittsburgh,PA,15201,185,LTL,Dry Van,4.45,5.10,12.9,1,Per CWT,100,2025-10-01,2026-09-30,CAR-018,XPO Logistics,
+LN-MW-0111,Columbus,OH,43215,Charlotte,NC,28201,446,FTL,Dry Van 53,2.68,3.05,12.9,2,Standard,38000,2025-10-01,2026-09-30,CAR-025,Schneider National,
+LN-MW-0112,Columbus,OH,43215,Detroit,MI,48201,204,FTL,Dry Van 53,2.95,3.40,12.9,1,Standard,38000,2025-10-01,2026-09-30,CAR-018,XPO Logistics,
+LN-MW-0113,Indianapolis,IN,46201,Louisville,KY,40202,114,LTL,Dry Van,4.65,5.25,12.9,1,Per CWT,100,2025-10-01,2026-09-30,CAR-015,Estes Express,
+LN-MW-0114,Indianapolis,IN,46201,Cleveland,OH,44101,318,LTL,Dry Van,4.15,4.75,12.9,1,Per CWT,100,2025-10-01,2026-09-30,CAR-022,Old Dominion,
+LN-MW-0115,Memphis,TN,38101,Houston,TX,77001,561,FTL,Dry Van 53,2.42,2.78,12.9,1,Standard,38000,2025-10-01,2026-09-30,CAR-012,Werner Enterprises,
+LN-MW-0116,Memphis,TN,38101,Nashville,TN,37201,212,FTL,Reefer 48,3.22,3.65,12.9,1,Standard,34000,2025-10-01,2026-09-30,CAR-008,JB Hunt,
+LN-MW-0117,Memphis,TN,38101,Birmingham,AL,35201,238,FTL,Reefer 48,3.18,3.60,12.9,1,Standard,34000,2025-10-01,2026-09-30,CAR-031,Averitt Express,
+LN-MW-0118,Memphis,TN,38101,Kansas City,MO,64101,451,FTL,Dry Van 53,2.48,2.85,12.9,1,Standard,38000,2025-10-01,2026-09-30,CAR-012,Werner Enterprises,
+LN-MW-0119,Memphis,TN,38101,Little Rock,AR,72201,135,FTL,Dry Van 53,3.25,3.70,12.9,1,Standard,38000,2025-10-01,2026-09-30,CAR-031,Averitt Express,Short haul
+LN-MW-0120,Joliet,IL,60432,Detroit,MI,48201,281,FTL,Dry Van 53,2.72,3.12,12.9,1,Standard,38000,2025-10-01,2026-09-30,CAR-018,XPO Logistics,
+LN-MW-0121,Joliet,IL,60432,Milwaukee,WI,53201,82,LTL,Dry Van,5.25,5.95,12.9,1,Per CWT,100,2025-10-01,2026-09-30,CAR-015,Estes Express,Short haul LTL
+LN-MW-0122,Joliet,IL,60432,Minneapolis,MN,55401,408,FTL,Dry Van 53,2.55,2.92,12.9,1,Standard,38000,2025-10-01,2026-09-30,CAR-025,Schneider National,
+LN-MW-0123,Columbus,OH,43215,Lexington,KY,40502,185,LTL,Dry Van,4.55,5.15,12.9,1,Per CWT,100,2025-10-01,2026-09-30,CAR-022,Old Dominion,
+LN-MW-0124,Columbus,OH,43215,Toledo,OH,43601,148,LTL,Flatbed,5.85,6.65,12.9,1,Per CWT,100,2025-10-01,2026-09-30,CAR-015,Estes Express,Flatbed surcharge
+LN-MW-0125,Indianapolis,IN,46201,Columbus,OH,43215,175,LTL,Dry Van,4.25,4.85,12.9,1,Per CWT,100,2025-10-01,2026-09-30,CAR-018,XPO Logistics,

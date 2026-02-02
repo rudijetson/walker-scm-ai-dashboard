@@ -1,0 +1,2709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FWI Deck - All Slides</title>
+    <style>
+/* FWI Slide Deck - Shared Styles */
+/* 16:9 Format: 16in x 9in */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    background: white;
+}
+
+/* For individual slide files */
+body {
+    width: 16in;
+    height: 9in;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: white;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Artboard container for multiple slides */
+.artboards-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Individual artboard (slide) */
+.artboard {
+    width: 16in;
+    height: 9in;
+    overflow: hidden;
+    position: relative;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    page-break-after: always;
+    page-break-inside: avoid;
+}
+
+/* When body has artboards-container, reset body size */
+body:has(.artboards-container) {
+    width: auto;
+    height: auto;
+    overflow: visible;
+}
+
+@page {
+    size: 16in 9in;
+    margin: 0;
+}
+
+@media print {
+    body {
+        background: white;
+        width: auto;
+        height: auto;
+    }
+    .artboards-container { padding: 0; gap: 0; }
+    .artboard {
+        width: 16in;
+        height: 9in;
+        box-shadow: none;
+        page-break-after: always;
+        margin: 0;
+    }
+}
+
+/* Color Variables */
+:root {
+    --walker-red: #8B2332;
+    --walker-red-light: #a82d3f;
+    --walker-red-dark: #6a1a27;
+    --dark-gray: #333333;
+    --medium-gray: #666666;
+    --light-gray: #f8f9fa;
+    --border-gray: #e0e0e0;
+    --accent-yellow: #ffc107;
+    --accent-yellow-bg: #fff3cd;
+    --accent-green: #28a745;
+    --accent-green-bg: #d4edda;
+    --accent-blue: #007bff;
+    --accent-blue-bg: #cce5ff;
+}
+
+/* === LAYOUT COMPONENTS === */
+
+.accent-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 12px;
+    height: 100%;
+    background: var(--walker-red);
+}
+
+.slide-content {
+    padding: 0.7in 0.75in 0.7in 1in;
+    height: 100%;
+    position: relative;
+}
+
+.slide-number {
+    position: absolute;
+    bottom: 0.35in;
+    right: 0.5in;
+    color: #999;
+    font-size: 14pt;
+}
+
+/* === TITLE SLIDE === */
+
+.title-slide {
+    background: var(--walker-red);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1in;
+    height: 100%;
+}
+
+.title-slide h1 {
+    color: white;
+    font-size: 72pt;
+    font-weight: bold;
+    margin-bottom: 0.3in;
+    letter-spacing: -1px;
+}
+
+.title-slide .subtitle {
+    color: white;
+    font-size: 32pt;
+    margin-bottom: 0.5in;
+}
+
+.title-slide .tagline {
+    color: rgba(255,255,255,0.9);
+    font-size: 24pt;
+    font-style: italic;
+    margin-bottom: 0.8in;
+}
+
+.title-slide .footer {
+    color: rgba(255,255,255,0.8);
+    font-size: 18pt;
+}
+
+/* === SECTION DIVIDER === */
+
+.section-slide {
+    background: var(--walker-red);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1in;
+    height: 100%;
+}
+
+.section-slide .section-label {
+    color: rgba(255,255,255,0.8);
+    font-size: 18pt;
+    text-transform: uppercase;
+    letter-spacing: 4pt;
+    margin-bottom: 0.3in;
+}
+
+.section-slide h1 {
+    color: white;
+    font-size: 64pt;
+    font-weight: bold;
+}
+
+.section-slide .section-subtitle {
+    color: rgba(255,255,255,0.85);
+    font-size: 24pt;
+    margin-top: 0.4in;
+}
+
+/* === TYPOGRAPHY === */
+
+h1.slide-title {
+    color: var(--walker-red);
+    font-size: 42pt;
+    font-weight: bold;
+    margin-bottom: 0.35in;
+}
+
+h1.slide-title-compact {
+    color: var(--walker-red);
+    font-size: 36pt;
+    font-weight: bold;
+    margin-bottom: 0.25in;
+}
+
+h2.section-header {
+    color: var(--walker-red);
+    font-size: 24pt;
+    font-weight: bold;
+    margin-top: 0.25in;
+    margin-bottom: 0.2in;
+}
+
+h3.subsection {
+    color: var(--dark-gray);
+    font-size: 20pt;
+    font-weight: bold;
+    margin-bottom: 0.15in;
+}
+
+p.lead {
+    color: var(--medium-gray);
+    font-size: 22pt;
+    margin-bottom: 0.3in;
+}
+
+p.body {
+    color: var(--dark-gray);
+    font-size: 18pt;
+    line-height: 1.5;
+    margin-bottom: 0.2in;
+}
+
+p.caption {
+    color: var(--medium-gray);
+    font-size: 14pt;
+    font-style: italic;
+}
+
+/* === BOXES === */
+
+.definition-box {
+    background: var(--light-gray);
+    border-left: 8px solid var(--walker-red);
+    padding: 0.35in;
+    margin-bottom: 0.35in;
+}
+
+.definition-box p {
+    color: var(--dark-gray);
+    font-size: 22pt;
+    line-height: 1.5;
+}
+
+.definition-box.compact p {
+    font-size: 18pt;
+}
+
+.highlight-box {
+    background: var(--accent-yellow-bg);
+    border-left: 6px solid var(--accent-yellow);
+    padding: 0.2in 0.3in;
+}
+
+.highlight-box p {
+    color: var(--dark-gray);
+    font-size: 18pt;
+}
+
+.highlight-box.bottom {
+    position: absolute;
+    bottom: 0.5in;
+    left: 1in;
+    right: 0.75in;
+}
+
+.quote-box {
+    background: var(--light-gray);
+    padding: 0.25in 0.35in;
+    border-radius: 8px;
+}
+
+.quote-box p {
+    color: var(--medium-gray);
+    font-size: 18pt;
+    font-style: italic;
+}
+
+.quote-box.bottom {
+    position: absolute;
+    bottom: 0.5in;
+    left: 1in;
+    right: 0.75in;
+}
+
+.red-box {
+    background: var(--walker-red);
+    padding: 0.25in 0.35in;
+    border-radius: 8px;
+}
+
+.red-box p {
+    color: white;
+    font-size: 18pt;
+}
+
+.red-box .box-title {
+    font-weight: bold;
+    font-size: 20pt;
+    margin-bottom: 0.1in;
+}
+
+.red-box.bottom {
+    position: absolute;
+    bottom: 0.5in;
+    left: 1in;
+    right: 0.75in;
+}
+
+.info-box {
+    background: var(--accent-blue-bg);
+    border-left: 6px solid var(--accent-blue);
+    padding: 0.2in 0.3in;
+}
+
+.info-box p {
+    color: var(--dark-gray);
+    font-size: 18pt;
+}
+
+.success-box {
+    background: var(--accent-green-bg);
+    border-left: 6px solid var(--accent-green);
+    padding: 0.2in 0.3in;
+}
+
+.success-box p {
+    color: var(--dark-gray);
+    font-size: 18pt;
+}
+
+/* === GRID LAYOUTS === */
+
+.two-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4in;
+}
+
+.three-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.3in;
+}
+
+.four-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.25in;
+}
+
+.six-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 0.2in;
+}
+
+/* === CARDS === */
+
+.card {
+    background: var(--walker-red);
+    padding: 0.25in;
+    border-radius: 8px;
+}
+
+.card p {
+    color: white;
+    font-size: 16pt;
+    text-align: center;
+}
+
+.card.large p {
+    font-size: 18pt;
+}
+
+.card-outline {
+    background: white;
+    border: 3px solid var(--walker-red);
+    padding: 0.25in;
+    border-radius: 8px;
+}
+
+.card-outline p {
+    color: var(--dark-gray);
+    font-size: 16pt;
+}
+
+.card-gray {
+    background: var(--light-gray);
+    padding: 0.25in;
+    border-radius: 8px;
+}
+
+.card-gray p {
+    color: var(--dark-gray);
+    font-size: 16pt;
+}
+
+/* === STAT BOXES === */
+
+.stat-box {
+    background: var(--light-gray);
+    border: 3px solid var(--walker-red);
+    padding: 0.2in;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.stat-box .number {
+    color: var(--walker-red);
+    font-size: 48pt;
+    font-weight: bold;
+}
+
+.stat-box .number.large {
+    font-size: 56pt;
+}
+
+.stat-box .label {
+    color: var(--medium-gray);
+    font-size: 14pt;
+    margin-top: 0.08in;
+}
+
+.stat-box-red {
+    background: var(--walker-red);
+    padding: 0.25in;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.stat-box-red .number {
+    color: white;
+    font-size: 48pt;
+    font-weight: bold;
+}
+
+.stat-box-red .label {
+    color: rgba(255,255,255,0.9);
+    font-size: 14pt;
+    margin-top: 0.08in;
+}
+
+/* === LISTS === */
+
+ul, ol {
+    margin-left: 0.4in;
+}
+
+li {
+    color: var(--dark-gray);
+    font-size: 20pt;
+    margin-bottom: 0.15in;
+    line-height: 1.4;
+}
+
+/* Override for white text in card elements */
+.card li,
+.card ul,
+.card h2,
+.card h3,
+.card p {
+    color: white !important;
+}
+
+li.compact {
+    font-size: 16pt;
+    margin-bottom: 0.1in;
+}
+
+li.large {
+    font-size: 22pt;
+    margin-bottom: 0.2in;
+}
+
+ul.no-bullets {
+    list-style: none;
+    margin-left: 0;
+}
+
+/* === TABLES === */
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th {
+    background: var(--walker-red);
+    color: white;
+    padding: 0.15in 0.2in;
+    font-size: 16pt;
+    text-align: left;
+}
+
+.data-table td {
+    padding: 0.15in 0.2in;
+    font-size: 16pt;
+    border-bottom: 1px solid var(--border-gray);
+}
+
+.data-table tr:nth-child(even) {
+    background: var(--light-gray);
+}
+
+.shift-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.shift-table th {
+    background: var(--walker-red);
+    color: white;
+    padding: 0.15in 0.2in;
+    font-size: 18pt;
+    text-align: left;
+}
+
+.shift-table td {
+    padding: 0.18in 0.2in;
+    font-size: 20pt;
+    border-bottom: 1px solid var(--border-gray);
+}
+
+.shift-table tr:nth-child(even) {
+    background: var(--light-gray);
+}
+
+.shift-table .from {
+    color: var(--medium-gray);
+}
+
+.shift-table .to {
+    color: var(--walker-red);
+    font-weight: bold;
+}
+
+.shift-table .arrow {
+    color: var(--walker-red);
+    font-size: 24pt;
+    text-align: center;
+    width: 80px;
+}
+
+/* === SPECIFIC COMPONENTS === */
+
+/* Slice/Pillar Cards */
+.slice-card {
+    padding: 0.3in;
+    border-radius: 8px;
+}
+
+.slice-card.active {
+    background: var(--walker-red);
+}
+
+.slice-card.future {
+    background: white;
+    border: 3px solid var(--walker-red);
+}
+
+.slice-card .slice-label {
+    font-size: 14pt;
+    font-weight: bold;
+    margin-bottom: 0.08in;
+}
+
+.slice-card.active .slice-label { color: rgba(255,255,255,0.8); }
+.slice-card.future .slice-label { color: var(--walker-red); }
+
+.slice-card .slice-title {
+    font-size: 22pt;
+    font-weight: bold;
+    margin-bottom: 0.08in;
+}
+
+.slice-card.active .slice-title { color: white; }
+.slice-card.future .slice-title { color: var(--walker-red); }
+
+.slice-card .slice-timing {
+    font-size: 14pt;
+    margin-bottom: 0.12in;
+}
+
+.slice-card.active .slice-timing { color: rgba(255,255,255,0.7); }
+.slice-card.future .slice-timing { color: var(--medium-gray); }
+
+.slice-card ul {
+    margin-left: 0.2in;
+}
+
+.slice-card li {
+    font-size: 14pt;
+    margin-bottom: 0.06in;
+}
+
+.slice-card.active li { color: white; }
+.slice-card.future li { color: var(--dark-gray); }
+
+/* Rule Cards */
+.rule-card {
+    background: var(--light-gray);
+    border-left: 6px solid var(--walker-red);
+    padding: 0.18in;
+}
+
+.rule-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.08in;
+}
+
+.rule-number {
+    background: var(--walker-red);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15pt;
+    font-weight: bold;
+    margin-right: 0.12in;
+    flex-shrink: 0;
+}
+
+.rule-title {
+    color: var(--dark-gray);
+    font-size: 17pt;
+    font-weight: bold;
+}
+
+.rule-desc {
+    color: var(--medium-gray);
+    font-size: 13pt;
+    margin-left: 0.52in;
+}
+
+/* Cohort Rows */
+.cohort-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.22in;
+}
+
+.cohort-box {
+    padding: 0.18in 0.25in;
+    border-radius: 8px;
+    text-align: center;
+    width: 2.3in;
+    flex-shrink: 0;
+}
+
+.cohort-box.primary { background: var(--walker-red); }
+.cohort-box.secondary { background: #6B7280; }
+.cohort-box.tertiary { background: #9CA3AF; }
+
+.cohort-box .name {
+    font-size: 15pt;
+    font-weight: bold;
+    color: white;
+}
+
+.cohort-box.tertiary .name { color: var(--dark-gray); }
+
+.cohort-box .size {
+    font-size: 13pt;
+    color: rgba(255,255,255,0.8);
+}
+
+.cohort-box.tertiary .size { color: var(--medium-gray); }
+
+.cohort-arrow {
+    color: var(--walker-red);
+    font-size: 26pt;
+    margin: 0 0.2in;
+}
+
+.cohort-details {
+    background: var(--light-gray);
+    padding: 0.18in 0.25in;
+    border-radius: 8px;
+    flex: 1;
+}
+
+.cohort-details .title {
+    color: var(--walker-red);
+    font-size: 15pt;
+    font-weight: bold;
+    margin-bottom: 0.05in;
+}
+
+.cohort-details .desc {
+    color: var(--medium-gray);
+    font-size: 13pt;
+}
+
+/* Timeline/Quarter Cards */
+.timeline-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.2in;
+}
+
+.quarter-card {
+    background: var(--light-gray);
+    border-top: 6px solid var(--walker-red);
+    padding: 0.2in;
+    border-radius: 0 0 8px 8px;
+}
+
+.quarter-card .quarter-label {
+    color: var(--walker-red);
+    font-size: 20pt;
+    font-weight: bold;
+    margin-bottom: 0.12in;
+}
+
+.quarter-card ul {
+    margin-left: 0.2in;
+}
+
+.quarter-card li {
+    font-size: 12pt;
+    margin-bottom: 0.06in;
+}
+
+/* Metric Cards with Icons */
+.metric-card {
+    background: var(--light-gray);
+    border: 2px solid var(--border-gray);
+    padding: 0.25in;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.metric-card svg {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0.12in;
+}
+
+.metric-card .title {
+    color: var(--walker-red);
+    font-size: 17pt;
+    font-weight: bold;
+    margin-bottom: 0.08in;
+}
+
+.metric-card .desc {
+    color: var(--medium-gray);
+    font-size: 12pt;
+}
+
+/* Stakeholder Grid */
+.stakeholder-card {
+    background: var(--light-gray);
+    padding: 0.18in;
+    border-radius: 8px;
+    border-left: 4px solid var(--walker-red);
+}
+
+.stakeholder-card .role {
+    color: var(--walker-red);
+    font-size: 15pt;
+    font-weight: bold;
+    margin-bottom: 0.05in;
+}
+
+.stakeholder-card .hears {
+    color: var(--medium-gray);
+    font-size: 14pt;
+}
+
+/* Two Column Layout */
+.two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5in;
+}
+
+.column h2 {
+    color: var(--walker-red);
+    font-size: 22pt;
+    font-weight: bold;
+    margin-bottom: 0.18in;
+    padding-bottom: 0.1in;
+    border-bottom: 3px solid var(--walker-red);
+}
+
+/* Icon styles */
+.icon-clock, .icon-users, .icon-book, .icon-chart {
+    width: 40px;
+    height: 40px;
+    stroke: var(--walker-red);
+    fill: none;
+    stroke-width: 2;
+}
+
+/* Process Flow */
+.process-step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.2in;
+}
+
+.step-number {
+    background: var(--walker-red);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20pt;
+    font-weight: bold;
+    margin-right: 0.2in;
+    flex-shrink: 0;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-title {
+    color: var(--walker-red);
+    font-size: 18pt;
+    font-weight: bold;
+}
+
+.step-desc {
+    color: var(--medium-gray);
+    font-size: 14pt;
+}
+
+/* Comparison/Before-After */
+.comparison-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.15in;
+}
+
+.comparison-before {
+    background: #fee2e2;
+    padding: 0.15in 0.2in;
+    border-radius: 6px;
+    width: 45%;
+    text-align: center;
+}
+
+.comparison-before p {
+    color: #991b1b;
+    font-size: 16pt;
+}
+
+.comparison-arrow {
+    color: var(--walker-red);
+    font-size: 28pt;
+    margin: 0 0.2in;
+}
+
+.comparison-after {
+    background: var(--accent-green-bg);
+    padding: 0.15in 0.2in;
+    border-radius: 6px;
+    width: 45%;
+    text-align: center;
+}
+
+.comparison-after p {
+    color: #166534;
+    font-size: 16pt;
+    font-weight: bold;
+}
+
+/* Big Quote Slide */
+.big-quote {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 1in;
+    text-align: center;
+}
+
+.big-quote blockquote {
+    color: var(--walker-red);
+    font-size: 36pt;
+    font-style: italic;
+    line-height: 1.4;
+    max-width: 12in;
+    margin-bottom: 0.4in;
+}
+
+.big-quote .attribution {
+    color: var(--medium-gray);
+    font-size: 20pt;
+}
+
+    </style>
+</head>
+<body>
+    <div class="artboards-container">
+        <div class="artboard">
+<div class="title-slide">
+        <h1>Frictionless Work Initiative</h1>
+        <p class="subtitle">2026 AI Strategy for Walker SCM</p>
+        <p class="footer">December 2025 | Executive Strategy Session</p>
+    </div>
+    <span class="slide-number" style="color: rgba(255,255,255,0.5);">01</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Today's Agenda</h1>
+
+        <div class="two-grid">
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">Strategy Session (45 min)</h2>
+                <ul>
+                    <li>Why AI, why now</li>
+                    <li>What is FWI</li>
+                    <li>Three pillars of the initiative</li>
+                    <li>Operating rules & governance</li>
+                    <li>Survey results & readiness</li>
+                    <li>Measurement & ROI</li>
+                    <li>2026 roadmap</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">Hands-On Demos (15 min)</h2>
+                <ul>
+                    <li>Microsoft Copilot in Word</li>
+                    <li>ChatGPT practical use cases</li>
+                    <li>NotebookLM for document Q&A</li>
+                </ul>
+
+                <div style="margin-top: 0.5in;">
+                    <div class="stat-box" style="display: inline-block; padding: 0.25in 0.5in;">
+                        <div class="number">60</div>
+                        <div class="label">Minutes Total</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <span class="slide-number">02</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">What We'll Accomplish Today</h1>
+
+        <div class="three-grid" style="margin-top: 0.4in;">
+            <div class="card" style="padding: 0.35in;">
+                <p style="font-size: 20pt; font-weight: bold; margin-bottom: 0.15in;">Understand</p>
+                <p style="font-size: 16pt;">What FWI is and why it matters for Walker SCM's future</p>
+            </div>
+            <div class="card" style="padding: 0.35in;">
+                <p style="font-size: 20pt; font-weight: bold; margin-bottom: 0.15in;">Align</p>
+                <p style="font-size: 16pt;">On strategy, governance, and 2026 roadmap priorities</p>
+            </div>
+            <div class="card" style="padding: 0.35in;">
+                <p style="font-size: 20pt; font-weight: bold; margin-bottom: 0.15in;">Experience</p>
+                <p style="font-size: 16pt;">Hands-on demos of AI tools you can use tomorrow</p>
+            </div>
+        </div>
+
+        <h2 class="section-header" style="margin-top: 0.5in;">Decisions Needed</h2>
+        <ul>
+            <li>Approval of FWI framework and operating rules</li>
+            <li>Commitment to Q1 2026 training schedule</li>
+            <li>Executive participation in first cohort</li>
+        </ul>
+    </div>
+    <span class="slide-number">03</span>
+        </div>
+        <div class="artboard">
+<div class="section-slide">
+        <p class="section-label">Context</p>
+        <h1>Why AI, Why Now</h1>
+        <p class="section-subtitle">The moment we're in and why it matters</p>
+    </div>
+    <span class="slide-number" style="color: rgba(255,255,255,0.5);">04</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Hype vs. Reality</h1>
+        <p class="lead">Grounding expectations for sustainable success</p>
+
+        <div class="two-grid" style="margin-top: 0.3in;">
+            <div>
+                <h2 class="section-header" style="margin-top: 0; color: #991b1b;">What You're Hearing</h2>
+                <ul>
+                    <li class="compact">"AI will replace everyone"</li>
+                    <li class="compact">"10x productivity overnight"</li>
+                    <li class="compact">"Just plug it in and go"</li>
+                    <li class="compact">"One tool solves everything"</li>
+                    <li class="compact">"ROI in 30 days"</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="section-header" style="margin-top: 0; color: #166534;">What's Actually True</h2>
+                <ul>
+                    <li class="compact">AI augments, doesn't replace</li>
+                    <li class="compact">20-40% gains with proper adoption</li>
+                    <li class="compact">Requires training and culture shift</li>
+                    <li class="compact">Different tools for different jobs</li>
+                    <li class="compact">6-12 months to measure real impact</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="quote-box bottom">
+            <p>"The organizations winning with AI aren't the ones buying the most tools — they're the ones investing in their people."</p>
+        </div>
+    </div>
+    <span class="slide-number">05</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Where We Are: Gartner Hype Cycle</h1>
+
+        <div style="display: flex; gap: 0.5in; margin-top: 0.3in;">
+            <!-- Simple visual representation -->
+            <div style="flex: 1;">
+                <svg viewBox="0 0 500 280" style="width: 100%; height: 4.5in;">
+                    <!-- Curve -->
+                    <path d="M 30 250 Q 80 250 120 80 Q 140 20 160 60 Q 200 180 280 200 Q 360 220 470 150"
+                          stroke="#8B2332" stroke-width="4" fill="none"/>
+
+                    <!-- Labels -->
+                    <text x="50" y="270" font-size="12" fill="#666">Innovation Trigger</text>
+                    <text x="120" y="30" font-size="12" fill="#666">Peak of Inflated</text>
+                    <text x="130" y="45" font-size="12" fill="#666">Expectations</text>
+                    <text x="180" y="220" font-size="12" fill="#666">Trough of</text>
+                    <text x="180" y="235" font-size="12" fill="#666">Disillusionment</text>
+                    <text x="320" y="230" font-size="12" fill="#666">Slope of Enlightenment</text>
+                    <text x="420" y="135" font-size="12" fill="#666">Plateau of</text>
+                    <text x="420" y="150" font-size="12" fill="#666">Productivity</text>
+
+                    <!-- "You Are Here" marker -->
+                    <circle cx="240" cy="195" r="12" fill="#ffc107"/>
+                    <text x="255" y="200" font-size="14" fill="#333" font-weight="bold">We are here</text>
+                </svg>
+            </div>
+
+            <div style="width: 4.5in;">
+                <div class="definition-box compact">
+                    <p style="font-size: 16pt;"><strong>Slope of Enlightenment:</strong> Organizations that invested wisely during the hype are now seeing real returns. Late adopters are playing catch-up.</p>
+                </div>
+
+                <h3 class="subsection" style="margin-top: 0.3in;">What This Means for Us</h3>
+                <ul>
+                    <li class="compact">The hype is settling into reality</li>
+                    <li class="compact">Best practices are emerging</li>
+                    <li class="compact">Time to move deliberately, not frantically</li>
+                    <li class="compact">Focus on fundamentals: literacy + culture</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <span class="slide-number">06</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">What 2024 Vendors Got Wrong</h1>
+        <p class="lead">Lessons from the AI pitches we received</p>
+
+        <div class="definition-box" style="margin-top: 0.3in; background: #fee2e2; border-color: #991b1b;">
+            <p style="color: #991b1b; font-size: 20pt;">"What are your systems? What are your problems? We can build an agent for you..."</p>
+            <p style="color: #666; font-size: 16pt; margin-top: 0.15in; font-style: italic;">— Common vendor pitch</p>
+        </div>
+
+        <h2 class="section-header">The Technical-First Approach Failed</h2>
+
+        <div class="two-grid">
+            <div>
+                <h3 class="subsection" style="color: #991b1b;">What They Pushed</h3>
+                <ul>
+                    <li class="compact">Jump straight to building agents</li>
+                    <li class="compact">Focus on systems integration</li>
+                    <li class="compact">Promise quick ROI numbers</li>
+                    <li class="compact">Ignore the human element</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="subsection" style="color: #166534;">What They Missed</h3>
+                <ul>
+                    <li class="compact">People need to understand AI first</li>
+                    <li class="compact">Culture change takes time</li>
+                    <li class="compact">Trust must be built gradually</li>
+                    <li class="compact">Sustainable adoption > quick wins</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="red-box bottom">
+            <p>We chose a different path: <strong>culture-first, technology-enabled.</strong></p>
+        </div>
+    </div>
+    <span class="slide-number">07</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">The Culture-First Approach</h1>
+        <p class="lead">What we learned matters most</p>
+
+        <div class="definition-box" style="margin-top: 0.2in; background: #d4edda; border-color: #28a745;">
+            <p style="color: #166534; font-size: 20pt;">"Bringing AI into your culture in a way where you really reap the benefits"</p>
+            <p style="color: #666; font-size: 16pt; margin-top: 0.15in; font-style: italic;">— AfroTech Conference insight</p>
+        </div>
+
+        <h2 class="section-header">Why Culture Comes First</h2>
+
+        <div class="three-grid" style="margin-top: 0.2in;">
+            <div class="card-gray" style="padding: 0.25in;">
+                <p style="font-weight: bold; color: var(--walker-red); margin-bottom: 0.1in;">Fear → Trust</p>
+                <p style="font-size: 14pt;">People fear AI will replace them. Training shows them it's a tool to make them more valuable.</p>
+            </div>
+            <div class="card-gray" style="padding: 0.25in;">
+                <p style="font-weight: bold; color: var(--walker-red); margin-bottom: 0.1in;">Skepticism → Adoption</p>
+                <p style="font-size: 14pt;">When people understand AI, they find their own use cases. Push becomes pull.</p>
+            </div>
+            <div class="card-gray" style="padding: 0.25in;">
+                <p style="font-weight: bold; color: var(--walker-red); margin-bottom: 0.1in;">Isolated → Shared</p>
+                <p style="font-size: 14pt;">Individual experiments become organizational knowledge. We learn together.</p>
+            </div>
+        </div>
+
+        <div class="highlight-box bottom">
+            <p><strong>Key insight:</strong> Organizations that train first see 3x higher adoption rates than those that deploy tools first.</p>
+        </div>
+    </div>
+    <span class="slide-number">08</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Walker SCM Today</h1>
+        <p class="lead">We have a strong foundation to build on</p>
+
+        <div class="four-grid" style="margin-top: 0.3in; margin-bottom: 0.35in;">
+            <div class="stat-box">
+                <div class="number" style="font-size: 40pt;">70%</div>
+                <div class="label">Already experimenting with AI</div>
+            </div>
+            <div class="stat-box">
+                <div class="number" style="font-size: 40pt;">8.7</div>
+                <div class="label">Avg comfort level (1-10)</div>
+            </div>
+            <div class="stat-box">
+                <div class="number" style="font-size: 40pt;">35%</div>
+                <div class="label">Use AI daily</div>
+            </div>
+            <div class="stat-box">
+                <div class="number" style="font-size: 40pt;">Open</div>
+                <div class="label">Leadership mindset</div>
+            </div>
+        </div>
+
+        <h2 class="section-header" style="margin-top: 0;">What This Tells Us</h2>
+        <div class="two-grid">
+            <ul>
+                <li class="compact">High baseline AI awareness</li>
+                <li class="compact">Curiosity outweighs fear</li>
+                <li class="compact">Informal adoption already happening</li>
+            </ul>
+            <ul>
+                <li class="compact">Need structure, not permission</li>
+                <li class="compact">Ready for formal guidance</li>
+                <li class="compact">Appetite for more capability</li>
+            </ul>
+        </div>
+
+        <div class="success-box" style="position: absolute; bottom: 0.5in; left: 1in; right: 0.75in;">
+            <p><strong>Bottom line:</strong> We're not starting from zero. We're formalizing what's already emerging.</p>
+        </div>
+    </div>
+    <span class="slide-number">09</span>
+        </div>
+        <div class="artboard">
+<div class="section-slide">
+        <p class="section-label">The Initiative</p>
+        <h1>What is FWI?</h1>
+        <p class="section-subtitle">A modern operating system for human performance</p>
+    </div>
+    <span class="slide-number" style="color: rgba(255,255,255,0.5);">10</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">The Frictionless Work Initiative</h1>
+
+        <div class="definition-box" style="margin-top: 0.3in;">
+            <p>Strategically using AI to <strong>remove friction from work</strong> — making laborious tasks easier and increasing productivity across all levels.</p>
+        </div>
+
+        <h2 class="section-header">What "Frictionless" Means</h2>
+
+        <div class="two-grid" style="margin-top: 0.2in;">
+            <div>
+                <p class="body" style="margin-bottom: 0.15in;"><strong>Friction is:</strong></p>
+                <ul>
+                    <li class="compact">Repetitive tasks that drain energy</li>
+                    <li class="compact">Context switching between tools</li>
+                    <li class="compact">Searching for information</li>
+                    <li class="compact">Manual data entry and formatting</li>
+                    <li class="compact">Administrative overhead</li>
+                </ul>
+            </div>
+            <div>
+                <p class="body" style="margin-bottom: 0.15in;"><strong>Frictionless is:</strong></p>
+                <ul>
+                    <li class="compact">AI handles the mundane</li>
+                    <li class="compact">Information comes to you</li>
+                    <li class="compact">Reports self-generate</li>
+                    <li class="compact">Context is always at hand</li>
+                    <li class="compact">Time for thinking, not typing</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="red-box bottom">
+            <p><strong>FWI turns AI into infrastructure</strong> — not a novelty, but a foundational layer that makes everything easier.</p>
+        </div>
+    </div>
+    <span class="slide-number">11</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">The Paradigm Shift</h1>
+
+        <div class="definition-box" style="margin-top: 1.5in; padding: 0.4in;">
+            <p style="font-size: 28pt; line-height: 1.4; text-align: center;"><strong>This is not "AI training."</strong></p>
+            <p style="font-size: 28pt; line-height: 1.4; text-align: center;">It's a redesign of work itself.</p>
+        </div>
+    </div>
+    <span class="slide-number">12</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">What FWI Sounds Like</h1>
+        <p class="lead">The language of the initiative</p>
+
+        <div class="two-grid" style="margin-top: 0.3in; gap: 0.3in;">
+            <div class="card-gray" style="padding: 0.3in;">
+                <p style="font-size: 18pt; color: var(--dark-gray); line-height: 1.5;">"We're moving work from <strong>slow, manual, and reactive</strong> to <strong>fast, automated, and proactive.</strong>"</p>
+            </div>
+            <div class="card-gray" style="padding: 0.3in;">
+                <p style="font-size: 18pt; color: var(--dark-gray); line-height: 1.5;">"We're removing the drag that makes daily work <strong>harder than it needs to be.</strong>"</p>
+            </div>
+            <div class="card-gray" style="padding: 0.3in;">
+                <p style="font-size: 18pt; color: var(--dark-gray); line-height: 1.5;">"We're giving people <strong>time back</strong> — to think, lead, create, and serve."</p>
+            </div>
+            <div class="card-gray" style="padding: 0.3in;">
+                <p style="font-size: 18pt; color: var(--dark-gray); line-height: 1.5;">"We are becoming an <strong>AI-mature organization.</strong>"</p>
+            </div>
+        </div>
+
+        <div class="quote-box bottom">
+            <p>"Every employee deserves a personal analyst, researcher, writer, and operations assistant — and AI gives each of them one."</p>
+        </div>
+    </div>
+    <span class="slide-number">13</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Why "Frictionless" Resonates</h1>
+        <p class="lead">Because it speaks to everyone</p>
+
+        <div class="six-grid" style="margin-top: 0.3in; gap: 0.25in;">
+            <div class="stakeholder-card">
+                <p class="role">CFO</p>
+                <p class="hears">Efficiency + cost leverage</p>
+            </div>
+            <div class="stakeholder-card">
+                <p class="role">COO</p>
+                <p class="hears">Operational maturity</p>
+            </div>
+            <div class="stakeholder-card">
+                <p class="role">CIO</p>
+                <p class="hears">Strategic AI deployment & governance</p>
+            </div>
+            <div class="stakeholder-card">
+                <p class="role">CHRO</p>
+                <p class="hears">Employee empowerment and upskilling</p>
+            </div>
+            <div class="stakeholder-card">
+                <p class="role">Managers</p>
+                <p class="hears">Less paperwork, more leadership</p>
+            </div>
+            <div class="stakeholder-card">
+                <p class="role">Employees</p>
+                <p class="hears">"My job gets easier"</p>
+            </div>
+        </div>
+
+        <div class="definition-box" style="margin-top: 0.4in;">
+            <p style="font-size: 18pt;">FWI is <strong>optimistic</strong>, <strong>operational</strong>, <strong>human-centered</strong>, <strong>forward-looking</strong>, grounded in economic reality, and tech-enabled but not tech-obsessed.</p>
+        </div>
+
+        <div class="highlight-box bottom">
+            <p><strong>It is both philosophical and practical.</strong></p>
+        </div>
+    </div>
+    <span class="slide-number">14</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Core Philosophy</h1>
+        <p class="lead">AI as investment in our people</p>
+
+        <div class="four-grid" style="margin-top: 0.4in;">
+            <div class="card" style="padding: 0.3in;">
+                <p style="font-weight: bold; font-size: 18pt; margin-bottom: 0.15in;">Workforce Benefit</p>
+                <p style="font-size: 15pt;">AI as a benefit — like medical and dental. Investing in people's futures.</p>
+            </div>
+            <div class="card" style="padding: 0.3in;">
+                <p style="font-weight: bold; font-size: 18pt; margin-bottom: 0.15in;">Skills Transfer</p>
+                <p style="font-size: 15pt;">What they learn at work helps them at home. Benefits extend beyond the office.</p>
+            </div>
+            <div class="card" style="padding: 0.3in;">
+                <p style="font-weight: bold; font-size: 18pt; margin-bottom: 0.15in;">Future Ready</p>
+                <p style="font-size: 15pt;">Preparing workforce for an AI-enabled world — at work and in life.</p>
+            </div>
+            <div class="card" style="padding: 0.3in;">
+                <p style="font-weight: bold; font-size: 18pt; margin-bottom: 0.15in;">Cultural Change</p>
+                <p style="font-size: 15pt;">Transformation, not just tool deployment. Mindset shift, not just software.</p>
+            </div>
+        </div>
+
+        <div class="quote-box" style="margin-top: 0.5in;">
+            <p style="font-size: 20pt;">"This is where we didn't just help them use AI to make us more beneficial at work — we help them use AI to become what they need to become, to work in the future world and to live in the future world."</p>
+        </div>
+    </div>
+    <span class="slide-number">15</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">What FWI Is NOT</h1>
+        <p class="lead">Clarity on scope and intent</p>
+
+        <div class="two-grid" style="margin-top: 0.3in;">
+            <div>
+                <h2 class="section-header" style="margin-top: 0; color: #991b1b;">FWI Is Not:</h2>
+                <ul>
+                    <li>A replacement for employees</li>
+                    <li>Customer-facing systems</li>
+                    <li>6-week IT projects</li>
+                    <li>One-time training event</li>
+                    <li>Technology for technology's sake</li>
+                    <li>Open to all employees immediately</li>
+                    <li>A vendor implementation</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="section-header" style="margin-top: 0; color: #166534;">FWI Is:</h2>
+                <ul>
+                    <li>Augmentation of human capability</li>
+                    <li>Internal operations focus</li>
+                    <li>Quick wins: 1-3 day builds</li>
+                    <li>Ongoing literacy program</li>
+                    <li>Business value driven</li>
+                    <li>Phased rollout by cohort</li>
+                    <li>Walker-owned initiative</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="red-box bottom">
+            <p><strong>We rejected:</strong> Sequential approach (training then agents) | IT-owned documentation | Open submission | Long projects</p>
+        </div>
+    </div>
+    <span class="slide-number">16</span>
+        </div>
+        <div class="artboard">
+<div class="section-slide">
+        <p class="section-label">The Framework</p>
+        <h1>Three Pillars of FWI</h1>
+        <p class="section-subtitle">Training, Agents, and Integration</p>
+    </div>
+    <span class="slide-number" style="color: rgba(255,255,255,0.5);">17</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Three Pillars of FWI</h1>
+
+        <div class="three-grid" style="margin-top: 0.35in;">
+            <div class="slice-card active">
+                <p class="slice-label">PILLAR 1</p>
+                <p class="slice-title">Training & AI Literacy</p>
+                <p class="slice-timing">Q1-Q2 2026</p>
+                <ul>
+                    <li>Top-down education</li>
+                    <li>ChatGPT, Copilot, Gemini</li>
+                    <li>Prompt engineering</li>
+                    <li>Skills for work AND life</li>
+                </ul>
+            </div>
+
+            <div class="slice-card active">
+                <p class="slice-label">PILLAR 2</p>
+                <p class="slice-title">Custom Agentic Solutions</p>
+                <p class="slice-timing">Q1-Q2 2026</p>
+                <ul>
+                    <li>Small, quick-deploy AI</li>
+                    <li>1-3 day builds only</li>
+                    <li>Internal friction points</li>
+                    <li>High ROI quick wins</li>
+                </ul>
+            </div>
+
+            <div class="slice-card future">
+                <p class="slice-label">PILLAR 3</p>
+                <p class="slice-title">Vendor AI Integration</p>
+                <p class="slice-timing">Q3-Q4 2026</p>
+                <ul>
+                    <li>AI in existing tools</li>
+                    <li>Microsoft Copilot evolution</li>
+                    <li>Evaluate vendor roadmaps</li>
+                    <li>Leverage what we pay for</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight-box bottom">
+            <p><strong>Key Decision:</strong> Training and agents run in parallel, not sequentially. Both tracks begin Q1.</p>
+        </div>
+    </div>
+    <span class="slide-number">18</span>
+        </div>
+        <div class="artboard">
+<div class="section-slide">
+        <h1 style="font-size: 120pt; font-weight: 800;">Pillar 1</h1>
+    </div>
+    <span class="slide-number" style="color: rgba(255,255,255,0.5);">19</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Pillar 1: Training & AI Literacy</h1>
+        <p class="lead">Building the foundation for AI adoption</p>
+
+        <div class="definition-box" style="margin-top: 0.25in;">
+            <p style="font-size: 20pt;">Top-down education on using AI tools effectively. Every leader and manager understands what AI can (and can't) do.</p>
+        </div>
+
+        <div class="two-grid" style="margin-top: 0.3in;">
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">What We'll Cover</h2>
+                <ul>
+                    <li class="compact">How AI/LLMs actually work</li>
+                    <li class="compact">Prompt engineering fundamentals</li>
+                    <li class="compact">Tool landscape (ChatGPT, Copilot, Gemini)</li>
+                    <li class="compact">When to use AI vs. when not to</li>
+                    <li class="compact">Security and privacy considerations</li>
+                    <li class="compact">Evaluating AI output quality</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">Why It Matters</h2>
+                <ul>
+                    <li class="compact">Reduces fear, builds confidence</li>
+                    <li class="compact">People find their own use cases</li>
+                    <li class="compact">Creates AI champions in every dept</li>
+                    <li class="compact">Enables informed decision-making</li>
+                    <li class="compact">Skills transfer to personal life</li>
+                    <li class="compact">Foundation for Pillar 2 success</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="red-box bottom">
+            <p><strong>Timeline:</strong> Q1-Q2 2026 | <strong>Goal:</strong> 100% of leadership AI-literate by end of Q2</p>
+        </div>
+    </div>
+    <span class="slide-number">20</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Training Curriculum</h1>
+        <p class="lead">What participants will learn</p>
+
+        <div class="three-grid" style="margin-top: 0.3in;">
+            <div class="card-gray" style="padding: 0.25in;">
+                <p style="font-weight: bold; color: var(--walker-red); font-size: 16pt; margin-bottom: 0.12in;">Module 1: AI Foundations</p>
+                <ul style="margin-left: 0.2in;">
+                    <li class="compact" style="font-size: 13pt;">What is generative AI?</li>
+                    <li class="compact" style="font-size: 13pt;">How LLMs work (simplified)</li>
+                    <li class="compact" style="font-size: 13pt;">Capabilities & limitations</li>
+                    <li class="compact" style="font-size: 13pt;">The AI landscape today</li>
+                </ul>
+            </div>
+            <div class="card-gray" style="padding: 0.25in;">
+                <p style="font-weight: bold; color: var(--walker-red); font-size: 16pt; margin-bottom: 0.12in;">Module 2: Practical Skills</p>
+                <ul style="margin-left: 0.2in;">
+                    <li class="compact" style="font-size: 13pt;">Prompt engineering basics</li>
+                    <li class="compact" style="font-size: 13pt;">Iterative prompting</li>
+                    <li class="compact" style="font-size: 13pt;">Context and examples</li>
+                    <li class="compact" style="font-size: 13pt;">Output evaluation</li>
+                </ul>
+            </div>
+            <div class="card-gray" style="padding: 0.25in;">
+                <p style="font-weight: bold; color: var(--walker-red); font-size: 16pt; margin-bottom: 0.12in;">Module 3: Tools & Apps</p>
+                <ul style="margin-left: 0.2in;">
+                    <li class="compact" style="font-size: 13pt;">ChatGPT deep dive</li>
+                    <li class="compact" style="font-size: 13pt;">Microsoft Copilot</li>
+                    <li class="compact" style="font-size: 13pt;">Google Gemini</li>
+                    <li class="compact" style="font-size: 13pt;">NotebookLM, Claude, etc.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="three-grid" style="margin-top: 0.25in;">
+            <div class="card-gray" style="padding: 0.25in;">
+                <p style="font-weight: bold; color: var(--walker-red); font-size: 16pt; margin-bottom: 0.12in;">Module 4: Use Cases</p>
+                <ul style="margin-left: 0.2in;">
+                    <li class="compact" style="font-size: 13pt;">Writing & editing</li>
+                    <li class="compact" style="font-size: 13pt;">Research & analysis</li>
+                    <li class="compact" style="font-size: 13pt;">Data interpretation</li>
+                    <li class="compact" style="font-size: 13pt;">Process documentation</li>
+                </ul>
+            </div>
+            <div class="card-gray" style="padding: 0.25in;">
+                <p style="font-weight: bold; color: var(--walker-red); font-size: 16pt; margin-bottom: 0.12in;">Module 5: Workflow Discovery</p>
+                <ul style="margin-left: 0.2in;">
+                    <li class="compact" style="font-size: 13pt;">Mapping your workflows</li>
+                    <li class="compact" style="font-size: 13pt;">Finding friction points</li>
+                    <li class="compact" style="font-size: 13pt;">Identifying AI opportunities</li>
+                    <li class="compact" style="font-size: 13pt;">Building your FWI pipeline</li>
+                </ul>
+            </div>
+            <div class="card-gray" style="padding: 0.25in;">
+                <p style="font-weight: bold; color: var(--walker-red); font-size: 16pt; margin-bottom: 0.12in;">Module 6: Governance</p>
+                <ul style="margin-left: 0.2in;">
+                    <li class="compact" style="font-size: 13pt;">Data privacy & security</li>
+                    <li class="compact" style="font-size: 13pt;">What NOT to put in AI</li>
+                    <li class="compact" style="font-size: 13pt;">Review & verification</li>
+                    <li class="compact" style="font-size: 13pt;">Responsible AI use</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <span class="slide-number">21</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Cohort 1: Cabinet</h1>
+        <p class="lead">Strategic AI for Executives</p>
+
+        <div class="two-grid" style="margin-top: 0.3in;">
+            <div>
+                <div class="stat-box" style="margin-bottom: 0.3in;">
+                    <div class="number" style="font-size: 40pt;">~12</div>
+                    <div class="label">Executive Participants</div>
+                </div>
+
+                <h2 class="section-header" style="margin-top: 0;">Format</h2>
+                <ul>
+                    <li class="compact">Half-day workshop (4 hours)</li>
+                    <li class="compact">Q1 2026 (January target)</li>
+                    <li class="compact">In-person, interactive</li>
+                    <li class="compact">Hands-on demonstrations</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">Curriculum Focus</h2>
+                <ul>
+                    <li>Evolution of AI & what changed</li>
+                    <li>Understanding LLMs at exec level</li>
+                    <li>Vendor ecosystem & platform decisions</li>
+                    <li>Strategic implications for Walker</li>
+                    <li>Hands-on with ChatGPT, Copilot</li>
+                    <li>How to evaluate AI opportunities</li>
+                </ul>
+
+                <div class="highlight-box" style="margin-top: 0.3in;">
+                    <p><strong>Goal:</strong> Executives can make informed AI decisions and champion the initiative to their teams.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="red-box bottom">
+            <p><strong>Why Cabinet First:</strong> Top-down adoption signals organizational commitment. Leaders model the behavior.</p>
+        </div>
+    </div>
+    <span class="slide-number">22</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Cohort 2: Senior Management (Director and Regional)</h1>
+        <p class="lead">Foundations in AI + Workflow Discovery</p>
+
+        <div class="two-grid" style="margin-top: 0.2in;">
+            <div>
+                <div class="stat-box" style="margin-bottom: 0.2in;">
+                    <div class="number" style="font-size: 36pt;">15-20</div>
+                    <div class="label">Manager Participants</div>
+                </div>
+
+                <h2 class="section-header" style="margin-top: 0; font-size: 16pt;">Format</h2>
+                <ul style="font-size: 13pt;">
+                    <li class="compact">Full-day workshop or multiple workshops</li>
+                    <li class="compact">Q1 2026 (Feb-Mar target)</li>
+                    <li class="compact">Department-grouped sessions</li>
+                    <li class="compact">Heavy hands-on component</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="section-header" style="margin-top: 0; font-size: 16pt;">Curriculum Focus</h2>
+                <ul style="font-size: 13pt;">
+                    <li>AI fundamentals (deeper dive)</li>
+                    <li>Prompt engineering mastery</li>
+                    <li>Tool proficiency (ChatGPT, Copilot)</li>
+                    <li>Department-specific use cases</li>
+                    <li>Workflow mapping workshop</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="red-box bottom" style="margin-top: 0.25in;">
+            <p><strong>Key Outcome:</strong> Managers become AI-literate leaders who identify opportunities in their teams.</p>
+        </div>
+    </div>
+    <span class="slide-number">23</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Cohort 3: Branch Management (GM and FF Manager)</h1>
+        <p class="lead">Foundations in AI + Workflow Discovery (Operations Focus)</p>
+
+        <div class="two-grid" style="margin-top: 0.2in;">
+            <div>
+                <div class="stat-box" style="margin-bottom: 0.2in;">
+                    <div class="number" style="font-size: 36pt;">10-15</div>
+                    <div class="label">Manager Participants</div>
+                </div>
+
+                <h2 class="section-header" style="margin-top: 0; font-size: 16pt;">Format</h2>
+                <ul style="font-size: 13pt;">
+                    <li class="compact">Full-day workshop or multiple workshops</li>
+                    <li class="compact">Online</li>
+                    <li class="compact">Q1-Q2 2026</li>
+                    <li class="compact">Mobile-first approach</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="section-header" style="margin-top: 0; font-size: 16pt;">Adaptations for Operations</h2>
+                <ul style="font-size: 13pt;">
+                    <li>Same core curriculum as Cohort 2</li>
+                    <li>Warehouse-specific use cases</li>
+                    <li>Phone/tablet interface focus</li>
+                    <li>Voice input considerations</li>
+                    <li>Operational workflow examples</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="red-box bottom" style="margin-top: 0.25in;">
+            <p><strong>Key Outcome:</strong> Operations leaders see AI through their lens — efficiency, time savings, error reduction.</p>
+        </div>
+    </div>
+    <span class="slide-number">24</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Cohort 4: Organization Wide</h1>
+        <p class="lead">Self-Serve AI Foundations</p>
+
+        <div class="two-grid" style="margin-top: 0.3in;">
+            <div>
+                <div class="stat-box" style="margin-bottom: 0.3in;">
+                    <div class="number" style="font-size: 32pt;">All Staff</div>
+                    <div class="label">Perms & Temps</div>
+                </div>
+
+                <h2 class="section-header" style="margin-top: 0;">Format</h2>
+                <ul>
+                    <li class="compact">Online learning module</li>
+                    <li class="compact">Self-serve, semi-mandatory</li>
+                    <li class="compact">Q2 2026</li>
+                    <li class="compact">Role-specific use cases</li>
+                    <li class="compact">Phone/tablet/internet focus</li>
+                    <li class="compact">Voice input operational</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">Approach</h2>
+                <ul>
+                    <li>Same core curriculum as Cohort 2 & 3</li>
+                    <li>Role-specific use cases</li>
+                    <li>Phone/tablet interface focus</li>
+                    <li>Voice input considerations</li>
+                    <li>Operational workflow examples</li>
+                    <li>On-demand availability</li>
+                </ul>
+
+                <div class="highlight-box" style="margin-top: 0.2in; font-size: 13pt;">
+                    <p><em>Note: Phone interface prioritized for accessibility. Mic/speaker quality varies by device.</em></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="red-box bottom">
+            <p><strong>Key Outcome:</strong> Every employee has baseline AI literacy and knows how to access tools for their daily work.</p>
+        </div>
+    </div>
+    <span class="slide-number">25</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Training Cohort Model</h1>
+
+        <div class="cohort-row">
+            <div class="cohort-box primary">
+                <p class="name">Cohort 1: Cabinet</p>
+                <p class="size">~12 people</p>
+            </div>
+            <span class="cohort-arrow">→</span>
+            <div class="cohort-details">
+                <p class="title">Strategic AI for Executives (Half-day)</p>
+                <p class="desc">Evolution of AI, LLMs, prompting, vendor ecosystem, strategic decisions</p>
+            </div>
+        </div>
+
+        <div class="cohort-row">
+            <div class="cohort-box secondary">
+                <p class="name">Cohort 2: Senior Mgmt</p>
+                <p class="size">15-20 people</p>
+            </div>
+            <span class="cohort-arrow">→</span>
+            <div class="cohort-details">
+                <p class="title">Foundations in AI + Workflow Discovery (Online, Multiple Workshops)</p>
+                <p class="desc">Directors, regional managers—AI fundamentals, prompt engineering, workflow mapping</p>
+            </div>
+        </div>
+
+        <div class="cohort-row">
+            <div class="cohort-box tertiary">
+                <p class="name">Cohort 3: Branch Mgmt</p>
+                <p class="size">10-15 people</p>
+            </div>
+            <span class="cohort-arrow">→</span>
+            <div class="cohort-details">
+                <p class="title">Foundations in AI + Workflow Discovery (Online, Operations Focus)</p>
+                <p class="desc">Branch, freight forwarding—operations-specific cases, mobile-first, voice features</p>
+            </div>
+        </div>
+
+        <div class="cohort-row">
+            <div class="cohort-box quaternary" style="background-color: #6c757d;">
+                <p class="name">Cohort 4: Organization Wide</p>
+                <p class="size">All staff (perms & temps)</p>
+            </div>
+            <span class="cohort-arrow">→</span>
+            <div class="cohort-details">
+                <p class="title">Self-Serve AI Foundations (Online, Semi-Mandatory)</p>
+                <p class="desc">Blue-collar workforce—practical phone/voice use, prompt sharing, daily task help</p>
+            </div>
+        </div>
+
+        <div class="highlight-box bottom">
+            <p><strong>Future State:</strong> Trained users may get platform access to build their own solutions (but not deploy to production without review)</p>
+        </div>
+    </div>
+    <span class="slide-number">26</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Addressing Staff Concerns</h1>
+        <p class="lead">What we heard and how FWI responds</p>
+
+        <div class="two-grid" style="margin-top: 0.3in; gap: 0.3in;">
+            <div class="card-gray" style="padding: 0.25in;">
+                <p style="font-weight: bold; color: #991b1b; margin-bottom: 0.1in;">Concern: AI Accuracy</p>
+                <p style="font-size: 15pt; color: var(--medium-gray); margin-bottom: 0.1in;">"How do I know if the output is correct?"</p>
+                <p style="font-size: 15pt; color: var(--dark-gray);"><strong>Response:</strong> Training covers output evaluation. Human review always required for important work.</p>
+            </div>
+            <div class="card-gray" style="padding: 0.25in;">
+                <p style="font-weight: bold; color: #991b1b; margin-bottom: 0.1in;">Concern: Job Security</p>
+                <p style="font-size: 15pt; color: var(--medium-gray); margin-bottom: 0.1in;">"Will AI replace my job?"</p>
+                <p style="font-size: 15pt; color: var(--dark-gray);"><strong>Response:</strong> AI augments, doesn't replace. We're investing in YOU, not replacing you.</p>
+            </div>
+            <div class="card-gray" style="padding: 0.25in;">
+                <p style="font-weight: bold; color: #991b1b; margin-bottom: 0.1in;">Concern: Privacy/Security</p>
+                <p style="font-size: 15pt; color: var(--medium-gray); margin-bottom: 0.1in;">"What data is safe to use?"</p>
+                <p style="font-size: 15pt; color: var(--dark-gray);"><strong>Response:</strong> Training covers data governance. Clear guidelines on what NOT to input.</p>
+            </div>
+            <div class="card-gray" style="padding: 0.25in;">
+                <p style="font-weight: bold; color: #991b1b; margin-bottom: 0.1in;">Concern: Learning Curve</p>
+                <p style="font-size: 15pt; color: var(--medium-gray); margin-bottom: 0.1in;">"I don't know where to start."</p>
+                <p style="font-size: 15pt; color: var(--dark-gray);"><strong>Response:</strong> Structured training by cohort. Start with basics, build confidence gradually.</p>
+            </div>
+        </div>
+
+        <div class="red-box bottom">
+            <p><strong>Pillar 1 (Training) directly addresses every top concern.</strong> Literacy reduces fear.</p>
+        </div>
+    </div>
+    <span class="slide-number">27</span>
+        </div>
+        <div class="artboard">
+<div class="section-slide">
+        <h1 style="font-size: 120pt; font-weight: 800;">Pillar 2</h1>
+    </div>
+    <span class="slide-number" style="color: rgba(255,255,255,0.5);">28</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Pillar 2: Custom Agentic Solutions</h1>
+        <p class="lead">Small, quick-deploy AI systems for internal friction points</p>
+
+        <div class="definition-box" style="margin-top: 0.25in;">
+            <p style="font-size: 20pt;">Quick-win AI automations that remove specific friction points. <strong>1-3 days to build</strong>, measurable impact, high ROI.</p>
+        </div>
+
+        <div class="two-grid" style="margin-top: 0.3in;">
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">What Qualifies</h2>
+                <ul>
+                    <li class="compact">Internal operations only</li>
+                    <li class="compact">Clear friction point identified</li>
+                    <li class="compact">Can be built in 1-3 days</li>
+                    <li class="compact">Has a business owner</li>
+                    <li class="compact">Measurable time savings</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">Examples</h2>
+                <ul>
+                    <li class="compact">Report auto-generation</li>
+                    <li class="compact">Email drafting assistants</li>
+                    <li class="compact">Document summarization</li>
+                    <li class="compact">Data formatting/cleanup</li>
+                    <li class="compact">Status update compilation</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="red-box bottom">
+            <p><strong>Timeline:</strong> Q1-Q2 2026 | <strong>Goal:</strong> 10+ agents deployed, demonstrable hours saved</p>
+        </div>
+    </div>
+    <span class="slide-number">29</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">What Qualifies as an FWI Project?</h1>
+
+        <div class="two-grid" style="margin-top: 0.3in;">
+            <div>
+                <h2 class="section-header" style="margin-top: 0; color: #166534;">Qualifies</h2>
+                <div class="success-box" style="margin-bottom: 0.15in;">
+                    <p style="font-size: 16pt;">Internal process automation</p>
+                </div>
+                <div class="success-box" style="margin-bottom: 0.15in;">
+                    <p style="font-size: 16pt;">1-3 day build time</p>
+                </div>
+                <div class="success-box" style="margin-bottom: 0.15in;">
+                    <p style="font-size: 16pt;">Clear business owner</p>
+                </div>
+                <div class="success-box" style="margin-bottom: 0.15in;">
+                    <p style="font-size: 16pt;">Measurable time savings</p>
+                </div>
+                <div class="success-box">
+                    <p style="font-size: 16pt;">Repetitive, predictable task</p>
+                </div>
+            </div>
+            <div>
+                <h2 class="section-header" style="margin-top: 0; color: #991b1b;">Does NOT Qualify</h2>
+                <div style="background: #fee2e2; border-left: 6px solid #991b1b; padding: 0.15in 0.2in; margin-bottom: 0.15in;">
+                    <p style="font-size: 16pt; color: var(--dark-gray);">Customer-facing systems</p>
+                </div>
+                <div style="background: #fee2e2; border-left: 6px solid #991b1b; padding: 0.15in 0.2in; margin-bottom: 0.15in;">
+                    <p style="font-size: 16pt; color: var(--dark-gray);">3-6 week projects</p>
+                </div>
+                <div style="background: #fee2e2; border-left: 6px solid #991b1b; padding: 0.15in 0.2in; margin-bottom: 0.15in;">
+                    <p style="font-size: 16pt; color: var(--dark-gray);">No identified owner</p>
+                </div>
+                <div style="background: #fee2e2; border-left: 6px solid #991b1b; padding: 0.15in 0.2in; margin-bottom: 0.15in;">
+                    <p style="font-size: 16pt; color: var(--dark-gray);">Vague "make it better" requests</p>
+                </div>
+                <div style="background: #fee2e2; border-left: 6px solid #991b1b; padding: 0.15in 0.2in;">
+                    <p style="font-size: 16pt; color: var(--dark-gray);">Complex integrations</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-box bottom">
+            <p><strong>Scope Control:</strong> Long projects go through regular IT queue. FWI is for quick wins only.</p>
+        </div>
+    </div>
+    <span class="slide-number">30</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Friction Points by Department</h1>
+        <p class="lead">Examples of what FWI can address</p>
+
+        <div class="three-grid" style="margin-top: 0.25in; gap: 0.2in;">
+            <div class="card-gray" style="padding: 0.2in;">
+                <p style="font-weight: bold; color: var(--walker-red); margin-bottom: 0.1in;">Finance</p>
+                <ul style="margin-left: 0.15in;">
+                    <li class="compact" style="font-size: 12pt;">Report generation</li>
+                    <li class="compact" style="font-size: 12pt;">Variance explanations</li>
+                    <li class="compact" style="font-size: 12pt;">Data reconciliation</li>
+                </ul>
+            </div>
+            <div class="card-gray" style="padding: 0.2in;">
+                <p style="font-weight: bold; color: var(--walker-red); margin-bottom: 0.1in;">HR</p>
+                <ul style="margin-left: 0.15in;">
+                    <li class="compact" style="font-size: 12pt;">Policy Q&A</li>
+                    <li class="compact" style="font-size: 12pt;">Onboarding docs</li>
+                    <li class="compact" style="font-size: 12pt;">Job description drafts</li>
+                </ul>
+            </div>
+            <div class="card-gray" style="padding: 0.2in;">
+                <p style="font-weight: bold; color: var(--walker-red); margin-bottom: 0.1in;">Sales</p>
+                <ul style="margin-left: 0.15in;">
+                    <li class="compact" style="font-size: 12pt;">Proposal drafts</li>
+                    <li class="compact" style="font-size: 12pt;">RFP responses</li>
+                    <li class="compact" style="font-size: 12pt;">CRM updates</li>
+                </ul>
+            </div>
+            <div class="card-gray" style="padding: 0.2in;">
+                <p style="font-weight: bold; color: var(--walker-red); margin-bottom: 0.1in;">Operations</p>
+                <ul style="margin-left: 0.15in;">
+                    <li class="compact" style="font-size: 12pt;">Status summaries</li>
+                    <li class="compact" style="font-size: 12pt;">Incident reports</li>
+                    <li class="compact" style="font-size: 12pt;">SOP documentation</li>
+                </ul>
+            </div>
+            <div class="card-gray" style="padding: 0.2in;">
+                <p style="font-weight: bold; color: var(--walker-red); margin-bottom: 0.1in;">IT</p>
+                <ul style="margin-left: 0.15in;">
+                    <li class="compact" style="font-size: 12pt;">Ticket triage</li>
+                    <li class="compact" style="font-size: 12pt;">Documentation</li>
+                    <li class="compact" style="font-size: 12pt;">Knowledge base</li>
+                </ul>
+            </div>
+            <div class="card-gray" style="padding: 0.2in;">
+                <p style="font-weight: bold; color: var(--walker-red); margin-bottom: 0.1in;">All Departments</p>
+                <ul style="margin-left: 0.15in;">
+                    <li class="compact" style="font-size: 12pt;">Meeting notes</li>
+                    <li class="compact" style="font-size: 12pt;">Email drafts</li>
+                    <li class="compact" style="font-size: 12pt;">Status updates</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="quote-box bottom">
+            <p>"Workflow mapping during training will uncover specific friction points unique to each department."</p>
+        </div>
+    </div>
+    <span class="slide-number">31</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">FWI Build Process</h1>
+        <p class="lead">From intake to deployment</p>
+
+        <div style="margin-top: 0.35in;">
+            <div class="process-step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <p class="step-title">Submit Request</p>
+                    <p class="step-desc">Department head submits friction point via intake dashboard with clear problem statement</p>
+                </div>
+            </div>
+            <div class="process-step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <p class="step-title">Prioritize</p>
+                    <p class="step-desc">Kevin and Claudell review, score by impact/effort, decide build order</p>
+                </div>
+            </div>
+            <div class="process-step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <p class="step-title">Build</p>
+                    <p class="step-desc">Internal developer (or consultant) builds solution in 1-3 days</p>
+                </div>
+            </div>
+            <div class="process-step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    <p class="step-title">Deploy & Train</p>
+                    <p class="step-desc">Business owner receives solution, handles team training and documentation</p>
+                </div>
+            </div>
+            <div class="process-step">
+                <span class="step-number">5</span>
+                <div class="step-content">
+                    <p class="step-title">Measure</p>
+                    <p class="step-desc">Owner collects weekly feedback: hours saved, usage, user stories</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-box bottom">
+            <p><strong>Key:</strong> Business owns the solution. IT builds it. Everyone measures it.</p>
+        </div>
+    </div>
+    <span class="slide-number">32</span>
+        </div>
+        <div class="artboard">
+<div class="section-slide">
+        <p class="section-label">Pillar 2 Governance</p>
+        <h1>Operating Rules</h1>
+        <p class="section-subtitle">How custom agent requests work</p>
+    </div>
+    <span class="slide-number" style="color: rgba(255,255,255,0.5);">33</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Pillar 2: Operating Rules</h1>
+        <p class="lead">Guidelines for custom agent requests</p>
+
+        <div class="two-grid" style="gap: 0.2in; margin-top: 0.2in;">
+            <div class="rule-card">
+                <div class="rule-header">
+                    <span class="rule-number">1</span>
+                    <span class="rule-title">Internal Focus Only</span>
+                </div>
+                <p class="rule-desc">Non-customer facing systems. Customer AI goes through regular IT queue.</p>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header">
+                    <span class="rule-number">2</span>
+                    <span class="rule-title">Scope/Cost/Time Limits</span>
+                </div>
+                <p class="rule-desc">Quick hitters only: 1-3 days to build. No 3-6 week projects under FWI.</p>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header">
+                    <span class="rule-number">3</span>
+                    <span class="rule-title">Owner Documentation</span>
+                </div>
+                <p class="rule-desc">Business owner documents usage and handles training. Not IT's job.</p>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header">
+                    <span class="rule-number">4</span>
+                    <span class="rule-title">Owner Accountability</span>
+                </div>
+                <p class="rule-desc">Submitter collects productivity data: hours saved, user stories.</p>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header">
+                    <span class="rule-number">5</span>
+                    <span class="rule-title">Limited Submission Rights</span>
+                </div>
+                <p class="rule-desc">Only department heads or certain grade levels can submit requests.</p>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header">
+                    <span class="rule-number">6</span>
+                    <span class="rule-title">Centralized Prioritization</span>
+                </div>
+                <p class="rule-desc">Kevin and Claudell prioritize all submissions and decide build order.</p>
+            </div>
+        </div>
+    </div>
+    <span class="slide-number">34</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Rules 1-2: Scope Boundaries</h1>
+
+        <div class="two-grid" style="margin-top: 0.4in; gap: 0.5in;">
+            <div>
+                <div class="card" style="padding: 0.3in; margin-bottom: 0.3in;">
+                    <p style="font-size: 20pt; font-weight: bold;">Rule 1: Internal Focus Only</p>
+                </div>
+
+                <p class="body">FWI is exclusively for internal operations. Any AI that touches customers goes through the standard IT governance process.</p>
+
+                <h3 class="subsection" style="margin-top: 0.25in;">Why This Matters</h3>
+                <ul>
+                    <li class="compact">Lower risk for internal experiments</li>
+                    <li class="compact">Faster iteration and learning</li>
+                    <li class="compact">Protects customer relationships</li>
+                    <li class="compact">Clear line of responsibility</li>
+                </ul>
+            </div>
+            <div>
+                <div class="card" style="padding: 0.3in; margin-bottom: 0.3in;">
+                    <p style="font-size: 20pt; font-weight: bold;">Rule 2: Time/Scope Limits</p>
+                </div>
+
+                <p class="body">If it takes more than 1-3 days to build, it's not an FWI project. Longer projects go through regular IT queue.</p>
+
+                <h3 class="subsection" style="margin-top: 0.25in;">Why This Matters</h3>
+                <ul>
+                    <li class="compact">Forces focus on quick wins</li>
+                    <li class="compact">Prevents scope creep</li>
+                    <li class="compact">Demonstrates value fast</li>
+                    <li class="compact">Maintains momentum</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight-box bottom">
+            <p><strong>Bottom line:</strong> Start small, prove value, then expand. Don't boil the ocean.</p>
+        </div>
+    </div>
+    <span class="slide-number">35</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Rules 3-4: Ownership Model</h1>
+
+        <div class="two-grid" style="margin-top: 0.4in; gap: 0.5in;">
+            <div>
+                <div class="card" style="padding: 0.3in; margin-bottom: 0.3in;">
+                    <p style="font-size: 20pt; font-weight: bold;">Rule 3: Owner Documentation</p>
+                </div>
+
+                <p class="body">The business owner (not IT) is responsible for documenting how the solution works and training their team.</p>
+
+                <h3 class="subsection" style="margin-top: 0.25in;">Why This Matters</h3>
+                <ul>
+                    <li class="compact">Business understands their needs best</li>
+                    <li class="compact">Creates internal expertise</li>
+                    <li class="compact">Reduces IT bottleneck</li>
+                    <li class="compact">Ensures practical documentation</li>
+                </ul>
+            </div>
+            <div>
+                <div class="card" style="padding: 0.3in; margin-bottom: 0.3in;">
+                    <p style="font-size: 20pt; font-weight: bold;">Rule 4: Owner Accountability</p>
+                </div>
+
+                <p class="body">Whoever submits the request is responsible for collecting and reporting productivity metrics.</p>
+
+                <h3 class="subsection" style="margin-top: 0.25in;">Why This Matters</h3>
+                <ul>
+                    <li class="compact">Real data from real users</li>
+                    <li class="compact">Skin in the game</li>
+                    <li class="compact">Proves ROI to leadership</li>
+                    <li class="compact">Builds case for more investment</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="red-box bottom">
+            <p><strong>The model:</strong> Business owns the problem, the solution, and the results. IT enables, not owns.</p>
+        </div>
+    </div>
+    <span class="slide-number">36</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Rules 5-6: Control & Prioritization</h1>
+
+        <div class="two-grid" style="margin-top: 0.4in; gap: 0.5in;">
+            <div>
+                <div class="card" style="padding: 0.3in; margin-bottom: 0.3in;">
+                    <p style="font-size: 20pt; font-weight: bold;">Rule 5: Limited Submission Rights</p>
+                </div>
+
+                <p class="body">Only department heads and certain grade levels can submit FWI requests. Not open to all employees initially.</p>
+
+                <h3 class="subsection" style="margin-top: 0.25in;">Why This Matters</h3>
+                <ul>
+                    <li class="compact">Quality over quantity</li>
+                    <li class="compact">Strategic alignment</li>
+                    <li class="compact">Prevents request flooding</li>
+                    <li class="compact">Ensures organizational priority</li>
+                </ul>
+            </div>
+            <div>
+                <div class="card" style="padding: 0.3in; margin-bottom: 0.3in;">
+                    <p style="font-size: 20pt; font-weight: bold;">Rule 6: Centralized Prioritization</p>
+                </div>
+
+                <p class="body">Kevin and Claudell review all submissions and decide what gets built and in what order.</p>
+
+                <h3 class="subsection" style="margin-top: 0.25in;">Why This Matters</h3>
+                <ul>
+                    <li class="compact">Single point of accountability</li>
+                    <li class="compact">Cross-functional visibility</li>
+                    <li class="compact">Strategic alignment</li>
+                    <li class="compact">Resource optimization</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight-box bottom">
+            <p><strong>Evolution:</strong> As we mature, submission rights may expand. Start tight, loosen with experience.</p>
+        </div>
+    </div>
+    <span class="slide-number">37</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">FWI Intake Dashboard</h1>
+        <p class="lead">How requests get submitted and processed</p>
+
+        <div class="two-grid" style="margin-top: 0.3in;">
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">Submission Features</h2>
+                <ul>
+                    <li class="compact">Simple, frictionless form</li>
+                    <li class="compact">AI-assisted writing cleanup</li>
+                    <li class="compact">Possible voice input option</li>
+                    <li class="compact">AI prompts for clarification</li>
+                    <li class="compact">Mobile-friendly design</li>
+                </ul>
+
+                <div class="highlight-box" style="margin-top: 0.3in;">
+                    <p style="font-size: 16pt;"><strong>Target Launch:</strong> January 2026</p>
+                </div>
+            </div>
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">What Submitters Provide</h2>
+                <ul>
+                    <li class="compact">Description of friction point</li>
+                    <li class="compact">Current time spent on task</li>
+                    <li class="compact">Who is affected</li>
+                    <li class="compact">Expected benefit</li>
+                    <li class="compact">Commitment to measure results</li>
+                </ul>
+
+                <div class="info-box" style="margin-top: 0.3in;">
+                    <p style="font-size: 16pt;">AI helps users articulate problems better via cleanup and clarifying questions.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="quote-box bottom">
+            <p>"The intake process itself must be frictionless — we're eating our own cooking."</p>
+        </div>
+    </div>
+    <span class="slide-number">38</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Measuring Success</h1>
+        <p class="lead">How we track and report FWI impact</p>
+
+        <div class="three-grid" style="margin-top: 0.3in;">
+            <div class="card" style="padding: 0.25in; background: var(--walker-red);">
+                <p style="font-size: 20pt; font-weight: bold; color: white; margin-bottom: 0.1in;">1</p>
+                <h3 style="margin-top: 0; font-size: 16pt; color: white;">Feedback Portal</h3>
+                <p style="font-size: 13pt; color: white;">System prompts participants for mandatory feedback on agent usage and time saved.</p>
+            </div>
+
+            <div class="card" style="padding: 0.25in; background: var(--walker-red);">
+                <p style="font-size: 20pt; font-weight: bold; color: white; margin-bottom: 0.1in;">2</p>
+                <h3 style="margin-top: 0; font-size: 16pt; color: white;">Tracked Fields</h3>
+                <p style="font-size: 13pt; color: white;">Hours saved, usage frequency, user stories, qualitative feedback, and ROI indicators.</p>
+            </div>
+
+            <div class="card" style="padding: 0.25in; background: var(--walker-red);">
+                <p style="font-size: 20pt; font-weight: bold; color: white; margin-bottom: 0.1in;">3</p>
+                <h3 style="margin-top: 0; font-size: 16pt; color: white;">Management Reports</h3>
+                <p style="font-size: 13pt; color: white;">Real-time dashboards and stats available to leadership for decision-making.</p>
+            </div>
+        </div>
+
+        <div class="highlight-box" style="margin-top: 0.3in; padding: 0.2in;">
+            <h2 class="section-header" style="margin-top: 0; font-size: 16pt;">What Gets Measured</h2>
+            <ul style="font-size: 13pt;">
+                <li>Time saved per agent per week</li>
+                <li>Adoption rates by department</li>
+                <li>User satisfaction scores</li>
+            </ul>
+        </div>
+    </div>
+    <span class="slide-number">39</span>
+        </div>
+        <div class="artboard">
+<div class="section-slide">
+        <h1 style="font-size: 120pt; font-weight: 800;">Pillar 3</h1>
+    </div>
+    <span class="slide-number" style="color: rgba(255,255,255,0.5);">40</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Pillar 3: Vendor AI Integration</h1>
+        <p class="lead">Leveraging AI in tools we already pay for</p>
+
+        <div class="definition-box" style="margin-top: 0.25in;">
+            <p style="font-size: 20pt;">Evaluate and enable AI features in existing vendor tools. <strong>Q3-Q4 2026 focus</strong> — by then, vendor AI will be more mature.</p>
+        </div>
+
+        <div class="two-grid" style="margin-top: 0.3in;">
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">What We're Watching</h2>
+                <ul>
+                    <li class="compact">Microsoft 365 Copilot evolution</li>
+                    <li class="compact">Google Workspace AI features</li>
+                    <li class="compact">Vendor-specific AI tools</li>
+                    <li class="compact">ERP/WMS AI capabilities</li>
+                    <li class="compact">Industry-specific AI solutions</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">Why Wait Until Q3-Q4</h2>
+                <ul>
+                    <li class="compact">Vendor AI is rapidly improving</li>
+                    <li class="compact">Costs dropping monthly</li>
+                    <li class="compact">Enterprise features maturing</li>
+                    <li class="compact">Build literacy first (Pillar 1)</li>
+                    <li class="compact">Prove value with quick wins (Pillar 2)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight-box bottom">
+            <p><strong>Strategy:</strong> Don't pay for vendor AI until we've maximized value from what we can build ourselves.</p>
+        </div>
+    </div>
+    <span class="slide-number">41</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">How It Works</h1>
+        <p class="lead">Vendor AI Integration Process</p>
+
+        <div class="three-grid" style="margin-top: 0.3in;">
+            <div class="card" style="padding: 0.25in; background: var(--walker-red);">
+                <p style="font-size: 20pt; font-weight: bold; color: white; margin-bottom: 0.1in;">1</p>
+                <h3 style="margin-top: 0; font-size: 16pt; color: white;">Navigate Vendor Hype</h3>
+                <p style="font-size: 13pt; color: white;">We help you cut through marketing claims and identify genuine AI capabilities.</p>
+            </div>
+
+            <div class="card" style="padding: 0.25in; background: var(--walker-red);">
+                <p style="font-size: 20pt; font-weight: bold; color: white; margin-bottom: 0.1in;">2</p>
+                <h3 style="margin-top: 0; font-size: 16pt; color: white;">Track Roadmaps</h3>
+                <p style="font-size: 13pt; color: white;">System business owners monitor product roadmaps and emerging AI opportunities.</p>
+            </div>
+
+            <div class="card" style="padding: 0.25in; background: var(--walker-red);">
+                <p style="font-size: 20pt; font-weight: bold; color: white; margin-bottom: 0.1in;">3</p>
+                <h3 style="margin-top: 0; font-size: 16pt; color: white;">IT Partnership</h3>
+                <p style="font-size: 13pt; color: white;">IT partners with business owners to vet solutions and build business cases.</p>
+            </div>
+        </div>
+
+        <div class="highlight-box" style="margin-top: 0.3in; padding: 0.2in;">
+            <h2 class="section-header" style="margin-top: 0; font-size: 16pt;">Evaluation Criteria</h2>
+            <ul class="two-column-list" style="font-size: 13pt;">
+                <li>Actual AI capability vs. marketing</li>
+                <li>Integration complexity</li>
+                <li>ROI potential</li>
+                <li>User adoption likelihood</li>
+            </ul>
+        </div>
+    </div>
+    <span class="slide-number">42</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Some Examples</h1>
+        <p class="lead">Vendor AI integration opportunities to evaluate</p>
+
+        <div class="three-grid" style="margin-top: 0.3in;">
+            <div class="card" style="padding: 0.2in; border-left: 4px solid #28a745;">
+                <p style="font-size: 14pt; font-weight: bold; color: #28a745; margin-bottom: 0.1in;">✓ SUCCESS</p>
+                <h3 style="margin-top: 0; font-size: 15pt; color: var(--walker-red);">eQMS Quality System</h3>
+                <p style="font-size: 12pt; margin-top: 0.08in;"><strong>What happened:</strong> Vendor demo showed real AI capabilities.</p>
+                <p style="font-size: 12pt; margin-top: 0.08in;"><strong>Result:</strong> Approved $5K add-on. Clear value.</p>
+            </div>
+
+            <div class="card" style="padding: 0.2in; border-left: 4px solid #dc3545;">
+                <p style="font-size: 14pt; font-weight: bold; color: #dc3545; margin-bottom: 0.1in;">✗ REJECTED</p>
+                <h3 style="margin-top: 0; font-size: 15pt; color: var(--walker-red);">DocuSign "AI Ready"</h3>
+                <p style="font-size: 12pt; margin-top: 0.08in;"><strong>What happened:</strong> Vendor claimed "AI ready" system.</p>
+                <p style="font-size: 12pt; margin-top: 0.08in;"><strong>Result:</strong> AI features weren't there. Marketing vs. reality.</p>
+            </div>
+
+            <div class="card" style="padding: 0.2in; border-left: 4px solid #ffc107;">
+                <p style="font-size: 14pt; font-weight: bold; color: #ffc107; margin-bottom: 0.1in;">⚠ MIXED</p>
+                <h3 style="margin-top: 0; font-size: 15pt; color: var(--walker-red);">CargoWise Logistics</h3>
+                <p style="font-size: 12pt; margin-top: 0.08in;"><strong>What happened:</strong> Met about AI features for shipment tracking.</p>
+                <p style="font-size: 12pt; margin-top: 0.08in;"><strong>Result:</strong> Features weren't as advertised. Overhyped.</p>
+            </div>
+        </div>
+
+        <div class="red-box bottom" style="margin-top: 0.25in;">
+            <p><strong>The Lesson:</strong> We vet AI claims, test before buying, and don't chase vendor hype.</p>
+        </div>
+    </div>
+    <span class="slide-number">43</span>
+        </div>
+        <div class="artboard">
+<div class="section-slide">
+        <p class="section-label">Proving Value</p>
+        <h1>Measurement & ROI</h1>
+        <p class="section-subtitle">Real numbers from real users</p>
+    </div>
+    <span class="slide-number" style="color: rgba(255,255,255,0.5);">44</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Measurement Philosophy</h1>
+        <p class="lead">Real numbers from real users, not executive estimates</p>
+
+        <div class="definition-box" style="margin-top: 0.3in;">
+            <p style="font-size: 20pt;"><strong>Operations Analogy:</strong> Engineers use time studies to measure productivity gains. FWI adapts this for corporate via user-reported hours and stories.</p>
+        </div>
+
+        <div class="two-grid" style="margin-top: 0.35in;">
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">Why This Approach</h2>
+                <ul>
+                    <li class="compact">Numbers come from actual users</li>
+                    <li class="compact">Stories provide context and credibility</li>
+                    <li class="compact">Builds organic momentum</li>
+                    <li class="compact">Creates internal case studies</li>
+                    <li class="compact">Proves ROI with hard data</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">What We'll Capture</h2>
+                <ul>
+                    <li class="compact">Hours saved per week</li>
+                    <li class="compact">Number of active users</li>
+                    <li class="compact">Qualitative feedback</li>
+                    <li class="compact">Success stories</li>
+                    <li class="compact">Improvement suggestions</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="quote-box bottom">
+            <p>"6-12 months from now, we can literally say: this many hours saved. Real numbers from the people using it."</p>
+        </div>
+    </div>
+    <span class="slide-number">45</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">What Success Looks Like</h1>
+        <p class="lead">Measurable outcomes at 6 and 12 months</p>
+
+        <div class="two-grid" style="margin-top: 0.3in;">
+            <div class="card" style="padding: 0.3in; background: var(--walker-red);">
+                <h2 class="section-header" style="margin-top: 0; color: white; font-size: 16pt;">At 6 Months (Q2 2026)</h2>
+                <ul style="font-size: 13pt;">
+                    <li style="color: white !important;">All leadership trained (Cohorts 1-3)</li>
+                    <li style="color: white !important;">Intake dashboard live</li>
+                    <li style="color: white !important;">5+ agents deployed</li>
+                    <li style="color: white !important;">First wave of productivity data</li>
+                    <li style="color: white !important;">Early success stories documented</li>
+                </ul>
+            </div>
+
+            <div class="card" style="padding: 0.3in; background: var(--walker-red);">
+                <h2 class="section-header" style="margin-top: 0; color: white; font-size: 16pt;">At 12 Months (Q4 2026)</h2>
+                <ul style="font-size: 13pt;">
+                    <li style="color: white !important;">10+ agents deployed and scaled</li>
+                    <li style="color: white !important;">1000s of hours saved documented</li>
+                    <li style="color: white !important;">Compelling user story library</li>
+                    <li style="color: white !important;">Clear ROI demonstrated</li>
+                    <li style="color: white !important;">Vendor AI integration evaluated</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="red-box bottom" style="margin-top: 0.3in;">
+            <p><strong>The Promise:</strong> Real transformation we can point to. Not vague "AI benefits" — specific hours, specific stories, specific wins.</p>
+        </div>
+    </div>
+    <span class="slide-number">46</span>
+        </div>
+        <div class="artboard">
+<div class="section-slide">
+        <p class="section-label">Proof of Concept</p>
+        <h1>FWI in Action</h1>
+        <p class="section-subtitle">A real example from Walker SCM</p>
+    </div>
+    <span class="slide-number" style="color: rgba(255,255,255,0.5);">47</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Real Example: Eli Lilly RFP</h1>
+
+        <div class="definition-box" style="margin-top: 0.25in;">
+            <p style="font-size: 18pt;"><strong>The Situation:</strong> Needed to respond to an Eli Lilly PowerPoint proposal. Clifton was out of country. Traditional approach would have taken all evening plus the next morning.</p>
+        </div>
+
+        <div class="two-grid" style="margin-top: 0.3in;">
+            <div>
+                <h2 class="section-header" style="margin-top: 0;">What Happened</h2>
+                <ul>
+                    <li class="compact">Recorded phone conversation with Clifton</li>
+                    <li class="compact">Fed transcript + PowerPoint to ChatGPT</li>
+                    <li class="compact">AI generated excellent quote/proposal</li>
+                    <li class="compact">Reviewed, refined, submitted</li>
+                </ul>
+            </div>
+            <div>
+                <div class="three-grid" style="gap: 0.15in;">
+                    <div class="stat-box-red">
+                        <div class="number" style="font-size: 32pt;">8-10</div>
+                        <div class="label">Hours Saved</div>
+                    </div>
+                    <div class="stat-box-red">
+                        <div class="number" style="font-size: 32pt;">1</div>
+                        <div class="label">Evening Back</div>
+                    </div>
+                    <div class="stat-box-red">
+                        <div class="number" style="font-size: 32pt;">100%</div>
+                        <div class="label">Quality</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-box" style="margin-top: 0.35in;">
+            <p><strong>This is FWI in action:</strong> Removing friction from high-value work. Time back for thinking, not typing.</p>
+        </div>
+
+        <div class="quote-box bottom">
+            <p>"This is the kind of story that inspires others. 'They can do that — I can do that too.'"</p>
+        </div>
+    </div>
+    <span class="slide-number">48</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">2026 Roadmap</h1>
+
+        <div class="timeline-row" style="margin-top: 0.35in;">
+            <div class="quarter-card">
+                <p class="quarter-label">Q1 2026</p>
+                <ul>
+                    <li>Cabinet training (half-day)</li>
+                    <li>Management cohort training</li>
+                    <li>Launch intake dashboard</li>
+                    <li>Begin workflow discovery</li>
+                    <li>First FWI agent requests</li>
+                </ul>
+            </div>
+
+            <div class="quarter-card">
+                <p class="quarter-label">Q2 2026</p>
+                <ul>
+                    <li>Continue workflow mapping</li>
+                    <li>Deploy first agents</li>
+                    <li>Collect productivity data</li>
+                    <li>Train-the-trainer rollout</li>
+                    <li>Identify AI Champions</li>
+                </ul>
+            </div>
+
+            <div class="quarter-card">
+                <p class="quarter-label">Q3 2026</p>
+                <ul>
+                    <li>Vendor AI evaluation</li>
+                    <li>Scale successful agents</li>
+                    <li>Broader IC training begins</li>
+                    <li>Refine feedback loops</li>
+                    <li>Document ROI</li>
+                </ul>
+            </div>
+
+            <div class="quarter-card">
+                <p class="quarter-label">Q4 2026</p>
+                <ul>
+                    <li>Vendor AI integration</li>
+                    <li>Year-end assessment</li>
+                    <li>Measure transformation</li>
+                    <li>User stories compilation</li>
+                    <li>Plan 2027 strategy</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="red-box bottom">
+            <p><strong>Key Principle:</strong> Pillars 1 & 2 run in parallel from Q1. Pillar 3 joins in Q3 when vendor AI is more mature.</p>
+        </div>
+    </div>
+    <span class="slide-number">49</span>
+        </div>
+        <div class="artboard">
+<div class="accent-bar"></div>
+    <div class="slide-content">
+        <h1 class="slide-title">Next Steps</h1>
+
+        <div class="two-columns" style="margin-top: 0.3in;">
+            <div class="column">
+                <h2>December - January</h2>
+                <ul>
+                    <li>Finalize 2026 strategy document</li>
+                    <li>Secure budget allocation</li>
+                    <li>Schedule Q1 Cabinet training</li>
+                    <li>Launch intake survey (January)</li>
+                    <li>Identify internal developer</li>
+                </ul>
+            </div>
+
+            <div class="column">
+                <h2>Q1 2026 Priorities</h2>
+                <ul>
+                    <li>Cabinet half-day workshop</li>
+                    <li>Management cohort training</li>
+                    <li>Select primary AI platform</li>
+                    <li>First agent deployments</li>
+                    <li>Begin productivity tracking</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="red-box" style="margin-top: 0.4in;">
+            <p class="box-title">What We Need From Leadership</p>
+            <p>Commitment to literacy-first approach  |  Budget for 2026  |  Executive participation in training  |  Support for cultural change</p>
+        </div>
+
+        <div class="highlight-box bottom">
+            <p><strong>Decision Point:</strong> Do we have alignment to proceed with FWI as presented?</p>
+        </div>
+    </div>
+    <span class="slide-number">50</span>
+        </div>
+        <div class="artboard">
+<div class="title-slide">
+        <h1>Frictionless Work Initiative</h1>
+        <p class="tagline">"We're removing the drag that makes daily work harder than it needs to be."</p>
+        <p class="subtitle" style="margin-top: 0.6in;">Questions & Discussion</p>
+    </div>
+    <span class="slide-number" style="color: rgba(255,255,255,0.5);">51</span>
+        </div>
+        <div class="artboard">
+<div class="section-slide">
+        <p class="section-label">Hands-On Session</p>
+        <h1>Live AI Demos</h1>
+
+        <div style="display: flex; gap: 0.4in; justify-content: center; margin-top: 0.5in;">
+            <div style="background: white; padding: 0.35in; text-align: center; border-radius: 12px; width: 2.8in;">
+                <p style="color: var(--walker-red); font-size: 20pt; font-weight: bold; margin-bottom: 0.12in;">Word Copilot</p>
+                <p style="color: var(--medium-gray); font-size: 15pt;">Highlight text, rewrite, fix grammar instantly</p>
+            </div>
+            <div style="background: white; padding: 0.35in; text-align: center; border-radius: 12px; width: 2.8in;">
+                <p style="color: var(--walker-red); font-size: 20pt; font-weight: bold; margin-bottom: 0.12in;">ChatGPT</p>
+                <p style="color: var(--medium-gray); font-size: 15pt;">Practical use cases for daily work</p>
+            </div>
+            <div style="background: white; padding: 0.35in; text-align: center; border-radius: 12px; width: 2.8in;">
+                <p style="color: var(--walker-red); font-size: 20pt; font-weight: bold; margin-bottom: 0.12in;">NotebookLM</p>
+                <p style="color: var(--medium-gray); font-size: 15pt;">Drop docs, ask questions, get answers</p>
+            </div>
+        </div>
+    </div>
+    <span class="slide-number" style="color: rgba(255,255,255,0.5);">52</span>
+        </div>
+    </div>
+</body>
+</html>

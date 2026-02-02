@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP-WH-003: Inbound Receiving Process</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; max-width: 950px; margin: 0 auto; padding: 40px 20px; color: #333; background: #f9f9f9; }
+        h1 { color: #1a365d; border-bottom: 3px solid #2b6cb0; padding-bottom: 10px; }
+        h2 { color: #2c5282; margin-top: 30px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+        h3 { color: #2b6cb0; background: #ebf8ff; padding: 10px 15px; border-radius: 6px; }
+        hr { border: none; border-top: 2px solid #e2e8f0; margin: 30px 0; }
+        .container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        table { border-collapse: collapse; width: 100%; margin: 15px 0; font-size: 0.9em; }
+        th, td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; }
+        th { background: #2b6cb0; color: white; }
+        tr:nth-child(even) { background: #f7fafc; }
+        .doc-header { background: #f7fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .warning { background: #fed7e2; border-left: 4px solid #c53030; padding: 10px 15px; margin: 15px 0; }
+        .system-note { background: #e9d8fd; border-left: 4px solid #805ad5; padding: 10px 15px; margin: 10px 0; font-size: 0.9em; }
+        .step-time { color: #718096; font-size: 0.85em; }
+        ol, ul { padding-left: 25px; }
+        li { margin: 6px 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>SOP-WH-003: Inbound Receiving Process</h1>
+
+<div class="doc-header">
+<table style="margin: 0;">
+<tr><th>Field</th><th>Value</th><th>Field</th><th>Value</th></tr>
+<tr><td>Document ID</td><td>SOP-WH-003</td><td>Version</td><td>2.4</td></tr>
+<tr><td>Effective Date</td><td>2025-09-12</td><td>Last Review</td><td>2025-09-01</td></tr>
+<tr><td>Next Review</td><td>2026-03-01</td><td>Owner</td><td>Tom Bradley, Director Operations</td></tr>
+<tr><td>Approver</td><td>Sarah Chen, VP Operations</td><td>Classification</td><td>Internal Use Only</td></tr>
+</table>
+</div>
+
+<hr>
+
+<h2>1. Purpose</h2>
+<p>This procedure establishes the standard process for receiving inbound freight at all Midwest Premier Logistics facilities. Proper execution ensures inventory accuracy, product integrity, and customer satisfaction.</p>
+
+<h2>2. Scope</h2>
+<p>This SOP applies to:</p>
+<ul>
+<li>All warehouse associates performing receiving functions</li>
+<li>All facilities: CLB-01, IND-02, MEM-03, CHI-04</li>
+<li>All inbound freight types: FTL, LTL, parcel, customer returns</li>
+</ul>
+
+<h2>3. Responsibilities</h2>
+<table>
+<tr><th>Role</th><th>Responsibility</th></tr>
+<tr><td>Receiving Clerk</td><td>Verify appointments, check in drivers, document discrepancies</td></tr>
+<tr><td>Forklift Operator</td><td>Unload freight, stage in receiving area, transport to putaway</td></tr>
+<tr><td>Receiving Supervisor</td><td>Resolve exceptions, approve adjustments, ensure compliance</td></tr>
+<tr><td>Inventory Control</td><td>Investigate variances, process adjustments, maintain accuracy</td></tr>
+</table>
+
+<h2>4. Required Equipment & Systems</h2>
+<ul>
+<li>RF scanner (Zebra MC9300)</li>
+<li>Manhattan SCALE WMS (Receiving module)</li>
+<li>Pallet jack / forklift (certified operators only)</li>
+<li>Digital camera (for damage documentation)</li>
+<li>Temperature probe (for refrigerated freight)</li>
+<li>PPE: Safety vest, steel-toe boots, gloves</li>
+</ul>
+
+<hr>
+
+<h2>5. Procedure</h2>
+
+<h3>Step 1: Verify Appointment <span class="step-time">(5 min)</span></h3>
+<ol>
+<li>Check TMS (Oracle OTM) for scheduled delivery appointment</li>
+<li>Confirm the following match the ASN (Advanced Ship Notice):
+<ul>
+<li>PO number(s)</li>
+<li>Carrier name</li>
+<li>Expected piece count</li>
+<li>Expected weight</li>
+</ul>
+</li>
+<li>If no appointment exists:
+<ul>
+<li>Contact Receiving Supervisor</li>
+<li>Check with customer service for authorization</li>
+<li><strong>Do NOT proceed without supervisor approval</strong></li>
+</ul>
+</li>
+</ol>
+<div class="system-note"><strong>System:</strong> TMS → Appointments → Search by PO or Carrier</div>
+
+<h3>Step 2: Driver Check-In <span class="step-time">(5 min)</span></h3>
+<ol>
+<li>Collect from driver: Bill of Lading (BOL), Delivery receipt, Driver's license (for log)</li>
+<li>Assign dock door in WMS</li>
+<li>Provide driver with: Door assignment slip, Facility safety rules acknowledgment, Estimated unload time</li>
+<li>Log check-in time in TMS</li>
+</ol>
+<div class="system-note"><strong>System:</strong> WMS → Receiving → Door Assignment</div>
+
+<h3>Step 3: Trailer Inspection <span class="step-time">(10 min)</span></h3>
+<ol>
+<li>Verify seal number matches BOL</li>
+</ol>
+<div class="warning"><strong>If seal mismatch:</strong> STOP - notify Supervisor immediately. Document seal number on receiving log.</div>
+<ol start="2">
+<li>Break seal and photograph (required for all shipments)</li>
+<li>Inspect trailer condition: Check for damage, water intrusion, pest evidence, load shift or fallen product</li>
+<li>For temperature-controlled freight:
+<ul>
+<li>Record reefer temperature from unit display</li>
+<li>Probe product temperature (minimum 3 locations)</li>
+<li><strong>Requirement:</strong> Must be ≤35°F for refrigerated, ≤0°F for frozen</li>
+</ul>
+</li>
+</ol>
+<div class="warning"><strong>If out of spec:</strong> STOP - contact QA and customer</div>
+
+<p><strong>Exception Codes:</strong></p>
+<table>
+<tr><th>Code</th><th>Description</th><th>Action</th></tr>
+<tr><td>SEAL-01</td><td>Seal missing</td><td>Supervisor approval required</td></tr>
+<tr><td>SEAL-02</td><td>Seal mismatch</td><td>Supervisor + customer notification</td></tr>
+<tr><td>TEMP-01</td><td>Temperature variance</td><td>QA hold + customer notification</td></tr>
+<tr><td>DMG-01</td><td>Visible damage</td><td>Photo documentation + claims process</td></tr>
+</table>
+
+<h3>Step 4: Unload and Stage <span class="step-time">(30-60 min)</span></h3>
+<ol>
+<li>Unload freight using appropriate equipment (Standard pallets: Forklift; Floor-loaded: Pallet jack + manual handling)</li>
+<li>Stage pallets in designated receiving lanes (RECV-01 through RECV-08)</li>
+<li>Scan each pallet/carton barcode to receiving location</li>
+<li>Count pieces and compare to BOL</li>
+<li>Document any discrepancies immediately</li>
+</ol>
+<div class="system-note"><strong>WMS Transaction:</strong> Receiving → Scan to Stage → Location RECV-XX</div>
+
+<h3>Step 5: Receipt Verification <span class="step-time">(15 min)</span></h3>
+<ol>
+<li>In WMS, open the ASN/PO</li>
+<li>Enter received quantities by SKU</li>
+<li>System will flag variances:
+<ul>
+<li><strong style="color: green;">Green:</strong> Within tolerance (±2%)</li>
+<li><strong style="color: #d69e2e;">Yellow:</strong> Outside tolerance, supervisor review</li>
+<li><strong style="color: red;">Red:</strong> Major variance, stop and investigate</li>
+</ul>
+</li>
+<li>For variances: Recount, check for mislabeled product, document, get supervisor approval</li>
+</ol>
+
+<p><strong>Tolerance Thresholds:</strong></p>
+<table>
+<tr><th>Variance Type</th><th>Threshold</th><th>Action</th></tr>
+<tr><td>Quantity ±2%</td><td>Auto-accept</td><td>Proceed to putaway</td></tr>
+<tr><td>Quantity 2-5%</td><td>Supervisor review</td><td>Recount, document, approve</td></tr>
+<tr><td>Quantity >5%</td><td>Hold</td><td>Investigation required</td></tr>
+<tr><td>SKU mismatch</td><td>Hold</td><td>Do not receive, contact shipper</td></tr>
+</table>
+
+<h3>Step 6: Putaway <span class="step-time">(20-40 min)</span></h3>
+<ol>
+<li>Within 4 hours of staging, initiate system-directed putaway</li>
+<li>Scan pallet/carton</li>
+<li>System assigns bin location based on: Product velocity, Lot/FIFO requirements, Available capacity</li>
+<li>Transport product to assigned location</li>
+<li>Confirm putaway with RF scan</li>
+<li>Verify bin label matches system</li>
+</ol>
+
+<h3>Step 7: Complete Receipt <span class="step-time">(5 min)</span></h3>
+<ol>
+<li>Sign driver's delivery receipt</li>
+<li>Return BOL copy to driver</li>
+<li>Close receipt in WMS</li>
+<li>File paperwork in daily receiving log</li>
+<li>Update TMS with receipt confirmation</li>
+</ol>
+
+<hr>
+
+<h2>6. Exception Handling</h2>
+<h3>6.1 Driver Detention</h3>
+<ul>
+<li>Free time: 2 hours from check-in</li>
+<li>After 2 hours: Begin detention log</li>
+<li>Detention rate: Per carrier contract (typically $75/hour)</li>
+</ul>
+
+<h3>6.2 Refused Shipments</h3>
+<ul>
+<li>Supervisor authorization required</li>
+<li>Document reason on BOL</li>
+<li>Contact customer service within 1 hour</li>
+</ul>
+
+<hr>
+
+<h2>7. Performance Metrics</h2>
+<table>
+<tr><th>Metric</th><th>Target</th><th>Measurement</th></tr>
+<tr><td>Dock-to-stock time</td><td>&lt;4 hours</td><td>WMS timestamp</td></tr>
+<tr><td>Receiving accuracy</td><td>99.5%</td><td>Cycle count variance</td></tr>
+<tr><td>Driver wait time</td><td>&lt;90 min</td><td>TMS log</td></tr>
+<tr><td>ASN compliance</td><td>95%</td><td>EDI match rate</td></tr>
+</table>
+
+<hr>
+
+<h2>9. Revision History</h2>
+<table>
+<tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+<tr><td>2.4</td><td>2025-09-12</td><td>T. Bradley</td><td>Added temperature probe requirements</td></tr>
+<tr><td>2.3</td><td>2025-06-01</td><td>T. Bradley</td><td>Updated exception codes</td></tr>
+<tr><td>2.2</td><td>2025-01-15</td><td>S. Chen</td><td>Added driver detention policy</td></tr>
+<tr><td>2.0</td><td>2024-03-01</td><td>S. Chen</td><td>Major revision for Manhattan SCALE</td></tr>
+</table>
+
+<hr>
+<p><em>This document is controlled. Printed copies are for reference only.</em></p>
+
+</div>
+</body>
+</html>

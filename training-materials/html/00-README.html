@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Assets for AI Training Session</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 40px 20px; color: #333; background: #f9f9f9; }
+        h1 { color: #1a365d; border-bottom: 3px solid #2b6cb0; padding-bottom: 10px; }
+        h2 { color: #2c5282; margin-top: 30px; }
+        h3 { color: #2b6cb0; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        th, td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
+        th { background: #2b6cb0; color: white; }
+        tr:nth-child(even) { background: #f7fafc; }
+        hr { border: none; border-top: 2px solid #e2e8f0; margin: 30px 0; }
+        code { background: #edf2f7; padding: 2px 6px; border-radius: 4px; font-family: 'Monaco', 'Consolas', monospace; }
+        blockquote { border-left: 4px solid #2b6cb0; margin: 20px 0; padding: 10px 20px; background: #ebf8ff; }
+        ol, ul { padding-left: 25px; }
+        li { margin: 8px 0; }
+        .container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Mock Assets for AI Training Session</h1>
+
+<h2>Overview</h2>
+<p>These files are realistic mock data for Walker Logistics to use in tomorrow's hands-on AI training session. All company names, contacts, and data are fictional.</p>
+
+<hr>
+
+<h2>File List</h2>
+<table>
+<tr><th>File</th><th>Type</th><th>Purpose</th></tr>
+<tr><td>01-sample-rfp.md</td><td>Markdown</td><td>Full RFP to practice extraction prompts</td></tr>
+<tr><td>02-walker-rate-sheet.tsv</td><td>TSV/Excel</td><td>Rate lookup reference data</td></tr>
+<tr><td>03-quote-template.md</td><td>Markdown</td><td>Quote document structure</td></tr>
+<tr><td>04-sample-rate-requests.md</td><td>Markdown</td><td>7 email scenarios for rate quotes</td></tr>
+<tr><td>05-new-customer-info-sheet.md</td><td>Markdown</td><td>Customer onboarding data</td></tr>
+<tr><td>06-building-file-checklist.md</td><td>Markdown</td><td>Full onboarding process checklist</td></tr>
+<tr><td>07-scenario-cards.md</td><td>Markdown</td><td>8 email writing scenarios</td></tr>
+<tr><td>08-messy-process-description.md</td><td>Markdown</td><td>Raw process description for mapping</td></tr>
+<tr><td>09-ar-aging-report.tsv</td><td>TSV/Excel</td><td>Accounts receivable data</td></tr>
+<tr><td>10-monthly-revenue-summary.tsv</td><td>TSV/Excel</td><td>Financial summary data</td></tr>
+</table>
+
+<hr>
+
+<h2>How to Use Each File</h2>
+
+<h3>For RFP/Quote Workflow (Hour 1)</h3>
+<p><strong>Primary files:</strong></p>
+<ul>
+<li><code>01-sample-rfp.md</code> - Paste this into ChatGPT/Claude to practice RFP extraction</li>
+<li><code>02-walker-rate-sheet.tsv</code> - Reference for building quotes</li>
+<li><code>03-quote-template.md</code> - Show what the final output should look like</li>
+</ul>
+<p><strong>Exercise flow:</strong></p>
+<ol>
+<li>Show the RFP</li>
+<li>Build a prompt to extract key requirements</li>
+<li>Test across models</li>
+<li>Show how extracted info maps to quote template</li>
+</ol>
+
+<hr>
+
+<h3>For Rate Lookup Workflow</h3>
+<p><strong>Primary files:</strong></p>
+<ul>
+<li><code>04-sample-rate-requests.md</code> - 7 realistic rate request emails</li>
+<li><code>02-walker-rate-sheet.tsv</code> - Internal rate reference</li>
+</ul>
+<p><strong>Exercise flow:</strong></p>
+<ol>
+<li>Pick a rate request email</li>
+<li>Build a prompt to parse the request and recommend rates</li>
+<li>Test with internal rates vs. web search for market rates</li>
+<li>Compare ChatGPT vs. Perplexity for current rate data</li>
+</ol>
+<p><strong>Note:</strong> Request #6 is intentionally vague/incomplete - good for showing how AI can identify missing information.</p>
+
+<hr>
+
+<h3>For Customer Onboarding / Building File</h3>
+<p><strong>Primary files:</strong></p>
+<ul>
+<li><code>05-new-customer-info-sheet.md</code> - Sample customer data</li>
+<li><code>06-building-file-checklist.md</code> - Full process checklist</li>
+</ul>
+<p><strong>Exercise flow:</strong></p>
+<ol>
+<li>Show the customer info sheet</li>
+<li>Build a prompt to generate onboarding tasks</li>
+<li>Use the checklist to show how AI can track status</li>
+<li>Practice generating customer communications</li>
+</ol>
+
+<hr>
+
+<h3>For Process Mapping / Mermaid Demo</h3>
+<p><strong>Primary file:</strong></p>
+<ul>
+<li><code>08-messy-process-description.md</code> - Raw, unstructured process description</li>
+</ul>
+<p><strong>Exercise flow:</strong></p>
+<ol>
+<li>Show the messy description (read a section aloud)</li>
+<li>Paste into Claude/ChatGPT with prompt: "Create a Mermaid flowchart for this process"</li>
+<li>Show the instant visualization</li>
+<li>Discuss how to identify AI integration points on the map</li>
+</ol>
+
+<hr>
+
+<h3>For Customer Communications</h3>
+<p><strong>Primary file:</strong></p>
+<ul>
+<li><code>07-scenario-cards.md</code> - 8 different email scenarios</li>
+</ul>
+<p><strong>Scenarios included:</strong></p>
+<ul>
+<li>A: Shipment delay notification</li>
+<li>B: Quote follow-up</li>
+<li>C: Damage claim response</li>
+<li>D: Service issue apology (our fault)</li>
+<li>E: Contract renewal outreach</li>
+<li>F: Price increase notification</li>
+<li>G: Win-back attempt (lost customer)</li>
+<li>H: Thank you / relationship building</li>
+</ul>
+<p><strong>Exercise flow:</strong></p>
+<ol>
+<li>Pick a scenario</li>
+<li>Build prompt with role, context, task, format</li>
+<li>Generate email draft</li>
+<li>Discuss what to verify/personalize before sending</li>
+</ol>
+
+<hr>
+
+<h3>For Financial / Cash Flow</h3>
+<p><strong>Primary files:</strong></p>
+<ul>
+<li><code>09-ar-aging-report.tsv</code> - Detailed AR data</li>
+<li><code>10-monthly-revenue-summary.tsv</code> - Revenue and cash flow data</li>
+</ul>
+<p><strong>Exercise flow:</strong></p>
+<ol>
+<li>Show the data</li>
+<li>Practice prompts for:
+<ul>
+<li>Summarizing AR status</li>
+<li>Identifying collection priorities</li>
+<li>Drafting collection emails</li>
+<li>Analyzing revenue trends</li>
+<li>Generating executive summaries</li>
+</ul>
+</li>
+</ol>
+
+<hr>
+
+<h2>TSV Files - How to Use</h2>
+<p>The <code>.tsv</code> files can be:</p>
+<ol>
+<li><strong>Opened directly in Excel</strong> - File > Open > Select the .tsv file</li>
+<li><strong>Copy/pasted into Excel</strong> - Open in text editor, select all, paste into Excel</li>
+<li><strong>Pasted into AI tools</strong> - Works directly in ChatGPT, Claude, etc.</li>
+</ol>
+<p>TSV (Tab-Separated Values) maintains column structure when pasted.</p>
+
+<hr>
+
+<h2>Tips for the Session</h2>
+<ol>
+<li><strong>Start simple</strong> - Use the RFP extraction first, it's the clearest demo</li>
+<li><strong>Let them pick</strong> - Ask which scenario interests them most</li>
+<li><strong>Show iteration</strong> - Run a prompt, show the output, ask "what would we change?", run again</li>
+<li><strong>Compare models</strong> - Same prompt in ChatGPT vs Claude shows different strengths</li>
+<li><strong>Connect to their work</strong> - "Where do you see this in your daily job?"</li>
+</ol>
+
+<hr>
+
+<h2>Customization</h2>
+<p>Feel free to modify these files to better match Walker's actual:</p>
+<ul>
+<li>Service offerings</li>
+<li>Locations</li>
+<li>Customer types</li>
+<li>Rate structures</li>
+<li>Internal processes</li>
+</ul>
+<p>The more realistic, the more valuable the training.</p>
+</div>
+</body>
+</html>

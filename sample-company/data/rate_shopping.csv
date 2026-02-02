@@ -1,0 +1,19 @@
+quote_id,request_date,request_time,shipment_id,origin_city,origin_state,dest_city,dest_state,pickup_date,weight_lbs,equipment_type,carrier_id,carrier_name,quoted_rate,fuel_surcharge,accessorials,total_quote,transit_days,on_time_score,capacity_status,quote_valid_until,selected,selection_reason
+QT-2026-00421,2026-01-17,08:15,SHP-2026-00156,Columbus,OH,Lexington,KY,2026-01-19,2840,Dry Van,CAR-022,Old Dominion,342.00,44.08,75.00,461.08,1,93.4%,Available,2026-01-19,Yes,Best service + price balance
+QT-2026-00422,2026-01-17,08:15,SHP-2026-00156,Columbus,OH,Lexington,KY,2026-01-19,2840,Dry Van,CAR-015,Estes Express,325.00,41.89,85.00,451.89,1,89.5%,Available,2026-01-19,No,Lower on-time score
+QT-2026-00423,2026-01-17,08:15,SHP-2026-00156,Columbus,OH,Lexington,KY,2026-01-19,2840,Dry Van,CAR-018,XPO Logistics,398.00,51.30,50.00,499.30,1,96.1%,Limited,2026-01-19,No,Premium pricing
+QT-2026-00424,2026-01-17,08:45,SHP-2026-00157,Indianapolis,IN,Columbus,OH,2026-01-19,4120,Dry Van,CAR-018,XPO Logistics,265.00,34.15,50.00,349.15,1,96.1%,Available,2026-01-19,Yes,Best service for high-value
+QT-2026-00425,2026-01-17,08:45,SHP-2026-00157,Indianapolis,IN,Columbus,OH,2026-01-19,4120,Dry Van,CAR-022,Old Dominion,248.00,31.95,75.00,354.95,1,93.4%,Available,2026-01-19,No,Slightly higher total
+QT-2026-00426,2026-01-17,08:45,SHP-2026-00157,Indianapolis,IN,Columbus,OH,2026-01-19,4120,Dry Van,CAR-015,Estes Express,235.00,30.28,85.00,350.28,1,89.5%,Available,2026-01-19,No,Service concern for electronics
+QT-2026-00427,2026-01-17,09:30,SHP-2026-00158,Memphis,TN,Birmingham,AL,2026-01-20,29800,Reefer 48,CAR-031,Averitt Express,685.00,88.26,175.00,948.26,1,90.2%,Available,2026-01-20,Yes,Regional specialist
+QT-2026-00428,2026-01-17,09:30,SHP-2026-00158,Memphis,TN,Birmingham,AL,2026-01-20,29800,Reefer 48,CAR-008,JB Hunt,725.00,93.41,150.00,968.41,1,94.2%,Limited,2026-01-20,No,Capacity constrained
+QT-2026-00429,2026-01-17,09:30,SHP-2026-00158,Memphis,TN,Birmingham,AL,2026-01-20,29800,Reefer 48,CAR-025,Schneider National,698.00,89.94,165.00,952.94,1,91.8%,Available,2026-01-20,No,Slightly higher cost
+QT-2026-00430,2026-01-17,10:15,SHP-2026-00159,Columbus,OH,Charlotte,NC,2026-01-20,40500,Dry Van 53,CAR-025,Schneider National,1520.00,195.88,0.00,1715.88,2,91.8%,Available,2026-01-21,Yes,Contract rate
+QT-2026-00431,2026-01-17,10:15,SHP-2026-00159,Columbus,OH,Charlotte,NC,2026-01-20,40500,Dry Van 53,CAR-012,Werner Enterprises,1485.00,191.36,45.00,1721.36,2,92.8%,Available,2026-01-21,No,Similar total cost
+QT-2026-00432,2026-01-17,10:15,SHP-2026-00159,Columbus,OH,Charlotte,NC,2026-01-20,40500,Dry Van 53,CAR-008,JB Hunt,1545.00,199.10,0.00,1744.10,2,94.2%,Limited,2026-01-21,No,Higher base rate
+QT-2026-00433,2026-01-17,10:45,SHP-2026-00160,Columbus,OH,Toledo,OH,2026-01-20,9200,Flatbed,CAR-015,Estes Express,215.00,27.70,45.00,287.70,1,89.5%,Available,2026-01-20,Pending,Awaiting customer approval
+QT-2026-00434,2026-01-17,10:45,SHP-2026-00160,Columbus,OH,Toledo,OH,2026-01-20,9200,Flatbed,CAR-045,Landstar System,198.00,25.52,65.00,288.52,1,95.2%,Available,2026-01-20,Pending,Better service but agent model
+QT-2026-00435,2026-01-17,10:45,SHP-2026-00160,Columbus,OH,Toledo,OH,2026-01-20,9200,Flatbed,CAR-048,Echo Global,245.00,31.57,35.00,311.57,1,86.8%,Available,2026-01-20,Pending,Broker - higher markup
+QT-2026-00436,2026-01-17,11:30,SHP-2026-00161,Memphis,TN,Little Rock,AR,2026-01-21,5500,Dry Van,CAR-031,Averitt Express,412.00,53.11,0.00,465.11,1,90.2%,Available,2026-01-21,Pending,Regional coverage
+QT-2026-00437,2026-01-17,11:30,SHP-2026-00161,Memphis,TN,Little Rock,AR,2026-01-21,5500,Dry Van,CAR-012,Werner Enterprises,398.00,51.30,25.00,474.30,1,92.8%,Available,2026-01-21,Pending,Slightly higher total
+QT-2026-00438,2026-01-17,11:30,SHP-2026-00161,Memphis,TN,Little Rock,AR,2026-01-21,5500,Dry Van,CAR-035,Heartland Express,385.00,49.62,35.00,469.62,1,88.4%,Available,2026-01-21,Pending,Service concerns
