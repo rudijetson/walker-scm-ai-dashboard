@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walker SCM — AI Prompt Library</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        walker: {
+          900: '#8B2332',
+          800: '#a12a3d',
+          700: '#b83348',
+          100: '#fdf2f4',
+          50: '#fef8f9',
+        },
+        slate: {
+          925: '#0f1117',
+          875: '#1a1c24',
+        }
+      },
+      fontFamily: {
+        serif: ['Source Serif 4', 'Georgia', 'serif'],
+        sans: ['DM Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; background: #f7f7f5; }
+
+  /* Notion-style scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #d1d1d1; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+  /* Slide panel animation */
+  .slide-panel { transform: translateX(100%); transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1); }
+  .slide-panel.open { transform: translateX(0); }
+
+  /* Overlay */
+  .panel-overlay { opacity: 0; transition: opacity 0.28s ease; pointer-events: none; }
+  .panel-overlay.open { opacity: 1; pointer-events: all; }
+
+  /* Star hover effect */
+  .star-btn { transition: transform 0.1s ease; }
+  .star-btn:hover { transform: scale(1.2); }
+
+  /* Copy feedback */
+  .copy-flash { animation: copyPulse 0.6s ease; }
+  @keyframes copyPulse {
+    0% { background: #dcfce7; }
+    100% { background: transparent; }
+  }
+
+  /* Card hover */
+  .prompt-card { transition: box-shadow 0.15s ease, transform 0.15s ease; }
+  .prompt-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); transform: translateY(-1px); }
+
+  /* Sidebar item */
+  .nav-item { transition: background 0.12s ease, color 0.12s ease; }
+
+  /* Tag pill */
+  .dept-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; }
+
+  /* Textarea auto-resize feel */
+  textarea { resize: vertical; }
+
+  /* Toast */
+  .toast-enter { animation: toastIn 0.3s ease forwards; }
+  @keyframes toastIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback } = React;
+
+// ─── Data ───────────────────────────────────────────────────────────
+const DEPARTMENTS = [
+  { id: 'all', name: 'All Prompts', icon: '⊞', color: '#6b7280' },
+  { id: 'company', name: 'Company-Wide', icon: '◆', color: '#8B2332' },
+  { id: 'legal', name: 'Legal', icon: '§', color: '#7c3aed' },
+  { id: 'sales', name: 'Sales & Marketing', icon: '◎', color: '#059669' },
+  { id: 'hr', name: 'HR & People', icon: '♦', color: '#d97706' },
+  { id: 'compliance', name: 'Compliance', icon: '✓', color: '#0284c7' },
+  { id: 'operations', name: 'Operations', icon: '⚙', color: '#475569' },
+  { id: 'finance', name: 'Finance', icon: '$', color: '#16a34a' },
+  { id: 'engineering', name: 'Engineering', icon: '▲', color: '#dc2626' },
+  { id: 'general', name: 'General / Life', icon: '☼', color: '#8b5cf6' },
+];
+
+const DEPT_COLORS = {
+  company: { bg: '#fdf2f4', text: '#8B2332', border: '#f5c6cb' },
+  legal: { bg: '#f5f3ff', text: '#7c3aed', border: '#ddd6fe' },
+  sales: { bg: '#ecfdf5', text: '#059669', border: '#a7f3d0' },
+  hr: { bg: '#fffbeb', text: '#d97706', border: '#fde68a' },
+  compliance: { bg: '#f0f9ff', text: '#0284c7', border: '#bae6fd' },
+  operations: { bg: '#f8fafc', text: '#475569', border: '#cbd5e1' },
+  finance: { bg: '#f0fdf4', text: '#16a34a', border: '#bbf7d0' },
+  engineering: { bg: '#fef2f2', text: '#dc2626', border: '#fecaca' },
+  general: { bg: '#faf5ff', text: '#8b5cf6', border: '#ddd6fe' },
+};
+
+const PROMPTS = [
+  {
+    id: 1,
+    title: 'Contract Renewal Date Extraction',
+    dept: 'legal',
+    rating: 4.8,
+    ratingCount: 12,
+    uses: 47,
+    contributor: 'Andy M.',
+    contributorRole: 'Legal Counsel',
+    description: 'Extract all renewal dates, termination clauses, and notification deadlines from uploaded contracts. Returns a structured table for tracking.',
+    prompt: `You are a legal contract analyst for Walker Supply Chain Management. I'm going to upload a contract document. Please analyze it and extract the following into a structured table:
+
+1. Contract effective date
+2. Contract expiration/renewal date
+3. Auto-renewal clause (yes/no, terms)
+4. Termination notice period (days required)
+5. Key notification deadlines
+6. Parties involved
+7. Contract value (if stated)
+
+Format the output as a clean table. Flag any contracts expiring within 90 days as "URGENT". After the table, provide a brief summary of any unusual or noteworthy clauses.`,
+    anatomy: {
+      purpose: 'Automate the extraction of critical contract dates and clauses to prevent missed renewals and ensure timely notifications.',
+      whenToUse: 'When processing new contracts, during quarterly contract reviews, or when onboarding contracts from a new vendor.',
+      expectedInput: 'A PDF or image of a signed contract document (vendor agreement, lease, service contract, etc.)',
+      expectedOutput: 'A structured table with dates, clauses, and deadlines, plus flagged urgent items and a summary of notable terms.',
+      tips: 'Upload the full contract — partial uploads may miss clauses in appendices. For multi-contract batches, process one at a time for accuracy.',
+    },
+    testimonials: [
+      { text: "Caught a renewal we would've missed — saved us from a $15K auto-renew.", name: 'Andy M.', role: 'Legal' },
+      { text: "What used to take me 45 minutes per contract now takes 2 minutes.", name: 'Michael R.', role: 'Legal' },
+    ],
+    tags: ['contracts', 'dates', 'compliance', 'tracking'],
+    featured: true,
+    createdAt: '2025-03-15',
+  },
+  {
+    id: 2,
+    title: 'Lead Qualification & Pipeline Analysis',
+    dept: 'sales',
+    rating: 4.6,
+    ratingCount: 8,
+    uses: 34,
+    contributor: 'Kim L.',
+    contributorRole: 'Sales Manager',
+    description: 'Analyze your HubSpot export or sales data to qualify leads, score them by likelihood to close, and identify pipeline gaps.',
+    prompt: `You are a sales analytics expert for a supply chain management company. I'm providing our sales pipeline data (from HubSpot export or spreadsheet). Please analyze and provide:
+
+1. **Lead Scoring**: Rate each lead High/Medium/Low based on:
+   - Company size and industry fit (logistics, manufacturing, distribution = high fit)
+   - Engagement level (meetings held, emails opened, responses)
+   - Deal size relative to our average contract value
+   - Time in pipeline (flag stale leads > 60 days)
+
+2. **Pipeline Health Dashboard**:
+   - Total pipeline value by stage
+   - Average deal velocity (days per stage)
+   - Conversion rates between stages
+   - Revenue forecast (weighted by stage probability)
+
+3. **Action Items**: Top 5 leads needing immediate follow-up and why.
+
+Present findings with clear tables and bullet points. Use supply chain industry context for qualification.`,
+    anatomy: {
+      purpose: 'Transform raw sales data into actionable intelligence — know which leads to prioritize and where the pipeline is weak.',
+      whenToUse: 'Weekly pipeline reviews, monthly sales meetings, or when evaluating new leads from trade shows and marketing campaigns.',
+      expectedInput: 'A CSV/Excel export from HubSpot or a pasted table of current deals with columns like Company, Contact, Stage, Value, Last Activity Date.',
+      expectedOutput: 'Scored leads, pipeline health metrics, conversion analysis, and a prioritized action list.',
+      tips: 'Include as many data points as possible. The more history (past wins/losses), the better the scoring accuracy. Mention your average deal size for better calibration.',
+    },
+    testimonials: [
+      { text: "Finally have visibility into our pipeline health. This is what we've been asking for.", name: 'Kim L.', role: 'Sales' },
+    ],
+    tags: ['sales', 'pipeline', 'HubSpot', 'analysis', 'leads'],
+    featured: true,
+    createdAt: '2025-03-20',
+  },
+  {
+    id: 3,
+    title: 'Training Framework Builder',
+    dept: 'hr',
+    rating: 4.5,
+    ratingCount: 6,
+    uses: 19,
+    contributor: 'Sandra K.',
+    contributorRole: 'HR Director',
+    description: 'Generate a structured training program framework based on role requirements, skill gaps, and compliance needs.',
+    prompt: `You are an HR training specialist for a mid-size supply chain management company (~200 employees). I need to build a training framework. Here's the context:
+
+**Role/Department**: [specify]
+**Current skill gaps**: [describe what's missing]
+**Compliance requirements**: [any mandatory training]
+**Timeline**: [target completion date]
+**Budget considerations**: [if any]
+
+Please create:
+1. A phased training plan (onboarding → core skills → advanced)
+2. For each phase: topics, delivery method (classroom, e-learning, OJT), duration, and success criteria
+3. Assessment checkpoints and how to measure competency
+4. Recommended resources (internal and external)
+5. A simple tracking template I can use in Excel
+
+Keep it practical — we're a logistics company, not a training academy. People need to learn while doing their jobs.`,
+    anatomy: {
+      purpose: 'Create structured, role-specific training programs without hiring external consultants or purchasing expensive LMS platforms.',
+      whenToUse: 'When onboarding new hires, addressing performance gaps, rolling out new processes, or meeting compliance training deadlines.',
+      expectedInput: 'Role description, identified skill gaps, compliance requirements, timeline, and any budget constraints.',
+      expectedOutput: 'A phased training plan with topics, methods, assessments, and a tracking template.',
+      tips: 'Be specific about the role and gaps — "warehouse safety" gives better results than "general training". Include company context for more relevant recommendations.',
+    },
+    testimonials: [
+      { text: "Built our entire Q2 training calendar in one session. Would have taken me a week.", name: 'Sandra K.', role: 'HR' },
+    ],
+    tags: ['training', 'onboarding', 'skills', 'development', 'compliance'],
+    featured: false,
+    createdAt: '2025-03-22',
+  },
+  {
+    id: 4,
+    title: 'Warehouse Safety Audit Prep',
+    dept: 'compliance',
+    rating: 4.9,
+    ratingCount: 15,
+    uses: 52,
+    contributor: 'James T.',
+    contributorRole: 'Compliance Manager',
+    description: 'Prepare for OSHA-style warehouse safety audits by generating checklists, identifying common violations, and creating remediation plans.',
+    prompt: `You are a warehouse safety and compliance expert. I need to prepare for an upcoming safety audit at our warehouse facility. Please help me with:
+
+**Facility type**: [warehouse/distribution center/cross-dock]
+**Size**: [sq ft and # of employees]
+**Last audit date**: [date and any findings]
+**Specific concerns**: [describe any known issues]
+
+Generate:
+1. **Pre-Audit Checklist**: Comprehensive walkthrough checklist organized by area (dock, storage, aisles, equipment, break areas, exterior)
+2. **Top 10 Common Violations** for our facility type with severity ratings
+3. **Documentation Check**: What records/logs need to be current and accessible
+4. **Remediation Plan Template**: For any findings — timeline, responsible party, verification
+5. **Employee Prep**: Quick talking points for staff who may be interviewed during audit
+
+Format the checklist so I can print it and use it during my walkthrough.`,
+    anatomy: {
+      purpose: 'Ensure audit readiness by systematically checking all compliance areas before an official inspection arrives.',
+      whenToUse: 'Before scheduled audits, during quarterly self-inspections, after incidents, or when opening/expanding warehouse facilities.',
+      expectedInput: 'Facility details, last audit results, and any specific compliance concerns or recent incidents.',
+      expectedOutput: 'Printable checklists, violation risk analysis, documentation requirements, and remediation templates.',
+      tips: 'Include your last audit findings — the AI will focus on areas where you had previous violations. Mention any recent changes (new equipment, layout changes) for targeted checks.',
+    },
+    testimonials: [
+      { text: "We used this before our DOT audit and had zero findings. Zero.", name: 'James T.', role: 'Compliance' },
+      { text: "The printable checklist format is exactly what our team leads need for weekly walkdowns.", name: 'Marcus D.', role: 'Operations' },
+      { text: "Identified a forklift certification gap we completely overlooked.", name: 'James T.', role: 'Compliance' },
+    ],
+    tags: ['safety', 'OSHA', 'audit', 'warehouse', 'checklist'],
+    featured: true,
+    createdAt: '2025-02-28',
+  },
+  {
+    id: 5,
+    title: 'Lane Cost Calculator',
+    dept: 'operations',
+    rating: 4.3,
+    ratingCount: 9,
+    uses: 28,
+    contributor: 'Claude L.',
+    contributorRole: 'Operations Analyst',
+    description: 'Calculate freight lane costs including fuel surcharges, accessorials, and seasonal adjustments. Compare carrier rates.',
+    prompt: `You are a freight logistics cost analyst. I need to calculate and compare costs for shipping lanes. Here's the lane information:
+
+**Origin**: [city, state, zip]
+**Destination**: [city, state, zip]
+**Freight details**: [weight, class, dimensions, commodity]
+**Volume**: [shipments per week/month]
+**Current rate(s)**: [what we're paying now, if known]
+**Carriers being considered**: [list if applicable]
+
+Please calculate and provide:
+1. **Estimated cost per shipment** including line haul, fuel surcharge (use current DOE diesel index), and standard accessorials
+2. **Cost per unit/lb/mile** breakdown for comparison
+3. **Volume discount estimate** based on stated frequency
+4. **Seasonal adjustment factors** (peak surcharges for Q4, produce season, etc.)
+5. **Carrier comparison table** if multiple carriers provided
+6. **Cost optimization suggestions** — mode alternatives, consolidation opportunities, timing strategies
+
+Note: Use current market rates for the corridor. Flag if the lane is in a high-demand or imbalanced market.`,
+    anatomy: {
+      purpose: 'Get accurate lane cost estimates quickly without waiting for carrier quotes. Useful for spot quoting and budget planning.',
+      whenToUse: 'When quoting new business, reviewing carrier contracts, planning seasonal capacity, or evaluating lane profitability.',
+      expectedInput: 'Origin/destination, freight characteristics, volume, and any existing rate benchmarks.',
+      expectedOutput: 'Detailed cost breakdown, per-unit economics, carrier comparison, and optimization recommendations.',
+      tips: 'The more specific your freight details (exact weight, class, dimensions), the more accurate the estimate. Include your current rates for a meaningful comparison.',
+    },
+    testimonials: [
+      { text: "Got a ballpark cost in 30 seconds that was within 8% of the actual carrier quote.", name: 'Claude L.', role: 'Operations' },
+    ],
+    tags: ['freight', 'lanes', 'cost analysis', 'carriers', 'logistics'],
+    featured: false,
+    createdAt: '2025-03-10',
+  },
+  {
+    id: 6,
+    title: 'P&L Analysis & Variance Report',
+    dept: 'finance',
+    rating: 4.7,
+    ratingCount: 11,
+    uses: 39,
+    contributor: 'Rachel B.',
+    contributorRole: 'Finance Manager',
+    description: 'Upload your P&L data and get a detailed variance analysis with trend identification and management-ready commentary.',
+    prompt: `You are a financial analyst specializing in supply chain and logistics companies. I'm providing P&L data for analysis.
+
+**Period**: [month/quarter/year]
+**Comparison**: [vs prior period / vs budget / vs prior year]
+**Data format**: [I'll paste or upload the data]
+
+Please provide:
+1. **Variance Analysis Table**: Each line item with actual, comparison, $ variance, % variance
+2. **Significant Variances**: Flag anything >5% or >$10K variance with likely explanation
+3. **Trend Analysis**: If multiple periods provided, identify trends in:
+   - Revenue growth/decline by category
+   - Margin movement
+   - Cost category changes (labor, fuel, equipment, overhead)
+4. **Management Summary**: 3-5 bullet executive summary suitable for leadership review
+5. **Questions to Investigate**: Items that need further analysis or explanation from department heads
+6. **Visual Suggestions**: Describe what charts would best tell the story (I'll build them)
+
+Use logistics industry benchmarks for context. Flag ratios outside normal ranges for our industry (e.g., labor as % of revenue, fuel costs, equipment utilization).`,
+    anatomy: {
+      purpose: 'Transform raw financial data into a management-ready analysis with industry context — no more manual Excel formatting.',
+      whenToUse: 'Monthly close, quarterly reviews, board prep, budget vs actual analysis, or when investigating cost anomalies.',
+      expectedInput: 'P&L data (pasted from Excel, CSV, or described), comparison period, and any known context for unusual items.',
+      expectedOutput: 'Variance table, trend analysis, executive summary, investigation questions, and visualization recommendations.',
+      tips: 'Paste the raw data rather than describing it — the AI handles formatting. Include budget figures for the most useful comparison. Mention any known one-time items to avoid false flags.',
+    },
+    testimonials: [
+      { text: "This saved me 2 hours on the P&L variance report. The executive summary was boardroom-ready.", name: 'Rachel B.', role: 'Finance' },
+      { text: "The industry benchmarks context was something we never had before. Really useful.", name: 'Kevin W.', role: 'Executive' },
+    ],
+    tags: ['P&L', 'variance', 'analysis', 'financial', 'reporting'],
+    featured: true,
+    createdAt: '2025-03-08',
+  },
+  {
+    id: 7,
+    title: 'Summarize Long Document',
+    dept: 'general',
+    rating: 4.4,
+    ratingCount: 22,
+    uses: 89,
+    contributor: 'Kevin W.',
+    contributorRole: 'COO',
+    description: 'Drop in any long document — reports, policies, proposals — and get a structured summary with key takeaways.',
+    prompt: `I'm going to provide a long document. Please read it thoroughly and give me:
+
+1. **Executive Summary** (3-5 sentences max — the "if you read nothing else" version)
+2. **Key Points** (bulleted list of the most important items, max 10)
+3. **Action Items** (anything that requires someone to do something, with who and by when if stated)
+4. **Decisions Made** (any conclusions or decisions documented)
+5. **Questions/Concerns** (anything unclear, contradictory, or that I should follow up on)
+6. **My Quick Reference** (the 2-3 things I'll most likely need to recall from this document)
+
+Keep the total summary under 1 page. Be direct — I don't need filler language.`,
+    anatomy: {
+      purpose: 'Quickly extract the essential information from lengthy documents without reading every page.',
+      whenToUse: 'When you receive a long report, proposal, policy document, or meeting notes that you need to absorb quickly.',
+      expectedInput: 'Any text document — paste it in or upload the file. Works with reports, emails, policies, meeting notes, proposals.',
+      expectedOutput: 'A structured one-page summary with executive summary, key points, action items, and quick reference.',
+      tips: 'Upload the full document for best results. If it\'s extremely long (50+ pages), you can specify which sections matter most. Works great with Notebook LM too for audio summaries.',
+    },
+    testimonials: [
+      { text: "I use this literally every day. Changed how I handle my inbox.", name: 'Kevin W.', role: 'Executive' },
+      { text: "Dropped a 30-page RFP response in and had talking points in 60 seconds.", name: 'Kim L.', role: 'Sales' },
+    ],
+    tags: ['summary', 'documents', 'productivity', 'reading'],
+    featured: true,
+    createdAt: '2025-01-15',
+  },
+  {
+    id: 8,
+    title: 'Convert Image to Spreadsheet',
+    dept: 'general',
+    rating: 4.2,
+    ratingCount: 7,
+    uses: 31,
+    contributor: 'Kevin W.',
+    contributorRole: 'COO',
+    description: 'Got a screenshot or photo of a table? Paste it in and get clean spreadsheet-ready data back.',
+    prompt: `I have an image that contains a table, chart, or structured data. Please:
+
+1. Extract ALL data from the image into a clean, structured table format
+2. Maintain the original column headers and row labels exactly as shown
+3. Preserve all numbers, dates, and text accurately
+4. If any values are unclear, mark them with [unclear] rather than guessing
+5. Format the output so I can directly copy-paste into Excel or Google Sheets (tab-separated)
+6. Note any formatting in the original (bold headers, highlighted cells, merged cells) as comments after the table
+
+If the image contains a chart rather than a table, extract the underlying data points and present them in table format.`,
+    anatomy: {
+      purpose: 'Recover editable data from screenshots, photos, or PDFs where someone pasted a table as an image.',
+      whenToUse: 'When you receive data as an image/screenshot in an email, when a PDF table won\'t copy cleanly, or when you need to digitize a printed report.',
+      expectedInput: 'An image (screenshot, photo, PDF page) containing a table, chart, or structured data.',
+      expectedOutput: 'Tab-separated clean data ready to paste directly into Excel or Google Sheets.',
+      tips: 'Higher resolution images give better results. Crop the image to just the table for cleaner extraction. Works surprisingly well with phone photos of printed tables.',
+    },
+    testimonials: [
+      { text: "Someone emailed me data as a screenshot. Extracted it in 10 seconds. Game changer.", name: 'Kevin W.', role: 'Executive' },
+    ],
+    tags: ['image', 'spreadsheet', 'data extraction', 'Excel', 'OCR'],
+    featured: false,
+    createdAt: '2025-02-05',
+  },
+  {
+    id: 9,
+    title: 'RFP Response Drafting Assistant',
+    dept: 'sales',
+    rating: 4.5,
+    ratingCount: 5,
+    uses: 14,
+    contributor: 'Kim L.',
+    contributorRole: 'Sales Manager',
+    description: 'Accelerate RFP responses by generating structured answers based on Walker SCM capabilities and past proposals.',
+    prompt: `You are helping Walker Supply Chain Management respond to an RFP (Request for Proposal). Here is the context:
+
+**RFP Issuer**: [company name]
+**Industry**: [their industry]
+**Services requested**: [what they're looking for]
+**Key requirements**: [must-haves from the RFP]
+**Our strengths for this opportunity**: [what makes us a good fit]
+**Deadline**: [response due date]
+
+For each RFP question/requirement I share, please draft a response that:
+1. Directly addresses the question (don't be vague)
+2. Highlights Walker SCM's relevant experience and capabilities
+3. Includes specific examples where possible (I'll edit with real ones)
+4. Uses professional but not overly formal tone
+5. Keeps responses concise — evaluators read hundreds of these
+6. Flags any requirements where we may need to partner or note a limitation
+
+Format each response with the RFP question number/reference for easy assembly.`,
+    anatomy: {
+      purpose: 'Draft professional RFP responses faster while ensuring consistent quality and complete coverage of requirements.',
+      whenToUse: 'When responding to RFPs, RFIs, or formal bid requests. Best used early in the response process to get a solid first draft.',
+      expectedInput: 'RFP details, questions/requirements, and information about Walker SCM\'s relevant capabilities and experience.',
+      expectedOutput: 'Draft responses organized by RFP question number, ready for review and customization with specific client details.',
+      tips: 'Feed it past winning proposals for tone/style reference. Include specific Walker SCM capabilities rather than generic 3PL services. Review and personalize every response — AI drafts the skeleton, you add the soul.',
+    },
+    testimonials: [
+      { text: "Cut our RFP response time from 2 weeks to 3 days. The draft quality was solid.", name: 'Kim L.', role: 'Sales' },
+    ],
+    tags: ['RFP', 'proposals', 'sales', 'business development'],
+    featured: false,
+    createdAt: '2025-03-25',
+  },
+  {
+    id: 10,
+    title: 'Weekly Operations Briefing Generator',
+    dept: 'company',
+    rating: 4.6,
+    ratingCount: 10,
+    uses: 42,
+    contributor: 'Brandon H.',
+    contributorRole: 'Consultant',
+    description: 'Generate a concise weekly operations briefing from your notes, metrics, and updates. Leadership-ready format.',
+    prompt: `Generate a weekly operations briefing for Walker SCM leadership. I'll provide this week's raw notes and data.
+
+**Week of**: [date range]
+**Key metrics this week**: [paste or describe]
+**Notable events**: [incidents, wins, changes]
+**Department updates**: [what I know from each team]
+
+Format the briefing as:
+1. **Dashboard** — 5-6 key metrics with ↑↓→ trend indicators vs last week
+2. **Wins** — What went well (be specific, cite numbers)
+3. **Challenges** — What's not going well and current status
+4. **Watching** — Items not yet problems but trending in the wrong direction
+5. **Decisions Needed** — Anything requiring leadership input this week
+6. **Next Week Focus** — Top 3 priorities
+
+Keep it to one page. Use bullet points. No fluff. This goes to the C-suite.`,
+    anatomy: {
+      purpose: 'Transform scattered weekly notes into a polished executive briefing without spending hours formatting.',
+      whenToUse: 'Every Friday afternoon or Monday morning. Anytime you need to roll up departmental updates into an executive summary.',
+      expectedInput: 'Raw notes, metrics, updates from the week — can be messy, the AI structures it.',
+      expectedOutput: 'A one-page executive briefing with dashboard, wins, challenges, watch items, and priorities.',
+      tips: 'Include actual numbers wherever possible — "shipped 2,400 orders" beats "high volume week". The AI will highlight trends if you include prior week data.',
+    },
+    testimonials: [
+      { text: "Kevin actually complimented my briefing format. It was the AI.", name: 'Marcus D.', role: 'Operations' },
+      { text: "Consistent format every week means leadership always knows where to look.", name: 'Kevin W.', role: 'Executive' },
+    ],
+    tags: ['operations', 'briefing', 'reporting', 'leadership', 'weekly'],
+    featured: false,
+    createdAt: '2025-02-20',
+  },
+  {
+    id: 11,
+    title: 'Email to Professional Response',
+    dept: 'company',
+    rating: 4.1,
+    ratingCount: 18,
+    uses: 67,
+    contributor: 'Sandra K.',
+    contributorRole: 'HR Director',
+    description: 'Paste any email and get a polished, professional response drafted in seconds. Adjustable for tone and length.',
+    prompt: `I received this email and need to respond. Please draft a professional response.
+
+**The email**: [paste the email here]
+
+**My key points to convey**: [what I want to say]
+
+**Tone**: [choose: professional / friendly / firm / diplomatic / apologetic]
+
+**Length**: [choose: brief (2-3 sentences) / standard (1 paragraph) / detailed (multiple paragraphs)]
+
+**Additional context**: [anything the recipient should know]
+
+Draft the response. Don't use overly formal language — we're a supply chain company, not a law firm. Be direct but warm. End with a clear next step or call to action.`,
+    anatomy: {
+      purpose: 'Draft professional email responses quickly, especially for sensitive, complex, or high-stakes communications.',
+      whenToUse: 'When you need to respond to a tricky email, want to ensure the right tone, or just need to move through your inbox faster.',
+      expectedInput: 'The original email, your key points, desired tone, and any context about the relationship or situation.',
+      expectedOutput: 'A ready-to-send email response that you can review and personalize before hitting send.',
+      tips: 'Always review before sending — the AI doesn\'t know your relationship history with the person. Specify "firm" tone for vendor negotiations, "diplomatic" for internal politics.',
+    },
+    testimonials: [
+      { text: "I overthink emails. This gets me 90% there in 10 seconds.", name: 'Sandra K.', role: 'HR' },
+    ],
+    tags: ['email', 'communication', 'writing', 'productivity'],
+    featured: false,
+    createdAt: '2025-01-28',
+  },
+  {
+    id: 12,
+    title: 'DOT Compliance Documentation Review',
+    dept: 'compliance',
+    rating: 4.7,
+    ratingCount: 8,
+    uses: 23,
+    contributor: 'James T.',
+    contributorRole: 'Compliance Manager',
+    description: 'Review driver files, vehicle maintenance records, and HOS logs against DOT/FMCSA requirements. Generate gap reports.',
+    prompt: `You are a DOT/FMCSA compliance specialist for a supply chain company with a fleet. I need you to review compliance documentation.
+
+**Review type**: [driver qualification file / vehicle maintenance / HOS logs / general audit prep]
+**Data provided**: [describe what I'm uploading or pasting]
+**Fleet size**: [number of vehicles/drivers]
+**Last DOT audit**: [date and result]
+
+Please:
+1. Check each required element against current FMCSA regulations (49 CFR)
+2. Create a compliance checklist with PASS/FAIL/MISSING for each item
+3. Flag any items that would result in an OOS (Out of Service) order
+4. Prioritize findings by severity: Critical (immediate action) / Important (fix within 30 days) / Advisory
+5. Provide the specific CFR reference for each finding
+6. Generate a remediation timeline
+
+Format as a report I can share with our safety director.`,
+    anatomy: {
+      purpose: 'Systematically verify compliance documentation against federal regulations before DOT shows up at your door.',
+      whenToUse: 'During driver file audits, vehicle inspection prep, after any roadside inspection, or as part of regular compliance review cycles.',
+      expectedInput: 'Documentation details, fleet size, previous audit results, and specific areas of concern.',
+      expectedOutput: 'Compliance checklist with pass/fail ratings, severity-prioritized findings, CFR references, and remediation timeline.',
+      tips: 'Be thorough in describing what documentation you have — the AI can only check what you tell it about. Include any recent roadside inspection results for context.',
+    },
+    testimonials: [
+      { text: "Found 3 expired medical cards before our audit. That would have been ugly.", name: 'James T.', role: 'Compliance' },
+    ],
+    tags: ['DOT', 'FMCSA', 'fleet', 'compliance', 'safety', 'regulation'],
+    featured: false,
+    createdAt: '2025-03-01',
+  },
+];
+
+// ─── Utility ────────────────────────────────────────────────────────
+function getPromptsByDept(dept) {
+  if (dept === 'all') return PROMPTS;
+  return PROMPTS.filter(p => p.dept === dept);
+}
+
+function Stars({ rating, interactive, onRate, size = 'sm' }) {
+  const [hover, setHover] = useState(0);
+  const sz = size === 'sm' ? 'text-sm' : size === 'md' ? 'text-lg' : 'text-xl';
+  return (
+    <span className="inline-flex items-center gap-0.5">
+      {[1,2,3,4,5].map(i => (
+        <button
+          key={i}
+          className={`star-btn ${sz} ${interactive ? 'cursor-pointer' : 'cursor-default'}`}
+          style={{ color: i <= (hover || Math.round(rating)) ? '#f59e0b' : '#d1d5db', background: 'none', border: 'none', padding: '1px' }}
+          onMouseEnter={() => interactive && setHover(i)}
+          onMouseLeave={() => interactive && setHover(0)}
+          onClick={() => interactive && onRate && onRate(i)}
+          disabled={!interactive}
+        >★</button>
+      ))}
+    </span>
+  );
+}
+
+function DeptTag({ dept }) {
+  const c = DEPT_COLORS[dept] || { bg: '#f3f4f6', text: '#6b7280', border: '#e5e7eb' };
+  const label = DEPARTMENTS.find(d => d.id === dept)?.name || dept;
+  return (
+    <span className="dept-tag inline-block px-2 py-0.5 rounded-md" style={{ background: c.bg, color: c.text, border: `1px solid ${c.border}` }}>
+      {label}
+    </span>
+  );
+}
+
+// ─── Toast ──────────────────────────────────────────────────────────
+function Toast({ message, show }) {
+  if (!show) return null;
+  return (
+    <div className="fixed bottom-6 right-6 z-[100] toast-enter">
+      <div className="bg-gray-900 text-white px-4 py-2.5 rounded-lg shadow-lg text-sm font-medium flex items-center gap-2">
+        <span style={{ color: '#22c55e' }}>✓</span> {message}
+      </div>
+    </div>
+  );
+}
+
+// ─── Prompt Detail Panel ────────────────────────────────────────────
+function PromptPanel({ prompt, open, onClose, mode: initialMode }) {
+  const [mode, setMode] = useState(initialMode || 'view');
+  const [userRating, setUserRating] = useState(0);
+  const [copied, setCopied] = useState(false);
+  const [toast, setToast] = useState('');
+
+  // Add form state
+  const [form, setForm] = useState({
+    title: '', dept: 'company', prompt: '', purpose: '', whenToUse: '',
+    expectedInput: '', expectedOutput: '', tips: '', tags: '',
+  });
+
+  useEffect(() => {
+    setMode(initialMode || 'view');
+    setCopied(false);
+    setUserRating(0);
+    if (initialMode === 'add') {
+      setForm({ title: '', dept: 'company', prompt: '', purpose: '', whenToUse: '', expectedInput: '', expectedOutput: '', tips: '', tags: '' });
+    }
+  }, [prompt, initialMode, open]);
+
+  const copyPrompt = () => {
+    navigator.clipboard.writeText(prompt?.prompt || form.prompt);
+    setCopied(true);
+    setToast('Copied to clipboard');
+    setTimeout(() => { setCopied(false); setToast(''); }, 2000);
+  };
+
+  const handleSubmit = () => {
+    setToast('Prompt submitted for review');
+    setTimeout(() => { setToast(''); onClose(); }, 1500);
+  };
+
+  return (
+    <>
+      <div className={`panel-overlay fixed inset-0 bg-black/20 z-40 ${open ? 'open' : ''}`} onClick={onClose} />
+      <div className={`slide-panel fixed top-0 right-0 h-full z-50 bg-white shadow-2xl flex flex-col ${open ? 'open' : ''}`} style={{ width: 'min(640px, 90vw)' }}>
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+          <div className="flex items-center gap-3">
+            {mode === 'view' && prompt && <DeptTag dept={prompt.dept} />}
+            <h2 className="font-serif text-lg font-semibold text-gray-900">
+              {mode === 'add' ? 'Submit New Prompt' : prompt?.title}
+            </h2>
+          </div>
+          <div className="flex items-center gap-2">
+            {mode === 'view' && (
+              <button onClick={copyPrompt} className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md border border-gray-200 hover:bg-gray-50 transition-colors" style={copied ? { background: '#dcfce7', borderColor: '#86efac' } : {}}>
+                {copied ? '✓ Copied' : '⎘ Copy Prompt'}
+              </button>
+            )}
+            <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors text-lg">×</button>
+          </div>
+        </div>
+
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
+          {mode === 'view' && prompt && (
+            <>
+              {/* Stats bar */}
+              <div className="flex items-center gap-5 text-sm text-gray-500">
+                <span className="flex items-center gap-1.5">
+                  <Stars rating={prompt.rating} />
+                  <span className="font-medium text-gray-700">{prompt.rating}</span>
+                  <span>({prompt.ratingCount})</span>
+                </span>
+                <span className="flex items-center gap-1">
+                  <span style={{ fontSize: '13px' }}>▶</span>
+                  {prompt.uses} uses
+                </span>
+                <span>by {prompt.contributor}</span>
+              </div>
+
+              {/* Description */}
+              <p className="text-gray-600 text-[15px] leading-relaxed">{prompt.description}</p>
+
+              {/* Prompt text */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400">Prompt</h3>
+                </div>
+                <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm text-gray-800 leading-relaxed font-mono whitespace-pre-wrap" style={{ fontSize: '13px' }}>
+                  {prompt.prompt}
+                </div>
+              </div>
+
+              {/* Anatomy */}
+              <div>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Prompt Anatomy</h3>
+                <div className="space-y-3">
+                  {[
+                    { label: 'Purpose', value: prompt.anatomy.purpose, icon: '◎' },
+                    { label: 'When to Use', value: prompt.anatomy.whenToUse, icon: '◷' },
+                    { label: 'Expected Input', value: prompt.anatomy.expectedInput, icon: '→' },
+                    { label: 'Expected Output', value: prompt.anatomy.expectedOutput, icon: '←' },
+                    { label: 'Tips for Best Results', value: prompt.anatomy.tips, icon: '✦' },
+                  ].map(({ label, value, icon }) => (
+                    <div key={label} className="flex gap-3">
+                      <span className="text-base mt-0.5 w-5 text-center flex-shrink-0" style={{ color: '#8B2332' }}>{icon}</span>
+                      <div>
+                        <div className="text-xs font-semibold text-gray-500 mb-0.5">{label}</div>
+                        <div className="text-sm text-gray-700 leading-relaxed">{value}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Rate this prompt */}
+              <div className="bg-gray-50 rounded-lg p-4">
+                <div className="text-sm font-medium text-gray-700 mb-2">Rate this prompt</div>
+                <div className="flex items-center gap-3">
+                  <Stars rating={userRating} interactive onRate={r => { setUserRating(r); setToast(`Rated ${r} stars — thanks!`); setTimeout(() => setToast(''), 2000); }} size="lg" />
+                  {userRating > 0 && <span className="text-sm text-green-600 font-medium">Thanks for rating!</span>}
+                </div>
+              </div>
+
+              {/* Testimonials */}
+              {prompt.testimonials.length > 0 && (
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">What People Are Saying</h3>
+                  <div className="space-y-2.5">
+                    {prompt.testimonials.map((t, i) => (
+                      <div key={i} className="border border-gray-100 rounded-lg p-3.5 bg-white">
+                        <p className="text-sm text-gray-700 italic mb-1.5">"{t.text}"</p>
+                        <p className="text-xs text-gray-400 font-medium">{t.name} · {t.role}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Tags */}
+              <div className="flex flex-wrap gap-1.5">
+                {prompt.tags.map(t => (
+                  <span key={t} className="px-2 py-0.5 bg-gray-100 text-gray-500 rounded text-xs font-medium">{t}</span>
+                ))}
+              </div>
+
+              {/* Related prompts */}
+              <div>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Related Prompts</h3>
+                <div className="space-y-2">
+                  {PROMPTS.filter(p => p.id !== prompt.id && (p.dept === prompt.dept || p.tags.some(t => prompt.tags.includes(t)))).slice(0, 3).map(p => (
+                    <div key={p.id} className="flex items-center justify-between p-2.5 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                      <div>
+                        <div className="text-sm font-medium text-gray-800">{p.title}</div>
+                        <div className="text-xs text-gray-400">{p.uses} uses · {p.rating}★</div>
+                      </div>
+                      <DeptTag dept={p.dept} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+
+          {mode === 'add' && (
+            <>
+              <div className="space-y-4">
+                {/* Title */}
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Prompt Title</label>
+                  <input type="text" value={form.title} onChange={e => setForm({...form, title: e.target.value})} placeholder="e.g., Quarterly Budget Variance Analysis" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-200 transition-colors" />
+                </div>
+
+                {/* Department */}
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Department</label>
+                  <select value={form.dept} onChange={e => setForm({...form, dept: e.target.value})} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-gray-400 bg-white">
+                    {DEPARTMENTS.filter(d => d.id !== 'all').map(d => (
+                      <option key={d.id} value={d.id}>{d.name}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Prompt text */}
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Prompt Text</label>
+                  <textarea value={form.prompt} onChange={e => setForm({...form, prompt: e.target.value})} rows={8} placeholder="Write your full prompt here. Include placeholders like [paste your data here] where users should insert their own information..." className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm font-mono focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-200 transition-colors" style={{ fontSize: '13px' }} />
+                </div>
+
+                {/* Anatomy section */}
+                <div className="border-t border-gray-100 pt-4">
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-2">
+                    <span style={{ color: '#8B2332' }}>◎</span> Prompt Anatomy
+                    <span className="text-gray-300 font-normal normal-case tracking-normal">— helps others use it effectively</span>
+                  </h3>
+
+                  {[
+                    { key: 'purpose', label: 'Purpose', placeholder: 'What does this prompt help accomplish?' },
+                    { key: 'whenToUse', label: 'When to Use', placeholder: 'In what situations should someone reach for this prompt?' },
+                    { key: 'expectedInput', label: 'Expected Input', placeholder: 'What data or context should the user provide?' },
+                    { key: 'expectedOutput', label: 'Expected Output', placeholder: 'What will the AI return?' },
+                    { key: 'tips', label: 'Tips for Best Results', placeholder: 'Any tricks to get better output?' },
+                  ].map(({ key, label, placeholder }) => (
+                    <div key={key} className="mb-3">
+                      <label className="block text-xs font-medium text-gray-500 mb-1">{label}</label>
+                      <textarea value={form[key]} onChange={e => setForm({...form, [key]: e.target.value})} rows={2} placeholder={placeholder} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-200 transition-colors" />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tags */}
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Tags</label>
+                  <input type="text" value={form.tags} onChange={e => setForm({...form, tags: e.target.value})} placeholder="Comma-separated: analysis, Excel, finance" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-200 transition-colors" />
+                </div>
+              </div>
+
+              {/* Live Preview */}
+              {form.title && (
+                <div className="border-t border-gray-100 pt-4">
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Preview</h3>
+                  <div className="border border-gray-200 rounded-xl p-4 bg-white">
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <h4 className="font-semibold text-gray-900 text-sm">{form.title}</h4>
+                        <DeptTag dept={form.dept} />
+                      </div>
+                      <span className="text-xs text-gray-400">New</span>
+                    </div>
+                    {form.prompt && (
+                      <p className="text-xs text-gray-500 mt-2 line-clamp-2">{form.prompt.slice(0, 120)}...</p>
+                    )}
+                    {form.purpose && (
+                      <div className="mt-2 flex items-center gap-1.5 text-xs text-gray-400">
+                        <span style={{ color: '#8B2332' }}>◎</span> {form.purpose.slice(0, 80)}...
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Submit */}
+              <div className="flex gap-3 pt-2">
+                <button onClick={handleSubmit} className="flex-1 py-2.5 rounded-lg text-white text-sm font-semibold transition-colors" style={{ background: '#8B2332' }} onMouseOver={e => e.target.style.background = '#a12a3d'} onMouseOut={e => e.target.style.background = '#8B2332'}>
+                  Submit Prompt
+                </button>
+                <button onClick={onClose} className="px-5 py-2.5 rounded-lg border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-50 transition-colors">
+                  Cancel
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+      <Toast message={toast} show={!!toast} />
+    </>
+  );
+}
+
+// ─── Main App ───────────────────────────────────────────────────────
+function App() {
+  const [activeDept, setActiveDept] = useState('all');
+  const [search, setSearch] = useState('');
+  const [viewMode, setViewMode] = useState('grid');
+  const [sortBy, setSortBy] = useState('popular');
+  const [selectedPrompt, setSelectedPrompt] = useState(null);
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [panelMode, setPanelMode] = useState('view');
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const openPrompt = (p) => { setSelectedPrompt(p); setPanelMode('view'); setPanelOpen(true); };
+  const openAdd = () => { setSelectedPrompt(null); setPanelMode('add'); setPanelOpen(true); };
+
+  // Filter & sort
+  let prompts = activeDept === 'all' ? [...PROMPTS] : PROMPTS.filter(p => p.dept === activeDept);
+  if (search) {
+    const q = search.toLowerCase();
+    prompts = prompts.filter(p => p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q) || p.tags.some(t => t.includes(q)));
+  }
+  if (sortBy === 'popular') prompts.sort((a, b) => b.uses - a.uses);
+  if (sortBy === 'rating') prompts.sort((a, b) => b.rating - a.rating);
+  if (sortBy === 'newest') prompts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  const featured = PROMPTS.filter(p => p.featured).sort((a, b) => b.rating - a.rating).slice(0, 4);
+  const counts = {};
+  DEPARTMENTS.forEach(d => { counts[d.id] = d.id === 'all' ? PROMPTS.length : PROMPTS.filter(p => p.dept === d.id).length; });
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+      {/* ── Sidebar ── */}
+      <aside className="flex-shrink-0 h-full border-r border-gray-200 bg-white flex flex-col" style={{ width: sidebarOpen ? 260 : 0, transition: 'width 0.2s ease', overflow: 'hidden' }}>
+        <div className="px-5 pt-5 pb-2">
+          <div className="flex items-center gap-2.5 mb-1">
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white text-xs font-bold" style={{ background: '#8B2332' }}>W</div>
+            <div>
+              <div className="text-sm font-bold text-gray-900 leading-tight">Walker SCM</div>
+              <div className="text-[10px] text-gray-400 font-medium tracking-wide uppercase">AI Prompt Library</div>
+            </div>
+          </div>
+        </div>
+
+        <nav className="flex-1 overflow-y-auto px-3 py-2">
+          {/* Dashboard nav */}
+          <a href="index.html" className="nav-item w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-md mb-0.5 hover:bg-gray-50 text-gray-600 hover:text-gray-800 text-[13px]" style={{ textDecoration: 'none' }}>
+            <span className="w-5 text-center text-sm opacity-70">←</span> Dashboard
+          </a>
+          <a href="prompt-generator.html" className="nav-item w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-md mb-0.5 hover:bg-gray-50 text-gray-600 hover:text-gray-800 text-[13px]" style={{ textDecoration: 'none' }}>
+            <span className="w-5 text-center text-sm opacity-70">✦</span> Prompt Generator
+          </a>
+          <div className="border-t border-gray-100 my-2" />
+          {DEPARTMENTS.map(dept => {
+            const active = activeDept === dept.id;
+            return (
+              <button
+                key={dept.id}
+                onClick={() => setActiveDept(dept.id)}
+                className={`nav-item w-full flex items-center justify-between px-2.5 py-1.5 rounded-md text-left mb-0.5 group ${active ? 'bg-walker-100' : 'hover:bg-gray-50'}`}
+              >
+                <span className="flex items-center gap-2.5">
+                  <span className="w-5 text-center text-sm" style={{ color: active ? '#8B2332' : '#9ca3af', opacity: active ? 1 : 0.7 }}>{dept.icon}</span>
+                  <span className={`text-[13px] ${active ? 'font-semibold text-walker-900' : 'text-gray-600 group-hover:text-gray-800'}`}>{dept.name}</span>
+                </span>
+                <span className={`text-[11px] min-w-[20px] text-center rounded-full px-1.5 py-0.5 ${active ? 'bg-walker-900 text-white' : 'bg-gray-100 text-gray-400'}`} style={active ? { background: '#8B2332' } : {}}>
+                  {counts[dept.id]}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+
+        <div className="p-3 border-t border-gray-100">
+          <button onClick={openAdd} className="w-full flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold text-white transition-colors" style={{ background: '#8B2332' }} onMouseOver={e => e.target.style.background = '#a12a3d'} onMouseOut={e => e.target.style.background = '#8B2332'}>
+            + Submit a Prompt
+          </button>
+        </div>
+      </aside>
+
+      {/* ── Main ── */}
+      <main className="flex-1 flex flex-col overflow-hidden" style={{ background: '#f7f7f5' }}>
+        {/* Top bar */}
+        <header className="flex items-center gap-3 px-6 py-3 bg-white border-b border-gray-200">
+          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-100 text-gray-400 transition-colors text-lg">☰</button>
+
+          <div className="flex-1 relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300 text-sm">⌕</span>
+            <input
+              type="text"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search prompts..."
+              className="w-full max-w-md pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:bg-white focus:border-gray-300 transition-colors"
+            />
+          </div>
+
+          <div className="flex items-center gap-2 text-sm">
+            {/* Sort */}
+            <select value={sortBy} onChange={e => setSortBy(e.target.value)} className="px-2.5 py-1.5 bg-gray-50 border border-gray-200 rounded-md text-xs text-gray-600 focus:outline-none">
+              <option value="popular">Most Used</option>
+              <option value="rating">Top Rated</option>
+              <option value="newest">Newest</option>
+            </select>
+
+            {/* View toggle */}
+            <div className="flex border border-gray-200 rounded-md overflow-hidden">
+              <button onClick={() => setViewMode('grid')} className={`px-2.5 py-1.5 text-xs ${viewMode === 'grid' ? 'bg-gray-100 text-gray-800' : 'text-gray-400 hover:text-gray-600'}`}>⊞</button>
+              <button onClick={() => setViewMode('list')} className={`px-2.5 py-1.5 text-xs ${viewMode === 'list' ? 'bg-gray-100 text-gray-800' : 'text-gray-400 hover:text-gray-600'}`}>☰</button>
+            </div>
+          </div>
+        </header>
+
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="max-w-6xl mx-auto px-6 py-6">
+
+            {/* Featured / Trending — only on All view */}
+            {activeDept === 'all' && !search && (
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-base" style={{ color: '#8B2332' }}>★</span>
+                  <h2 className="font-serif text-lg font-semibold text-gray-900">Trending Prompts</h2>
+                  <span className="text-xs text-gray-400 ml-1">Highest rated across all departments</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  {featured.map(p => (
+                    <button key={p.id} onClick={() => openPrompt(p)} className="prompt-card text-left bg-white rounded-xl border border-gray-200 p-4 hover:border-gray-300 transition-all">
+                      <div className="flex items-center justify-between mb-2">
+                        <DeptTag dept={p.dept} />
+                        <span className="text-xs text-amber-500 font-semibold">{p.rating}★</span>
+                      </div>
+                      <h3 className="text-sm font-semibold text-gray-900 mb-1 leading-snug">{p.title}</h3>
+                      <p className="text-xs text-gray-400 leading-relaxed line-clamp-2">{p.description}</p>
+                      <div className="flex items-center justify-between mt-3 text-xs text-gray-400">
+                        <span>{p.uses} uses</span>
+                        <span>{p.contributor}</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Department heading */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <span className="text-base">{DEPARTMENTS.find(d => d.id === activeDept)?.icon}</span>
+                <h2 className="font-serif text-lg font-semibold text-gray-900">
+                  {DEPARTMENTS.find(d => d.id === activeDept)?.name}
+                </h2>
+                <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full font-medium">{prompts.length}</span>
+              </div>
+              {search && <span className="text-xs text-gray-400">Showing results for "{search}"</span>}
+            </div>
+
+            {/* Grid / List */}
+            {viewMode === 'grid' ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {prompts.map(p => (
+                  <button key={p.id} onClick={() => openPrompt(p)} className="prompt-card text-left bg-white rounded-xl border border-gray-200 p-5 hover:border-gray-300 transition-all">
+                    <div className="flex items-center justify-between mb-2.5">
+                      <DeptTag dept={p.dept} />
+                      <div className="flex items-center gap-1">
+                        <Stars rating={p.rating} size="sm" />
+                        <span className="text-xs text-gray-400 ml-0.5">{p.rating}</span>
+                      </div>
+                    </div>
+                    <h3 className="text-[15px] font-semibold text-gray-900 mb-1.5 leading-snug">{p.title}</h3>
+                    <p className="text-sm text-gray-500 leading-relaxed mb-3 line-clamp-2">{p.description}</p>
+                    <div className="flex items-center justify-between text-xs text-gray-400">
+                      <div className="flex items-center gap-3">
+                        <span className="flex items-center gap-1"><span style={{ fontSize: '10px' }}>▶</span> {p.uses} uses</span>
+                        <span>{p.ratingCount} ratings</span>
+                      </div>
+                      <span className="font-medium">{p.contributor}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-1.5">
+                {prompts.map(p => (
+                  <button key={p.id} onClick={() => openPrompt(p)} className="prompt-card w-full text-left bg-white rounded-lg border border-gray-200 px-5 py-3 hover:border-gray-300 transition-all flex items-center gap-4">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <h3 className="text-sm font-semibold text-gray-900 truncate">{p.title}</h3>
+                        <DeptTag dept={p.dept} />
+                      </div>
+                      <p className="text-xs text-gray-400 truncate">{p.description}</p>
+                    </div>
+                    <div className="flex items-center gap-5 text-xs text-gray-400 flex-shrink-0">
+                      <Stars rating={p.rating} size="sm" />
+                      <span>{p.uses} uses</span>
+                      <span className="font-medium text-gray-500">{p.contributor}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {prompts.length === 0 && (
+              <div className="text-center py-16">
+                <div className="text-4xl mb-3 opacity-30">⊘</div>
+                <p className="text-gray-400 text-sm">No prompts found{search ? ` for "${search}"` : ' in this category'}.</p>
+                <button onClick={openAdd} className="mt-3 text-sm font-medium underline" style={{ color: '#8B2332' }}>Submit the first one</button>
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+
+      {/* Slide Panel */}
+      <PromptPanel prompt={selectedPrompt} open={panelOpen} onClose={() => setPanelOpen(false)} mode={panelMode} />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

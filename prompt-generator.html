@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walker SCM — AI Prompt Generator</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        walker: { 900: '#8B2332', 800: '#a12a3d', 700: '#b83348', 100: '#fdf2f4', 50: '#fef8f9' },
+        slate: { 925: '#0f1117', 875: '#1a1c24' }
+      },
+      fontFamily: {
+        serif: ['Source Serif 4', 'Georgia', 'serif'],
+        sans: ['DM Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; background: #f7f7f5; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #d1d1d1; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #aaa; }
+  textarea { resize: vertical; }
+
+  .step-card { transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease; }
+  .step-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); transform: translateY(-1px); }
+
+  .toast-enter { animation: toastIn 0.3s ease forwards; }
+  @keyframes toastIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .fade-in { animation: fadeIn 0.25s ease forwards; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .prompt-output { position: relative; }
+  .prompt-output::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: #8B2332; border-radius: 2px;
+  }
+
+  .nav-item { transition: background 0.12s ease, color 0.12s ease; }
+  .dept-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; }
+
+  .progress-step { transition: all 0.2s ease; }
+  .progress-line { transition: background 0.3s ease; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef, useMemo } = React;
+
+// ─── Schema ─────────────────────────────────────────────────────────
+// Task types define what the wizard collects and how the prompt is assembled.
+// This is the schema — refine this with Kevin, everything else follows.
+
+const TASK_TYPES = [
+  {
+    id: 'analyze',
+    name: 'Analyze Data',
+    icon: '◎',
+    desc: 'Crunch numbers, find patterns, build reports',
+    color: '#059669',
+    fields: [
+      { key: 'dataType', label: 'What kind of data?', placeholder: 'e.g., Sales pipeline export, P&L spreadsheet, freight lane costs, HubSpot CSV...', type: 'text' },
+      { key: 'question', label: 'What do you need to know?', placeholder: 'e.g., Which lanes are losing money? What\'s driving the variance this quarter? Which leads should we prioritize?', type: 'textarea' },
+      { key: 'comparison', label: 'Compare against anything?', placeholder: 'e.g., Last quarter, budget, prior year, industry benchmark... (optional)', type: 'text', optional: true },
+      { key: 'outputFormat', label: 'How do you want the results?', placeholder: '', type: 'select', options: ['Table with key metrics', 'Executive summary (bullet points)', 'Detailed report with charts described', 'Ranked list with recommendations', 'Dashboard-ready data'] },
+    ],
+    assemble: (f, dept) => `You are a data analyst specializing in supply chain and logistics operations${dept ? ` for the ${dept} department` : ''}. I'm providing ${f.dataType || '[data]'}.
+
+Please analyze this data and answer the following question:
+${f.question || '[What do you need to know?]'}
+${f.comparison ? `\nCompare the results against: ${f.comparison}` : ''}
+
+Present your analysis as: ${f.outputFormat || 'a clear, structured summary'}
+
+Guidelines:
+- Lead with the answer, then show your work
+- Flag anything unusual or concerning
+- Include specific numbers, not just directional statements
+- If data is insufficient for a confident answer, say so
+- End with 2-3 actionable recommendations
+
+Keep it concise. This is for a busy operations team, not an academic paper.`,
+  },
+  {
+    id: 'write',
+    name: 'Write Something',
+    icon: '✎',
+    desc: 'Emails, reports, proposals, responses',
+    color: '#8B2332',
+    fields: [
+      { key: 'docType', label: 'What are you writing?', placeholder: '', type: 'select', options: ['Email response', 'Internal report', 'Proposal / RFP response', 'Policy or procedure', 'Meeting summary', 'Presentation talking points', 'Customer communication', 'Other'] },
+      { key: 'audience', label: 'Who is this for?', placeholder: 'e.g., Leadership team, a vendor, a customer, HR, the whole company...', type: 'text' },
+      { key: 'keyPoints', label: 'What are the key points to convey?', placeholder: 'List the main things you want to communicate. Be specific — the more detail you give, the better the output.', type: 'textarea' },
+      { key: 'tone', label: 'What tone?', placeholder: '', type: 'select', options: ['Professional', 'Friendly but professional', 'Firm / direct', 'Diplomatic / sensitive', 'Casual (internal team)', 'Formal (legal / external)'] },
+      { key: 'length', label: 'How long?', placeholder: '', type: 'select', options: ['Brief (2-3 sentences)', 'Short (1 paragraph)', 'Standard (2-3 paragraphs)', 'Detailed (full page)', 'As long as it needs to be'] },
+    ],
+    assemble: (f, dept) => `You are a professional writer for a supply chain management company${dept ? `, working with the ${dept} team` : ''}.
+
+Write a ${f.docType || '[document type]'} for the following audience: ${f.audience || '[who is reading this?]'}
+
+Key points to convey:
+${f.keyPoints || '[list your main points here]'}
+
+Tone: ${f.tone || 'Professional'}
+Length: ${f.length || 'Standard'}
+
+Guidelines:
+- Be direct — don't pad with filler language
+- Lead with the most important point
+- End with a clear next step or call to action
+- We're a logistics company, not a law firm — write like a human
+- Don't use buzzwords or corporate jargon unless the audience expects it`,
+  },
+  {
+    id: 'summarize',
+    name: 'Summarize',
+    icon: '≡',
+    desc: 'Condense long documents, emails, reports',
+    color: '#7c3aed',
+    fields: [
+      { key: 'sourceType', label: 'What are you summarizing?', placeholder: '', type: 'select', options: ['A long document or report', 'An email or email thread', 'Meeting notes', 'A policy or contract', 'Multiple sources / mixed', 'A spreadsheet or data'] },
+      { key: 'focusArea', label: 'What matters most to you?', placeholder: 'e.g., Action items, financial impact, decisions made, risks, deadlines, key takeaways... (optional)', type: 'text', optional: true },
+      { key: 'summaryLength', label: 'How concise?', placeholder: '', type: 'select', options: ['TL;DR (3-5 sentences)', 'One-page summary', 'Detailed summary with sections', 'Bullet points only'] },
+    ],
+    assemble: (f, dept) => `I'm going to provide ${f.sourceType === 'Multiple sources / mixed' ? 'multiple documents' : f.sourceType ? `a ${f.sourceType.toLowerCase()}` : 'a document'}. Please read it thoroughly and give me:
+
+1. **Executive Summary** (3-5 sentences — the "if you read nothing else" version)
+2. **Key Points** (bulleted, max 10)
+3. **Action Items** (who needs to do what, by when)
+4. **Decisions Made** (any conclusions documented)
+5. **Questions / Red Flags** (anything unclear or concerning)
+${f.focusArea ? `\n**Priority focus**: Pay special attention to: ${f.focusArea}` : ''}
+
+Format: ${f.summaryLength || 'One-page summary'}
+
+Keep it tight. I need the signal, not the noise.`,
+  },
+  {
+    id: 'research',
+    name: 'Research',
+    icon: '⌕',
+    desc: 'Explore topics, gather information, compare options',
+    color: '#0284c7',
+    fields: [
+      { key: 'topic', label: 'What do you need to research?', placeholder: 'e.g., Best practices for warehouse inventory management, DOT compliance changes for 2025, CRM options for mid-size 3PLs...', type: 'textarea' },
+      { key: 'context', label: 'Why do you need this?', placeholder: 'e.g., We\'re evaluating new software, prepping for an audit, building a business case, exploring a new market...', type: 'text' },
+      { key: 'depth', label: 'How deep?', placeholder: '', type: 'select', options: ['Quick overview (5 min read)', 'Solid briefing (executive summary + detail)', 'Deep dive (comprehensive with sources)', 'Comparison / pros-cons analysis'] },
+      { key: 'deliverable', label: 'What format do you need?', placeholder: '', type: 'select', options: ['Bullet point summary', 'Structured report', 'Comparison table', 'Pros/cons list', 'Recommendation with rationale'] },
+    ],
+    assemble: (f, dept) => `You are a research analyst supporting a supply chain management company${dept ? `'s ${dept} department` : ''}.
+
+Research the following topic:
+${f.topic || '[What do you need to research?]'}
+
+Context for why this matters: ${f.context || '[Why do you need this?]'}
+
+Depth: ${f.depth || 'Solid briefing'}
+Deliver as: ${f.deliverable || 'Structured report'}
+
+Guidelines:
+- Be specific and cite concrete examples where possible
+- Distinguish between established facts and your analysis/opinions
+- Include practical implications for a mid-size logistics company
+- Note any recent developments or changes (we're in ${new Date().getFullYear()})
+- End with "What to do next" — concrete steps, not vague suggestions`,
+  },
+  {
+    id: 'plan',
+    name: 'Build a Plan',
+    icon: '▤',
+    desc: 'Projects, processes, strategies, frameworks',
+    color: '#d97706',
+    fields: [
+      { key: 'objective', label: 'What are you planning?', placeholder: 'e.g., Implement a new safety training program, launch HubSpot CRM, migrate data to new system, Q3 hiring plan...', type: 'textarea' },
+      { key: 'constraints', label: 'What are the constraints?', placeholder: 'e.g., Budget of $50K, must be done by Q3, team of 3 people, need executive approval, compliance requirements...', type: 'textarea' },
+      { key: 'stakeholders', label: 'Who is involved?', placeholder: 'e.g., HR leads it, Operations and Finance need to sign off, external vendor involved...', type: 'text' },
+      { key: 'planType', label: 'What kind of plan?', placeholder: '', type: 'select', options: ['Phased rollout plan', 'Project timeline with milestones', 'Step-by-step action plan', 'Strategic framework', 'Decision matrix / evaluation criteria'] },
+    ],
+    assemble: (f, dept) => `You are a project planning specialist for a supply chain management company${dept ? `, working with the ${dept} team` : ''}.
+
+I need a plan for:
+${f.objective || '[What are you planning?]'}
+
+Constraints and context:
+${f.constraints || '[Budget, timeline, team, requirements]'}
+
+Key stakeholders: ${f.stakeholders || '[Who is involved?]'}
+
+Deliver as: ${f.planType || 'Phased rollout plan'}
+
+The plan must include:
+1. **Objective** — clear, measurable goal
+2. **Phases/Steps** — broken into manageable chunks with owners and deadlines
+3. **Dependencies** — what needs to happen before what
+4. **Risks** — what could go wrong and how to mitigate
+5. **Success Criteria** — how we know it's working
+6. **Resources Needed** — people, tools, budget, external support
+
+Keep it practical. We're a mid-size company — we don't have infinite resources. Prioritize ruthlessly and flag nice-to-haves separately from must-haves.`,
+  },
+  {
+    id: 'calculate',
+    name: 'Calculate',
+    icon: '⊕',
+    desc: 'Formulas, cost analysis, conversions, estimates',
+    color: '#16a34a',
+    fields: [
+      { key: 'calcType', label: 'What do you need calculated?', placeholder: 'e.g., Freight cost per mile, labor cost for a new shift, ROI on a software purchase, break-even analysis...', type: 'textarea' },
+      { key: 'inputs', label: 'What numbers / data do you have?', placeholder: 'List everything you know — rates, quantities, dates, costs, headcount, etc. The more numbers you provide, the more accurate the calculation.', type: 'textarea' },
+      { key: 'outputNeeded', label: 'What do you need back?', placeholder: '', type: 'select', options: ['Single number / answer', 'Comparison table', 'Break-even analysis', 'Cost breakdown', 'Formula I can reuse', 'Scenario analysis (best/worst/likely)'] },
+    ],
+    assemble: (f, dept) => `You are a financial and operations analyst for a supply chain management company${dept ? `, supporting the ${dept} team` : ''}.
+
+I need you to calculate:
+${f.calcType || '[What needs calculating?]'}
+
+Here are the inputs I have:
+${f.inputs || '[Provide your numbers, rates, quantities, etc.]'}
+
+Deliver as: ${f.outputNeeded || 'Clear answer with supporting work'}
+
+Guidelines:
+- Show your work step by step so I can verify
+- State any assumptions you're making clearly
+- If my inputs are incomplete, tell me what's missing and use reasonable estimates (flagged as estimates)
+- Round to practical precision (don't give me 8 decimal places)
+- If relevant, include the formula so I can recalculate with different inputs
+- Flag if results seem unusual for a logistics company of our size`,
+  },
+];
+
+const DEPARTMENTS = [
+  { id: '', name: 'General (no specific dept)', icon: '⊞' },
+  { id: 'company', name: 'Company-Wide', icon: '◆' },
+  { id: 'legal', name: 'Legal', icon: '§' },
+  { id: 'sales', name: 'Sales & Marketing', icon: '◎' },
+  { id: 'hr', name: 'HR & People', icon: '♦' },
+  { id: 'compliance', name: 'Compliance', icon: '✓' },
+  { id: 'operations', name: 'Operations', icon: '⚙' },
+  { id: 'finance', name: 'Finance', icon: '$' },
+  { id: 'engineering', name: 'Engineering', icon: '▲' },
+];
+
+const DEPT_COLORS = {
+  company:     { bg: '#fdf2f4', text: '#8B2332', border: '#f5c6cb' },
+  legal:       { bg: '#f5f3ff', text: '#7c3aed', border: '#ddd6fe' },
+  sales:       { bg: '#ecfdf5', text: '#059669', border: '#a7f3d0' },
+  hr:          { bg: '#fffbeb', text: '#d97706', border: '#fde68a' },
+  compliance:  { bg: '#f0f9ff', text: '#0284c7', border: '#bae6fd' },
+  operations:  { bg: '#f8fafc', text: '#475569', border: '#cbd5e1' },
+  finance:     { bg: '#f0fdf4', text: '#16a34a', border: '#bbf7d0' },
+  engineering: { bg: '#fef2f2', text: '#dc2626', border: '#fecaca' },
+};
+
+// ─── Components ─────────────────────────────────────────────────────
+
+function Toast({ message, show }) {
+  if (!show) return null;
+  return (
+    <div className="fixed bottom-6 right-6 z-[100] toast-enter">
+      <div className="bg-gray-900 text-white px-4 py-2.5 rounded-lg shadow-lg text-sm font-medium flex items-center gap-2">
+        <span style={{ color: '#22c55e' }}>✓</span> {message}
+      </div>
+    </div>
+  );
+}
+
+function ProgressBar({ currentStep, totalSteps }) {
+  return (
+    <div className="flex items-center gap-1 mb-6">
+      {Array.from({ length: totalSteps }, (_, i) => {
+        const step = i + 1;
+        const active = step === currentStep;
+        const done = step < currentStep;
+        return (
+          <React.Fragment key={i}>
+            <div className={`progress-step flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${done ? 'text-white' : active ? 'text-white' : 'text-gray-400 bg-gray-100'}`}
+                 style={done ? { background: '#059669' } : active ? { background: '#8B2332' } : {}}>
+              {done ? '✓' : step}
+            </div>
+            {i < totalSteps - 1 && (
+              <div className="progress-line flex-1 h-0.5 rounded" style={{ background: done ? '#059669' : '#e5e7eb' }} />
+            )}
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+}
+
+function StepLabel({ number, label, sublabel }) {
+  return (
+    <div className="mb-5">
+      <div className="flex items-center gap-2 mb-1">
+        <span className="text-xs font-bold uppercase tracking-wider text-gray-300">Step {number}</span>
+      </div>
+      <h2 className="font-serif text-xl font-semibold text-gray-900">{label}</h2>
+      {sublabel && <p className="text-sm text-gray-400 mt-1">{sublabel}</p>}
+    </div>
+  );
+}
+
+// ─── Main App ───────────────────────────────────────────────────────
+function App() {
+  const [step, setStep] = useState(1); // 1=task type, 2=department, 3=fill fields, 4=review
+  const [taskType, setTaskType] = useState(null);
+  const [dept, setDept] = useState('');
+  const [fields, setFields] = useState({});
+  const [toast, setToast] = useState('');
+  const [showCraft, setShowCraft] = useState(false);
+  const outputRef = useRef(null);
+
+  const totalSteps = 4;
+  const task = TASK_TYPES.find(t => t.id === taskType);
+
+  const generatedPrompt = useMemo(() => {
+    if (!task) return '';
+    const deptName = DEPARTMENTS.find(d => d.id === dept)?.name?.replace(' (no specific dept)', '') || '';
+    return task.assemble(fields, deptName);
+  }, [task, fields, dept]);
+
+  const canProceed = () => {
+    if (step === 1) return !!taskType;
+    if (step === 2) return true; // dept is optional
+    if (step === 3) {
+      if (!task) return false;
+      return task.fields.filter(f => !f.optional).every(f => fields[f.key]?.trim());
+    }
+    return true;
+  };
+
+  const next = () => { if (canProceed() && step < totalSteps) setStep(step + 1); };
+  const back = () => { if (step > 1) setStep(step - 1); };
+  const reset = () => { setStep(1); setTaskType(null); setDept(''); setFields({}); setShowCraft(false); };
+
+  const copyPrompt = () => {
+    navigator.clipboard.writeText(generatedPrompt);
+    setToast('Copied to clipboard — paste into your AI tool');
+    setTimeout(() => setToast(''), 2500);
+  };
+
+  const setField = (key, val) => setFields(prev => ({ ...prev, [key]: val }));
+
+  // CRAFT breakdown of current prompt
+  const craftBreakdown = useMemo(() => {
+    if (!task || !generatedPrompt) return null;
+    return {
+      context: `You're working ${dept ? `in ${DEPARTMENTS.find(d => d.id === dept)?.name || 'your department'}` : 'at Walker SCM'}. The AI is given your company context and industry.`,
+      role: `The AI is acting as a specialized ${task.name.toLowerCase() === 'write something' ? 'writer' : task.name.toLowerCase() === 'analyze data' ? 'data analyst' : task.name.toLowerCase() === 'research' ? 'research analyst' : task.name.toLowerCase() === 'build a plan' ? 'project planner' : task.name.toLowerCase() === 'calculate' ? 'financial analyst' : 'assistant'} for a supply chain company.`,
+      action: fields[task.fields[0]?.key] || '(fill in Step 3 to see this)',
+      format: task.fields.find(f => f.key.includes('output') || f.key.includes('Format') || f.key.includes('length') || f.key.includes('planType') || f.key.includes('summaryLength') || f.key.includes('deliverable') || f.key.includes('outputNeeded'))
+        ? fields[task.fields.find(f => f.key.includes('output') || f.key.includes('Format') || f.key.includes('length') || f.key.includes('planType') || f.key.includes('summaryLength') || f.key.includes('deliverable') || f.key.includes('outputNeeded'))?.key] || '(selected in Step 3)'
+        : 'Structured output with clear sections',
+      tone: 'Direct, practical, no fluff — built for a busy operations team.',
+    };
+  }, [task, fields, dept, generatedPrompt]);
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+      {/* ── Sidebar ── */}
+      <aside className="flex-shrink-0 h-full border-r border-gray-200 bg-white flex flex-col" style={{ width: 260, overflow: 'hidden' }}>
+        <div className="px-5 pt-5 pb-2">
+          <div className="flex items-center gap-2.5 mb-1">
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white text-xs font-bold" style={{ background: '#8B2332' }}>W</div>
+            <div>
+              <div className="text-sm font-bold text-gray-900 leading-tight">Walker SCM</div>
+              <div className="text-[10px] text-gray-400 font-medium tracking-wide uppercase">AI Prompt Generator</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Nav — links to other pages */}
+        <nav className="flex-1 overflow-y-auto px-3 py-2">
+          <a href="index.html" className="nav-item w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-md mb-0.5 hover:bg-gray-50 text-gray-600 hover:text-gray-800 text-[13px] no-underline">
+            <span className="w-5 text-center text-sm opacity-70">←</span> Dashboard
+          </a>
+          <div className="border-t border-gray-100 my-2" />
+          <div className="text-[10px] font-bold uppercase tracking-wider text-gray-300 px-2.5 mb-2">Tools</div>
+          <a href="prompt-library.html" className="nav-item w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-md mb-0.5 hover:bg-gray-50 text-gray-600 hover:text-gray-800 text-[13px] no-underline">
+            <span className="w-5 text-center text-sm opacity-70">⊞</span> Prompt Library
+          </a>
+          <div className="nav-item w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-md mb-0.5 bg-walker-100 text-[13px] font-semibold" style={{ color: '#8B2332' }}>
+            <span className="w-5 text-center text-sm">✦</span> Prompt Generator
+          </div>
+
+          <div className="text-[10px] font-bold uppercase tracking-wider text-gray-300 px-2.5 mb-2 mt-6">How It Works</div>
+          <div className="px-2.5 space-y-3 text-xs text-gray-500 leading-relaxed">
+            <div className="flex gap-2">
+              <span className="font-bold text-gray-300 mt-px">1</span>
+              <span>Pick what you're trying to do</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="font-bold text-gray-300 mt-px">2</span>
+              <span>Choose your department for tailored context</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="font-bold text-gray-300 mt-px">3</span>
+              <span>Fill in the details in plain language</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="font-bold text-gray-300 mt-px">4</span>
+              <span>Copy your prompt and paste into ChatGPT, Copilot, or Claude</span>
+            </div>
+          </div>
+
+          <div className="text-[10px] font-bold uppercase tracking-wider text-gray-300 px-2.5 mb-2 mt-6">CRAFT Framework</div>
+          <div className="px-2.5 space-y-1.5 text-xs text-gray-400">
+            <div><span className="font-bold" style={{ color: '#8B2332' }}>C</span>ontext — your situation</div>
+            <div><span className="font-bold" style={{ color: '#8B2332' }}>R</span>ole — who the AI acts as</div>
+            <div><span className="font-bold" style={{ color: '#8B2332' }}>A</span>ction — what you need done</div>
+            <div><span className="font-bold" style={{ color: '#8B2332' }}>F</span>ormat — how you want results</div>
+            <div><span className="font-bold" style={{ color: '#8B2332' }}>T</span>one — style of the response</div>
+          </div>
+        </nav>
+
+        <div className="p-3 border-t border-gray-100">
+          <button onClick={reset} className="w-full flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors">
+            ↺ Start Over
+          </button>
+        </div>
+      </aside>
+
+      {/* ── Main ── */}
+      <main className="flex-1 flex flex-col overflow-hidden" style={{ background: '#f7f7f5' }}>
+        {/* Header */}
+        <header className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200">
+          <div className="flex items-center gap-3">
+            <span className="text-base" style={{ color: '#8B2332' }}>✦</span>
+            <h1 className="font-serif text-lg font-semibold text-gray-900">Prompt Generator</h1>
+            <span className="text-xs bg-walker-100 px-2 py-0.5 rounded-full font-medium" style={{ color: '#8B2332' }}>Beta</span>
+          </div>
+          {step > 1 && (
+            <div className="text-xs text-gray-400">
+              {task && <span className="font-medium text-gray-600">{task.name}</span>}
+              {dept && <span> · {DEPARTMENTS.find(d => d.id === dept)?.name}</span>}
+            </div>
+          )}
+        </header>
+
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="max-w-3xl mx-auto px-6 py-8">
+
+            <ProgressBar currentStep={step} totalSteps={totalSteps} />
+
+            {/* ── Step 1: Task Type ── */}
+            {step === 1 && (
+              <div className="fade-in">
+                <StepLabel number={1} label="What do you need to do?" sublabel="Pick the task that's closest to what you're working on." />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {TASK_TYPES.map(t => {
+                    const selected = taskType === t.id;
+                    return (
+                      <button
+                        key={t.id}
+                        onClick={() => setTaskType(t.id)}
+                        className={`step-card text-left rounded-xl border-2 p-5 ${selected ? 'bg-white shadow-md' : 'bg-white hover:border-gray-300'}`}
+                        style={{ borderColor: selected ? t.color : '#e5e7eb' }}
+                      >
+                        <div className="flex items-start gap-3">
+                          <span className="text-2xl mt-0.5" style={{ color: t.color }}>{t.icon}</span>
+                          <div>
+                            <h3 className={`text-sm font-semibold ${selected ? 'text-gray-900' : 'text-gray-700'}`}>{t.name}</h3>
+                            <p className="text-xs text-gray-400 mt-0.5">{t.desc}</p>
+                          </div>
+                        </div>
+                        {selected && (
+                          <div className="mt-3 flex items-center gap-1.5 text-xs font-medium" style={{ color: t.color }}>
+                            <span>✓</span> Selected
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* ── Step 2: Department ── */}
+            {step === 2 && (
+              <div className="fade-in">
+                <StepLabel number={2} label="Which department is this for?" sublabel="This helps the AI tailor its response with the right industry context. Optional." />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {DEPARTMENTS.map(d => {
+                    const selected = dept === d.id;
+                    const c = DEPT_COLORS[d.id] || { bg: '#f3f4f6', text: '#6b7280', border: '#e5e7eb' };
+                    return (
+                      <button
+                        key={d.id}
+                        onClick={() => setDept(d.id)}
+                        className={`step-card text-left rounded-lg border-2 px-4 py-3 flex items-center gap-2.5 ${selected ? 'shadow-sm' : 'bg-white hover:border-gray-300'}`}
+                        style={{
+                          borderColor: selected ? c.text : '#e5e7eb',
+                          background: selected ? c.bg : '#fff',
+                        }}
+                      >
+                        <span className="text-base" style={{ color: selected ? c.text : '#9ca3af' }}>{d.icon}</span>
+                        <span className={`text-sm ${selected ? 'font-semibold' : 'text-gray-600'}`} style={selected ? { color: c.text } : {}}>{d.name}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* ── Step 3: Fill Fields ── */}
+            {step === 3 && task && (
+              <div className="fade-in">
+                <StepLabel number={3} label="Fill in the details" sublabel="Answer in plain language — the generator handles the prompt engineering." />
+                <div className="space-y-4">
+                  {task.fields.map((f, i) => (
+                    <div key={f.key} className="bg-white rounded-xl border border-gray-200 p-4">
+                      <label className="block text-sm font-semibold text-gray-800 mb-1.5">
+                        {f.label}
+                        {f.optional && <span className="text-xs font-normal text-gray-400 ml-1.5">(optional)</span>}
+                      </label>
+                      {f.type === 'text' && (
+                        <input
+                          type="text"
+                          value={fields[f.key] || ''}
+                          onChange={e => setField(f.key, e.target.value)}
+                          placeholder={f.placeholder}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-200 transition-colors"
+                        />
+                      )}
+                      {f.type === 'textarea' && (
+                        <textarea
+                          value={fields[f.key] || ''}
+                          onChange={e => setField(f.key, e.target.value)}
+                          placeholder={f.placeholder}
+                          rows={3}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-200 transition-colors"
+                        />
+                      )}
+                      {f.type === 'select' && (
+                        <select
+                          value={fields[f.key] || ''}
+                          onChange={e => setField(f.key, e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-gray-400 bg-white"
+                        >
+                          <option value="">Choose...</option>
+                          {f.options.map(o => <option key={o} value={o}>{o}</option>)}
+                        </select>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ── Step 4: Review & Copy ── */}
+            {step === 4 && task && (
+              <div className="fade-in">
+                <StepLabel number={4} label="Your prompt is ready" sublabel="Copy this and paste it into ChatGPT, Copilot, Claude, or any AI tool. Then paste your data or context after it." />
+
+                {/* Generated prompt */}
+                <div className="bg-white rounded-xl border border-gray-200 overflow-hidden mb-4">
+                  <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100 bg-gray-50">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm" style={{ color: task.color }}>{task.icon}</span>
+                      <span className="text-xs font-semibold text-gray-600">{task.name}</span>
+                      {dept && (
+                        <>
+                          <span className="text-gray-300">·</span>
+                          <span className="dept-tag inline-block px-2 py-0.5 rounded-md" style={{
+                            background: DEPT_COLORS[dept]?.bg || '#f3f4f6',
+                            color: DEPT_COLORS[dept]?.text || '#6b7280',
+                            border: `1px solid ${DEPT_COLORS[dept]?.border || '#e5e7eb'}`,
+                          }}>
+                            {DEPARTMENTS.find(d => d.id === dept)?.name}
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <button
+                      onClick={copyPrompt}
+                      className="flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md text-white transition-colors"
+                      style={{ background: '#8B2332' }}
+                      onMouseOver={e => e.target.style.background = '#a12a3d'}
+                      onMouseOut={e => e.target.style.background = '#8B2332'}
+                    >
+                      ⎘ Copy Prompt
+                    </button>
+                  </div>
+                  <div ref={outputRef} className="prompt-output p-5 pl-6 text-sm text-gray-800 leading-relaxed font-mono whitespace-pre-wrap" style={{ fontSize: '13px', background: '#fafaf8' }}>
+                    {generatedPrompt}
+                  </div>
+                </div>
+
+                {/* CRAFT breakdown toggle */}
+                <div className="bg-white rounded-xl border border-gray-200 overflow-hidden mb-4">
+                  <button
+                    onClick={() => setShowCraft(!showCraft)}
+                    className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-gray-50 transition-colors"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold" style={{ color: '#8B2332' }}>CRAFT</span>
+                      <span className="text-sm text-gray-600">See how this prompt is structured</span>
+                    </div>
+                    <span className="text-gray-400 text-sm">{showCraft ? '▾' : '▸'}</span>
+                  </button>
+                  {showCraft && craftBreakdown && (
+                    <div className="px-4 pb-4 border-t border-gray-100 pt-3 fade-in">
+                      <p className="text-xs text-gray-400 mb-3">The CRAFT framework ensures your prompt gives the AI everything it needs to give you a great answer.</p>
+                      {[
+                        { letter: 'C', label: 'Context', value: craftBreakdown.context },
+                        { letter: 'R', label: 'Role', value: craftBreakdown.role },
+                        { letter: 'A', label: 'Action', value: craftBreakdown.action },
+                        { letter: 'F', label: 'Format', value: craftBreakdown.format },
+                        { letter: 'T', label: 'Tone', value: craftBreakdown.tone },
+                      ].map(({ letter, label, value }) => (
+                        <div key={letter} className="flex gap-3 mb-2.5">
+                          <span className="w-6 h-6 rounded flex items-center justify-center text-xs font-bold text-white flex-shrink-0 mt-0.5" style={{ background: '#8B2332' }}>{letter}</span>
+                          <div>
+                            <div className="text-xs font-semibold text-gray-600">{label}</div>
+                            <div className="text-xs text-gray-500 leading-relaxed">{value}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Next steps */}
+                <div className="bg-walker-50 rounded-xl border border-walker-100 p-4">
+                  <h3 className="text-sm font-semibold text-gray-800 mb-2">What to do next</h3>
+                  <ol className="space-y-1.5 text-xs text-gray-600 leading-relaxed">
+                    <li className="flex gap-2"><span className="font-bold text-gray-400">1.</span> Copy the prompt above</li>
+                    <li className="flex gap-2"><span className="font-bold text-gray-400">2.</span> Open your AI tool (ChatGPT, Copilot, Claude, Notebook LM)</li>
+                    <li className="flex gap-2"><span className="font-bold text-gray-400">3.</span> Paste the prompt, then paste or upload your data/document after it</li>
+                    <li className="flex gap-2"><span className="font-bold text-gray-400">4.</span> Review the output — ask follow-up questions to refine</li>
+                    <li className="flex gap-2"><span className="font-bold text-gray-400">5.</span> If it worked well, <a href="prompt-library.html" className="underline font-medium" style={{ color: '#8B2332' }}>save it to the Prompt Library</a> so others can use it too</li>
+                  </ol>
+                </div>
+              </div>
+            )}
+
+            {/* ── Navigation ── */}
+            <div className="flex items-center justify-between mt-8 pt-4 border-t border-gray-200">
+              <div>
+                {step > 1 && (
+                  <button onClick={back} className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                    ← Back
+                  </button>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                {step === 2 && !dept && (
+                  <button onClick={next} className="px-4 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-gray-600 transition-colors">
+                    Skip — no department
+                  </button>
+                )}
+                {step < totalSteps && (
+                  <button
+                    onClick={next}
+                    disabled={!canProceed()}
+                    className={`flex items-center gap-1.5 px-5 py-2 rounded-lg text-sm font-semibold text-white transition-colors ${canProceed() ? '' : 'opacity-40 cursor-not-allowed'}`}
+                    style={{ background: canProceed() ? '#8B2332' : '#8B2332' }}
+                    onMouseOver={e => canProceed() && (e.target.style.background = '#a12a3d')}
+                    onMouseOut={e => (e.target.style.background = '#8B2332')}
+                  >
+                    Continue →
+                  </button>
+                )}
+                {step === totalSteps && (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={copyPrompt}
+                      className="flex items-center gap-1.5 px-5 py-2 rounded-lg text-sm font-semibold text-white transition-colors"
+                      style={{ background: '#8B2332' }}
+                      onMouseOver={e => e.target.style.background = '#a12a3d'}
+                      onMouseOut={e => e.target.style.background = '#8B2332'}
+                    >
+                      ⎘ Copy & Use
+                    </button>
+                    <button onClick={reset} className="px-4 py-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                      Build Another
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+
+      <Toast message={toast} show={!!toast} />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
